@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plan de Comidas Abril 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--cream:#F5F0E8;--dark:#1A1A14;--olive:#5C6B2E;--olive-light:#8A9E45;--amber:#C8863A;--border:rgba(26,26,20,0.1);--serif:'Playfair Display',Georgia,serif;--sans:'DM Sans',sans-serif;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--sans);background:var(--cream);color:var(--dark);font-size:15px;line-height:1.65;overflow-x:hidden;}
+nav{position:sticky;top:0;z-index:100;background:var(--dark);display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:54px;}
+.nav-brand{font-family:var(--serif);color:var(--cream);font-size:17px;}
+.nav-links{display:flex;}
+.nav-links a{color:rgba(245,240,232,0.55);text-decoration:none;font-size:13px;padding:0 1.1rem;height:54px;display:flex;align-items:center;border-left:1px solid rgba(255,255,255,0.07);transition:color .2s,background .2s;}
+.nav-links a:last-child{border-right:1px solid rgba(255,255,255,0.07);}
+.nav-links a:hover{color:var(--cream);background:rgba(255,255,255,0.05);}
+.hero{background:var(--dark);padding:3.5rem 2rem 3rem;text-align:center;}
+.hero-eye{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--olive-light);margin-bottom:1rem;}
+.hero h1{font-family:var(--serif);color:var(--cream);font-size:clamp(2rem,5vw,3.5rem);font-weight:900;margin-bottom:.75rem;}
+.hero h1 span{color:var(--amber);}
+.hero-sub{color:rgba(245,240,232,0.5);font-size:14px;margin-bottom:2rem;}
+.hero-stats{display:flex;justify-content:center;border:1px solid rgba(255,255,255,0.1);border-radius:10px;overflow:hidden;max-width:520px;margin:0 auto;}
+.hs{flex:1;padding:1rem;border-right:1px solid rgba(255,255,255,0.1);text-align:center;}
+.hs:last-child{border-right:none;}
+.hs-val{font-family:var(--serif);font-size:1.7rem;font-weight:700;color:var(--cream);}
+.hs-val.amber{color:var(--amber);}
+.hs-val.olive{color:#A8C060;}
+.hs-lbl{font-size:10px;color:rgba(245,240,232,0.4);text-transform:uppercase;letter-spacing:.07em;margin-top:3px;}
+.container{max-width:1200px;margin:0 auto;padding:0 2rem;}
+section{padding:3.5rem 0;}
+section+section{border-top:1px solid var(--border);}
+.sec-label{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--olive);font-weight:500;margin-bottom:.4rem;}
+.sec-title{font-family:var(--serif);font-size:clamp(1.5rem,3vw,2rem);font-weight:700;margin-bottom:1.5rem;}
+.week-nav{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1.75rem;}
+.wbtn{padding:7px 18px;border-radius:99px;font-size:13px;cursor:pointer;border:1px solid rgba(26,26,20,0.18);background:white;color:rgba(26,26,20,0.55);transition:all .18s;}
+.wbtn:hover{border-color:var(--olive);color:var(--olive);}
+.wbtn.active{background:var(--dark);color:var(--cream);border-color:var(--dark);font-weight:500;}
+.week-panel{display:none;}
+.week-panel.active{display:block;animation:fadeUp .22s ease;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.week-progress{margin-bottom:1.25rem;}
+.wp-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;}
+.wp-label{font-size:13px;color:rgba(26,26,20,0.55);}
+.wp-count{font-size:13px;font-weight:500;color:var(--olive);}
+.wp-track{height:5px;background:rgba(26,26,20,0.08);border-radius:3px;overflow:hidden;}
+.wp-fill{height:100%;background:var(--olive);border-radius:3px;transition:width .35s ease;}
+.day-grid{display:grid;gap:1rem;margin-bottom:1rem;}
+.day-grid-3{grid-template-columns:repeat(3,1fr);}
+.day-grid-4{grid-template-columns:repeat(4,1fr);}
+.day-card{background:white;border:1px solid var(--border);border-radius:14px;overflow:hidden;}
+.day-card.all-done{border-color:rgba(92,107,46,0.4);}
+.day-head{padding:.65rem 1rem;background:var(--dark);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:4px;}
+.day-head.done-head{background:var(--olive);}
+.day-name{font-family:var(--serif);color:var(--cream);font-size:14px;font-weight:700;}
+.day-date{font-size:11px;color:rgba(245,240,232,0.5);}
+.done-badge{font-size:10px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;padding:2px 7px;border-radius:99px;background:rgba(255,255,255,0.15);color:rgba(255,255,255,0.9);display:none;}
+.day-card.all-done .done-badge{display:inline;}
+.day-body{padding:.25rem 0;}
+.meal-row{padding:.45rem .9rem;border-bottom:1px solid var(--border);cursor:pointer;transition:background .15s;}
+.meal-row:last-child{border-bottom:none;}
+.meal-row:hover{background:rgba(92,107,46,0.04);}
+.meal-row.done{background:rgba(92,107,46,0.06);}
+.meal-top{display:flex;align-items:center;gap:7px;}
+.meal-check{width:17px;height:17px;border-radius:4px;flex-shrink:0;border:1.5px solid rgba(26,26,20,0.2);display:flex;align-items:center;justify-content:center;transition:background .15s,border-color .15s;}
+.meal-row.done .meal-check{background:var(--olive);border-color:var(--olive);}
+.meal-check svg{display:none;}
+.meal-row.done .meal-check svg{display:block;}
+.meal-info{flex:1;min-width:0;}
+.meal-type{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--olive);font-weight:500;}
+.meal-row.done .meal-type{color:rgba(92,107,46,0.55);}
+.meal-text{font-size:12px;color:rgba(26,26,20,0.72);line-height:1.35;margin-top:1px;}
+.meal-row.done .meal-text{color:rgba(26,26,20,0.35);text-decoration:line-through;text-decoration-color:rgba(26,26,20,0.18);}
+.meal-stars{display:flex;gap:1px;margin-top:4px;margin-left:24px;align-items:center;}
+.star{font-size:14px;cursor:pointer;color:rgba(26,26,20,0.14);transition:color .1s,transform .1s;line-height:1;user-select:none;}
+.star:hover,.star.lit{color:var(--amber);}
+.star:hover{transform:scale(1.18);}
+.star-note{font-size:10px;color:rgba(26,26,20,0.32);margin-left:4px;}
+.shop-header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:1.5rem;}
+.shop-prog-wrap{flex:1;min-width:200px;}
+.sp-label{font-size:13px;color:rgba(26,26,20,0.55);margin-bottom:4px;}
+.sp-track{height:5px;background:rgba(26,26,20,0.08);border-radius:3px;overflow:hidden;}
+.sp-fill{height:100%;background:var(--olive);border-radius:3px;transition:width .35s;}
+.btn-sm{font-size:12px;padding:6px 14px;border-radius:99px;border:1px solid rgba(26,26,20,0.18);background:white;cursor:pointer;color:rgba(26,26,20,0.6);transition:all .15s;}
+.btn-sm:hover{border-color:var(--olive);color:var(--olive);}
+.shop-week-tabs{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:1.25rem;}
+.stab{padding:5px 15px;border-radius:99px;font-size:12px;cursor:pointer;border:1px solid rgba(26,26,20,0.15);background:white;color:rgba(26,26,20,0.5);transition:all .15s;}
+.stab:hover{border-color:var(--olive);color:var(--olive);}
+.stab.active{background:var(--dark);color:var(--cream);border-color:var(--dark);font-weight:500;}
+.shop-panel{display:none;}
+.shop-panel.active{display:block;animation:fadeUp .2s ease;}
+.shop-cols{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1.25rem;}
+.scol-title{font-size:11px;text-transform:uppercase;letter-spacing:.14em;color:var(--olive);font-weight:500;margin-bottom:.6rem;padding-bottom:.4rem;border-bottom:2px solid var(--olive);}
+.sitem{display:flex;align-items:flex-start;gap:9px;padding:.4rem 0;border-bottom:1px solid var(--border);cursor:pointer;transition:opacity .2s;}
+.sitem:last-child{border-bottom:none;}
+.sitem.got{opacity:.36;}
+.sbox{width:17px;height:17px;border-radius:4px;flex-shrink:0;margin-top:2px;border:1.5px solid rgba(26,26,20,0.2);display:flex;align-items:center;justify-content:center;transition:background .15s,border-color .15s;}
+.sitem.got .sbox{background:var(--olive);border-color:var(--olive);}
+.scheck{display:none;}
+.sitem.got .scheck{display:block;}
+.sitem-text{font-size:13px;line-height:1.45;}
+.sitem.got .sitem-text{text-decoration:line-through;}
+footer{background:var(--dark);color:rgba(245,240,232,0.35);text-align:center;padding:2rem;font-size:12px;}
+@media(max-width:900px){.day-grid-3,.day-grid-4{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:580px){.day-grid-3,.day-grid-4{grid-template-columns:1fr;}.hero-stats{flex-direction:column;}.hs{border-right:none;border-bottom:1px solid rgba(255,255,255,0.1);}.nav-links{display:none;}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-brand">Plan Abril 2026</div>
+  <div class="nav-links">
+    <a href="#comidas">Comidas</a>
+    <a href="#compra">Lista de compra</a>
+  </div>
+</nav>
+<div class="hero">
+  <div class="hero-eye">Plan personalizado · Abril 2026 · España</div>
+  <h1>Mis comidas de <span>abril</span></h1>
+  <p class="hero-sub">4 semanas · ~1,600 kcal/día · Todo en Mercadona y Carrefour</p>
+  <div class="hero-stats">
+    <div class="hs"><div class="hs-val amber" id="total-done">0</div><div class="hs-lbl">Comidas completadas</div></div>
+    <div class="hs"><div class="hs-val olive" id="total-rated">0</div><div class="hs-lbl">Valoradas</div></div>
+    <div class="hs"><div class="hs-val" id="avg-rating">—</div><div class="hs-lbl">Media valoración</div></div>
+  </div>
+</div>
+<section id="comidas">
+<div class="container">
+  <div class="sec-label">Nutrición · Abril 2026</div>
+  <div class="sec-title">Plan de comidas</div>
+  <div class="week-nav">
+    <button class="wbtn active" onclick="showWeek(0,this)">Semana 1 · 7–13 abr</button>
+    <button class="wbtn" onclick="showWeek(1,this)">Semana 2 · 14–20 abr</button>
+    <button class="wbtn" onclick="showWeek(2,this)">Semana 3 · 21–27 abr</button>
+    <button class="wbtn" onclick="showWeek(3,this)">Semana 4 · 28–30 abr</button>
+  </div>
+<div class="week-panel active" id="week-0">
+  <div class="week-progress"><div class="wp-row"><span class="wp-label">Progreso semana 1</span><span class="wp-count" id="wprog-0">0 / 28 comidas</span></div><div class="wp-track"><div class="wp-fill" id="wfill-0" style="width:0%"></div></div></div>
+  <div class="day-grid day-grid-3">
+    <div class="day-card" data-week="0">
+      <div class="day-head"><span class="day-name">Lunes</span><span class="day-date">7 abr</span><span class="done-badge">Completado</span></div>
+      <div class="day-body">
+        <div class="meal-row" data-id="w0d0b" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Desayuno</div><div class="meal-text">Tortilla de patata pequeña (2 huevos, 100g patata) + café</div></div></div>
+          <div class="meal-stars" data-id="w0d0b-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+        <div class="meal-row" data-id="w0d0a" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Almuerzo</div><div class="meal-text">Pollo asado (muslo sin piel, 200g) + ensalada + gazpacho (200ml)</div></div></div>
+          <div class="meal-stars" data-id="w0d0a-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+        <div class="meal-row" data-id="w0d0m" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Merienda</div><div class="meal-text">Yogur natural + 1 plátano pequeño</div></div></div>
+          <div class="meal-stars" data-id="w0d0m-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+        <div class="meal-row" data-id="w0d0c" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Cena</div><div class="meal-text">Merluza al horno (200g) + judías verdes al vapor + 1 tostada integral</div></div></div>
+          <div class="meal-stars" data-id="w0d0c-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+      </div>
+    </div>
+    <div class="day-card" data-week="0">
+      <div class="day-head"><span class="day-name">Martes</span><span class="day-date">8 abr</span><span class="done-badge">Completado</span></div>
+      <div class="day-body">
+        <div class="meal-row" data-id="w0d1b" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Desayuno</div><div class="meal-text">2 huevos revueltos + 2 tostadas integrales + café solo</div></div></div>
+          <div class="meal-stars" data-id="w0d1b-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+        <div class="meal-row" data-id="w0d1a" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Almuerzo</div><div class="meal-text">Pechuga de pollo (200g) a la plancha + ensalada mixta + 1 naranja</div></div></div>
+          <div class="meal-stars" data-id="w0d1a-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+        <div class="meal-row" data-id="w0d1m" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Merienda</div><div class="meal-text">Yogur natural 0% + 1 manzana</div></div></div>
+          <div class="meal-stars" data-id="w0d1m-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+        <div class="meal-row" data-id="w0d1c" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Cena</div><div class="meal-text">Salmón a la plancha (180g) + brócoli al vapor + caldo de pollo</div></div></div>
+          <div class="meal-stars" data-id="w0d1c-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+      </div>
+    </div>
+    <div class="day-card" data-week="0">
+      <div class="day-head"><span class="day-name">Miércoles</span><span class="day-date">9 abr</span><span class="done-badge">Completado</span></div>
+      <div class="day-body">
+        <div class="meal-row" data-id="w0d2b" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Desayuno</div><div class="meal-text">Avena (50g) con leche desnatada + 1 plátano</div></div></div>
+          <div class="meal-stars" data-id="w0d2b-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+        <div class="meal-row" data-id="w0d2a" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Almuerzo</div><div class="meal-text">Lomo de cerdo (180g) a la plancha + arroz integral (60g) + pimiento asado</div></div></div>
+          <div class="meal-stars" data-id="w0d2a-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+        <div class="meal-row" data-id="w0d2m" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Merienda</div><div class="meal-text">Requesón (150g) + nueces (15g)</div></div></div>
+          <div class="meal-stars" data-id="w0d2m-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+        <div class="meal-row" data-id="w0d2c" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Cena</div><div class="meal-text">Tortilla francesa 3 huevos + ensalada de tomate y cebolla</div></div></div>
+          <div class="meal-stars" data-id="w0d2c-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="day-grid day-grid-4">
+    <div class="day-card" data-week="0">
+      <div class="day-head"><span class="day-name">Jueves</span><span class="day-date">10 abr</span><span class="done-badge">Completado</span></div>
+      <div class="day-body">
+        <div class="meal-row" data-id="w0d3b" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Desayuno</div><div class="meal-text">2 tostadas integrales + aguacate (½) + 2 huevos cocidos</div></div></div>
+          <div class="meal-stars" data-id="w0d3b-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+        <div class="meal-row" data-id="w0d3a" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Almuerzo</div><div class="meal-text">Atún al natural (120g) + garbanzos (150g) + pepino y tomate</div></div></div>
+          <div class="meal-stars" data-id="w0d3a-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+        <div class="meal-row" data-id="w0d3m" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Merienda</div><div class="meal-text">Yogur griego 0% + 1 kiwi</div></div></div>
+          <div class="meal-stars" data-id="w0d3m-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+        <div class="meal-row" data-id="w0d3c" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Cena</div><div class="meal-text">Revuelto de champiñones y gambas + 1 tostada integral</div></div></div>
+          <div class="meal-stars" data-id="w0d3c-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+      </div>
+    </div>
+    <div class="day-card" data-week="0">
+      <div class="day-head"><span class="day-name">Viernes</span><span class="day-date">11 abr</span><span class="done-badge">Completado</span></div>
+      <div class="day-body">
+        <div class="meal-row" data-id="w0d4b" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Desayuno</div><div class="meal-text">Batido: leche desnatada + plátano + avena + mantequilla de cacahuete</div></div></div>
+          <div class="meal-stars" data-id="w0d4b-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+        <div class="meal-row" data-id="w0d4a" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Almuerzo</div><div class="meal-text">Pechuga de pavo (200g) + lentejas guisadas (150g) + zanahoria</div></div></div>
+          <div class="meal-stars" data-id="w0d4a-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+        <div class="meal-row" data-id="w0d4m" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Merienda</div><div class="meal-text">Lata de atún al natural + palitos de apio</div></div></div>
+          <div class="meal-stars" data-id="w0d4m-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+        <div class="meal-row" data-id="w0d4c" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Cena</div><div class="meal-text">Dorada al horno (220g) + espárragos trigueros + pan integral</div></div></div>
+          <div class="meal-stars" data-id="w0d4c-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+      </div>
+    </div>
+    <div class="day-card" data-week="0">
+      <div class="day-head"><span class="day-name">Sábado</span><span class="day-date">12 abr</span><span class="done-badge">Completado</span></div>
+      <div class="day-body">
+        <div class="meal-row" data-id="w0d5b" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Desayuno</div><div class="meal-text">2 huevos + jamón serrano (40g) + café con leche desnatada</div></div></div>
+          <div class="meal-stars" data-id="w0d5b-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+        <div class="meal-row" data-id="w0d5a" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Almuerzo</div><div class="meal-text">Dorada al horno (250g) + patata asada (150g) + ensalada verde</div></div></div>
+          <div class="meal-stars" data-id="w0d5a-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+        <div class="meal-row" data-id="w0d5m" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Merienda</div><div class="meal-text">Queso fresco batido 0% + fresas</div></div></div>
+          <div class="meal-stars" data-id="w0d5m-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+        <div class="meal-row" data-id="w0d5c" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Cena</div><div class="meal-text">Sopa de verduras casera + pechuga de pollo (150g)</div></div></div>
+          <div class="meal-stars" data-id="w0d5c-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+      </div>
+    </div>
+    <div class="day-card" data-week="0">
+      <div class="day-head"><span class="day-name">Domingo</span><span class="day-date">13 abr</span><span class="done-badge">Completado</span></div>
+      <div class="day-body">
+        <div class="meal-row" data-id="w0d6b" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Desayuno</div><div class="meal-text">Tostadas con tomate y aceite de oliva + 2 huevos cocidos</div></div></div>
+          <div class="meal-stars" data-id="w0d6b-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+        <div class="meal-row" data-id="w0d6a" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Almuerzo</div><div class="meal-text">Fabada asturiana light (200g) + ensalada + 1 naranja</div></div></div>
+          <div class="meal-stars" data-id="w0d6a-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+        <div class="meal-row" data-id="w0d6m" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Merienda</div><div class="meal-text">Almendras (20g) + 1 pera</div></div></div>
+          <div class="meal-stars" data-id="w0d6m-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+        <div class="meal-row" data-id="w0d6c" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Cena</div><div class="meal-text">Sepia a la plancha (200g) + brócoli al vapor + pan integral (30g)</div></div></div>
+          <div class="meal-stars" data-id="w0d6c-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="week-panel" id="week-1">
+  <div class="week-progress"><div class="wp-row"><span class="wp-label">Progreso semana 2</span><span class="wp-count" id="wprog-1">0 / 28 comidas</span></div><div class="wp-track"><div class="wp-fill" id="wfill-1" style="width:0%"></div></div></div>
+  <div class="day-grid day-grid-3">
+    <div class="day-card" data-week="1">
+      <div class="day-head"><span class="day-name">Lunes</span><span class="day-date">14 abr</span><span class="done-badge">Completado</span></div>
+      <div class="day-body">
+        <div class="meal-row" data-id="w1d0b" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Desayuno</div><div class="meal-text">Avena (50g) + leche desnatada + canela + 1 manzana troceada</div></div></div>
+          <div class="meal-stars" data-id="w1d0b-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+        <div class="meal-row" data-id="w1d0a" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Almuerzo</div><div class="meal-text">Atún fresco a la plancha (200g) + quinoa (60g) + pisto de verduras</div></div></div>
+          <div class="meal-stars" data-id="w1d0a-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+        <div class="meal-row" data-id="w1d0m" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Merienda</div><div class="meal-text">Yogur griego 0% + 10 almendras</div></div></div>
+          <div class="meal-stars" data-id="w1d0m-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+        <div class="meal-row" data-id="w1d0c" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Cena</div><div class="meal-text">Crema de calabaza (sin nata) + 2 huevos duros + tostada integral</div></div></div>
+          <div class="meal-stars" data-id="w1d0c-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+      </div>
+    </div>
+    <div class="day-card" data-week="1">
+      <div class="day-head"><span class="day-name">Martes</span><span class="day-date">15 abr</span><span class="done-badge">Completado</span></div>
+      <div class="day-body">
+        <div class="meal-row" data-id="w1d1b" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Desayuno</div><div class="meal-text">3 claras + 1 huevo entero revuelto + 2 tostadas integrales + tomate</div></div></div>
+          <div class="meal-stars" data-id="w1d1b-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+        <div class="meal-row" data-id="w1d1a" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Almuerzo</div><div class="meal-text">Pechuga de pollo (200g) + potaje de lentejas (150g) + 1 naranja</div></div></div>
+          <div class="meal-stars" data-id="w1d1a-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+        <div class="meal-row" data-id="w1d1m" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Merienda</div><div class="meal-text">Requesón (150g) + 1 kiwi</div></div></div>
+          <div class="meal-stars" data-id="w1d1m-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+        <div class="meal-row" data-id="w1d1c" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Cena</div><div class="meal-text">Gambas al ajillo (150g, poco aceite) + espinacas salteadas + 1 tostada</div></div></div>
+          <div class="meal-stars" data-id="w1d1c-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+      </div>
+    </div>
+    <div class="day-card" data-week="1">
+      <div class="day-head"><span class="day-name">Miércoles</span><span class="day-date">16 abr</span><span class="done-badge">Completado</span></div>
+      <div class="day-body">
+        <div class="meal-row" data-id="w1d2b" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Desayuno</div><div class="meal-text">Batido: leche desnatada + plátano + avena + cacao en polvo sin azúcar</div></div></div>
+          <div class="meal-stars" data-id="w1d2b-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+        <div class="meal-row" data-id="w1d2a" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Almuerzo</div><div class="meal-text">Ternera magra a la plancha (180g) + judías verdes + arroz integral (50g)</div></div></div>
+          <div class="meal-stars" data-id="w1d2a-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+        <div class="meal-row" data-id="w1d2m" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Merienda</div><div class="meal-text">Mejillones al natural (lata) + 4 galletas de arroz</div></div></div>
+          <div class="meal-stars" data-id="w1d2m-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+        <div class="meal-row" data-id="w1d2c" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Cena</div><div class="meal-text">Tortilla de verduras (calabacín, cebolla, 3 huevos) + ensalada</div></div></div>
+          <div class="meal-stars" data-id="w1d2c-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="day-grid day-grid-4">
+    <div class="day-card" data-week="1">
+      <div class="day-head"><span class="day-name">Jueves</span><span class="day-date">17 abr</span><span class="done-badge">Completado</span></div>
+      <div class="day-body">
+        <div class="meal-row" data-id="w1d3b" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Desayuno</div><div class="meal-text">2 tostadas integrales + queso fresco 0% + mermelada sin azúcar</div></div></div>
+          <div class="meal-stars" data-id="w1d3b-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+        <div class="meal-row" data-id="w1d3a" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Almuerzo</div><div class="meal-text">Bacalao al horno (200g) + pisto manchego + pan integral (30g)</div></div></div>
+          <div class="meal-stars" data-id="w1d3a-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+        <div class="meal-row" data-id="w1d3m" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Merienda</div><div class="meal-text">Yogur natural 0% + fresas o frambuesas</div></div></div>
+          <div class="meal-stars" data-id="w1d3m-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+        <div class="meal-row" data-id="w1d3c" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Cena</div><div class="meal-text">Salmón (160g) + brócoli al vapor + caldo de verduras</div></div></div>
+          <div class="meal-stars" data-id="w1d3c-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+      </div>
+    </div>
+    <div class="day-card" data-week="1">
+      <div class="day-head"><span class="day-name">Viernes</span><span class="day-date">18 abr</span><span class="done-badge">Completado</span></div>
+      <div class="day-body">
+        <div class="meal-row" data-id="w1d4b" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Desayuno</div><div class="meal-text">2 huevos + pavo en lonchas (60g) + 1 tostada integral + café</div></div></div>
+          <div class="meal-stars" data-id="w1d4b-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+        <div class="meal-row" data-id="w1d4a" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Almuerzo</div><div class="meal-text">Ensalada completa: lechuga, tomate, atún, huevo, maíz, aceite de oliva</div></div></div>
+          <div class="meal-stars" data-id="w1d4a-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+        <div class="meal-row" data-id="w1d4m" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Merienda</div><div class="meal-text">Almendras (20g) + 1 manzana</div></div></div>
+          <div class="meal-stars" data-id="w1d4m-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+        <div class="meal-row" data-id="w1d4c" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Cena</div><div class="meal-text">Pechuga de pavo (180g) + puré de coliflor + 1 tostada integral</div></div></div>
+          <div class="meal-stars" data-id="w1d4c-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+      </div>
+    </div>
+    <div class="day-card" data-week="1">
+      <div class="day-head"><span class="day-name">Sábado</span><span class="day-date">19 abr</span><span class="done-badge">Completado</span></div>
+      <div class="day-body">
+        <div class="meal-row" data-id="w1d5b" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Desayuno</div><div class="meal-text">Overnight oats: avena (50g) + yogur 0% + leche desnatada + fruta + chía</div></div></div>
+          <div class="meal-stars" data-id="w1d5b-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+        <div class="meal-row" data-id="w1d5a" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Almuerzo</div><div class="meal-text">Pollo al horno (200g) + boniato asado (150g) + pimientos rojos</div></div></div>
+          <div class="meal-stars" data-id="w1d5a-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+        <div class="meal-row" data-id="w1d5m" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Merienda</div><div class="meal-text">Requesón (150g) + nueces (15g)</div></div></div>
+          <div class="meal-stars" data-id="w1d5m-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+        <div class="meal-row" data-id="w1d5c" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Cena</div><div class="meal-text">Gazpacho (250ml) + atún al natural (120g) + tostadas integrales</div></div></div>
+          <div class="meal-stars" data-id="w1d5c-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+      </div>
+    </div>
+    <div class="day-card" data-week="1">
+      <div class="day-head"><span class="day-name">Domingo</span><span class="day-date">20 abr</span><span class="done-badge">Completado</span></div>
+      <div class="day-body">
+        <div class="meal-row" data-id="w1d6b" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Desayuno</div><div class="meal-text">Tortilla francesa 2 huevos + jamón york (60g) + café con leche</div></div></div>
+          <div class="meal-stars" data-id="w1d6b-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+        <div class="meal-row" data-id="w1d6a" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Almuerzo</div><div class="meal-text">Mejillones en conserva (300g) + ensalada de pasta integral (80g)</div></div></div>
+          <div class="meal-stars" data-id="w1d6a-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+        <div class="meal-row" data-id="w1d6m" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Merienda</div><div class="meal-text">Yogur griego 0% + 1 naranja</div></div></div>
+          <div class="meal-stars" data-id="w1d6m-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+        <div class="meal-row" data-id="w1d6c" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Cena</div><div class="meal-text">Huevos al plato con tomate (3 huevos) + espárragos + pan integral</div></div></div>
+          <div class="meal-stars" data-id="w1d6c-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="week-panel" id="week-2">
+  <div class="week-progress"><div class="wp-row"><span class="wp-label">Progreso semana 3</span><span class="wp-count" id="wprog-2">0 / 28 comidas</span></div><div class="wp-track"><div class="wp-fill" id="wfill-2" style="width:0%"></div></div></div>
+  <div class="day-grid day-grid-3">
+    <div class="day-card" data-week="2">
+      <div class="day-head"><span class="day-name">Lunes</span><span class="day-date">21 abr</span><span class="done-badge">Completado</span></div>
+      <div class="day-body">
+        <div class="meal-row" data-id="w2d0b" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Desayuno</div><div class="meal-text">Smoothie: leche desnatada + plátano + espinacas + avena + cacao sin azúcar</div></div></div>
+          <div class="meal-stars" data-id="w2d0b-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+        <div class="meal-row" data-id="w2d0a" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Almuerzo</div><div class="meal-text">Solomillo de cerdo (180g) + quinoa (60g) + rúcula y tomate cherry</div></div></div>
+          <div class="meal-stars" data-id="w2d0a-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+        <div class="meal-row" data-id="w2d0m" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Merienda</div><div class="meal-text">Yogur 0% + arándanos + 1 cda semillas de chía</div></div></div>
+          <div class="meal-stars" data-id="w2d0m-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+        <div class="meal-row" data-id="w2d0c" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Cena</div><div class="meal-text">Lubina al horno (200g) + judías verdes + limón y aceite de oliva</div></div></div>
+          <div class="meal-stars" data-id="w2d0c-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+      </div>
+    </div>
+    <div class="day-card" data-week="2">
+      <div class="day-head"><span class="day-name">Martes</span><span class="day-date">22 abr</span><span class="done-badge">Completado</span></div>
+      <div class="day-body">
+        <div class="meal-row" data-id="w2d1b" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Desayuno</div><div class="meal-text">2 huevos + pavo en lonchas (60g) + 2 tostadas integrales</div></div></div>
+          <div class="meal-stars" data-id="w2d1b-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+        <div class="meal-row" data-id="w2d1a" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Almuerzo</div><div class="meal-text">Cocido madrileño light: garbanzos (150g) + verduras + pechuga de pollo</div></div></div>
+          <div class="meal-stars" data-id="w2d1a-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+        <div class="meal-row" data-id="w2d1m" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Merienda</div><div class="meal-text">Queso fresco 0% + 1 kiwi</div></div></div>
+          <div class="meal-stars" data-id="w2d1m-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+        <div class="meal-row" data-id="w2d1c" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Cena</div><div class="meal-text">Revuelto de espárragos trigueros + gambas (3 huevos) + tostada integral</div></div></div>
+          <div class="meal-stars" data-id="w2d1c-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+      </div>
+    </div>
+    <div class="day-card" data-week="2">
+      <div class="day-head"><span class="day-name">Miércoles</span><span class="day-date">23 abr</span><span class="done-badge">Completado</span></div>
+      <div class="day-body">
+        <div class="meal-row" data-id="w2d2b" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Desayuno</div><div class="meal-text">Avena (50g) + leche desnatada + 1 plátano + canela</div></div></div>
+          <div class="meal-stars" data-id="w2d2b-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+        <div class="meal-row" data-id="w2d2a" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Almuerzo</div><div class="meal-text">Crema de verduras (zanahoria, calabacín, puerro) + sardinas al horno (200g)</div></div></div>
+          <div class="meal-stars" data-id="w2d2a-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+        <div class="meal-row" data-id="w2d2m" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Merienda</div><div class="meal-text">Yogur griego 0% + fresas</div></div></div>
+          <div class="meal-stars" data-id="w2d2m-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+        <div class="meal-row" data-id="w2d2c" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Cena</div><div class="meal-text">Pechuga de pollo a la plancha (180g) + brócoli + arroz integral (50g)</div></div></div>
+          <div class="meal-stars" data-id="w2d2c-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="day-grid day-grid-4">
+    <div class="day-card" data-week="2">
+      <div class="day-head"><span class="day-name">Jueves</span><span class="day-date">24 abr</span><span class="done-badge">Completado</span></div>
+      <div class="day-body">
+        <div class="meal-row" data-id="w2d3b" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Desayuno</div><div class="meal-text">3 huevos revueltos + 1 tostada integral + tomate y aceite de oliva</div></div></div>
+          <div class="meal-stars" data-id="w2d3b-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+        <div class="meal-row" data-id="w2d3a" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Almuerzo</div><div class="meal-text">Lentejas con verduras (zanahoria, puerro, tomate) + huevo duro encima</div></div></div>
+          <div class="meal-stars" data-id="w2d3a-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+        <div class="meal-row" data-id="w2d3m" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Merienda</div><div class="meal-text">Lata de atún + pepino y zanahoria en bastones</div></div></div>
+          <div class="meal-stars" data-id="w2d3m-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+        <div class="meal-row" data-id="w2d3c" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Cena</div><div class="meal-text">Salmón al horno (180g) + espárragos + 1 rebanada pan integral</div></div></div>
+          <div class="meal-stars" data-id="w2d3c-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+      </div>
+    </div>
+    <div class="day-card" data-week="2">
+      <div class="day-head"><span class="day-name">Viernes</span><span class="day-date">25 abr</span><span class="done-badge">Completado</span></div>
+      <div class="day-body">
+        <div class="meal-row" data-id="w2d4b" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Desayuno</div><div class="meal-text">Yogur griego 0% + granola sin azúcar (30g) + fresas y kiwi</div></div></div>
+          <div class="meal-stars" data-id="w2d4b-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+        <div class="meal-row" data-id="w2d4a" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Almuerzo</div><div class="meal-text">Garbanzos con espinacas al estilo andaluz (light) + pechuga pollo (150g)</div></div></div>
+          <div class="meal-stars" data-id="w2d4a-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+        <div class="meal-row" data-id="w2d4m" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Merienda</div><div class="meal-text">Nueces (15g) + 1 manzana</div></div></div>
+          <div class="meal-stars" data-id="w2d4m-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+        <div class="meal-row" data-id="w2d4c" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Cena</div><div class="meal-text">Pimientos del piquillo rellenos de atún y requesón (al horno) + ensalada</div></div></div>
+          <div class="meal-stars" data-id="w2d4c-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+      </div>
+    </div>
+    <div class="day-card" data-week="2">
+      <div class="day-head"><span class="day-name">Sábado</span><span class="day-date">26 abr</span><span class="done-badge">Completado</span></div>
+      <div class="day-body">
+        <div class="meal-row" data-id="w2d5b" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Desayuno</div><div class="meal-text">Tostadas con tomate + aceite de oliva + jamón serrano (40g)</div></div></div>
+          <div class="meal-stars" data-id="w2d5b-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+        <div class="meal-row" data-id="w2d5a" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Almuerzo</div><div class="meal-text">Pulpo a la gallega (200g) + patata cocida (100g) + pimentón y aceite</div></div></div>
+          <div class="meal-stars" data-id="w2d5a-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+        <div class="meal-row" data-id="w2d5m" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Merienda</div><div class="meal-text">Requesón (150g) + arándanos</div></div></div>
+          <div class="meal-stars" data-id="w2d5m-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+        <div class="meal-row" data-id="w2d5c" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Cena</div><div class="meal-text">Cena libre moderada — disfruta con cabeza</div></div></div>
+          <div class="meal-stars" data-id="w2d5c-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+      </div>
+    </div>
+    <div class="day-card" data-week="2">
+      <div class="day-head"><span class="day-name">Domingo</span><span class="day-date">27 abr</span><span class="done-badge">Completado</span></div>
+      <div class="day-body">
+        <div class="meal-row" data-id="w2d6b" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Desayuno</div><div class="meal-text">Batido proteico: leche desnatada + plátano + avena + mantequilla cacahuete</div></div></div>
+          <div class="meal-stars" data-id="w2d6b-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+        <div class="meal-row" data-id="w2d6a" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Almuerzo</div><div class="meal-text">Merluza a la plancha (200g) + arroz integral (50g) + pisto de calabacín</div></div></div>
+          <div class="meal-stars" data-id="w2d6a-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+        <div class="meal-row" data-id="w2d6m" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Merienda</div><div class="meal-text">Yogur natural 0% + 1 naranja</div></div></div>
+          <div class="meal-stars" data-id="w2d6m-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+        <div class="meal-row" data-id="w2d6c" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Cena</div><div class="meal-text">Sepia a la plancha (200g) + judías verdes + gazpacho (150ml)</div></div></div>
+          <div class="meal-stars" data-id="w2d6c-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="week-panel" id="week-3">
+  <div class="week-progress"><div class="wp-row"><span class="wp-label">Progreso semana 4</span><span class="wp-count" id="wprog-3">0 / 12 comidas</span></div><div class="wp-track"><div class="wp-fill" id="wfill-3" style="width:0%"></div></div></div>
+  <div class="day-grid day-grid-3">
+    <div class="day-card" data-week="3">
+      <div class="day-head"><span class="day-name">Lunes</span><span class="day-date">28 abr</span><span class="done-badge">Completado</span></div>
+      <div class="day-body">
+        <div class="meal-row" data-id="w3d0b" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Desayuno</div><div class="meal-text">2 huevos revueltos + 2 tostadas integrales + café con leche desnatada</div></div></div>
+          <div class="meal-stars" data-id="w3d0b-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+        <div class="meal-row" data-id="w3d0a" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Almuerzo</div><div class="meal-text">Dorada al horno (250g) + quinoa (50g) + ensalada verde con vinagreta</div></div></div>
+          <div class="meal-stars" data-id="w3d0a-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+        <div class="meal-row" data-id="w3d0m" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Merienda</div><div class="meal-text">Requesón (150g) + 1 cda chía + arándanos</div></div></div>
+          <div class="meal-stars" data-id="w3d0m-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+        <div class="meal-row" data-id="w3d0c" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Cena</div><div class="meal-text">Gambas al ajillo (150g) + espinacas salteadas + tostada integral</div></div></div>
+          <div class="meal-stars" data-id="w3d0c-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+      </div>
+    </div>
+    <div class="day-card" data-week="3">
+      <div class="day-head"><span class="day-name">Martes</span><span class="day-date">29 abr</span><span class="done-badge">Completado</span></div>
+      <div class="day-body">
+        <div class="meal-row" data-id="w3d1b" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Desayuno</div><div class="meal-text">Avena (50g) + leche desnatada + 1 manzana + canela</div></div></div>
+          <div class="meal-stars" data-id="w3d1b-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+        <div class="meal-row" data-id="w3d1a" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Almuerzo</div><div class="meal-text">Pechuga de pollo (200g) + lentejas estofadas (150g) + zanahoria y apio</div></div></div>
+          <div class="meal-stars" data-id="w3d1a-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+        <div class="meal-row" data-id="w3d1m" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Merienda</div><div class="meal-text">Yogur griego 0% + nueces (15g)</div></div></div>
+          <div class="meal-stars" data-id="w3d1m-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+        <div class="meal-row" data-id="w3d1c" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Cena</div><div class="meal-text">Salmón a la plancha (180g) + coliflor al vapor + caldo de pollo</div></div></div>
+          <div class="meal-stars" data-id="w3d1c-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+      </div>
+    </div>
+    <div class="day-card" data-week="3">
+      <div class="day-head"><span class="day-name">Miércoles</span><span class="day-date">30 abr</span><span class="done-badge">Completado</span></div>
+      <div class="day-body">
+        <div class="meal-row" data-id="w3d2b" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Desayuno</div><div class="meal-text">Tortilla francesa (2 huevos) + jamón york (60g) + café solo</div></div></div>
+          <div class="meal-stars" data-id="w3d2b-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+        <div class="meal-row" data-id="w3d2a" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Almuerzo</div><div class="meal-text">Bacalao al horno (200g) + arroz integral (50g) + pimiento asado</div></div></div>
+          <div class="meal-stars" data-id="w3d2a-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+        <div class="meal-row" data-id="w3d2m" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Merienda</div><div class="meal-text">Queso fresco 0% + fresas</div></div></div>
+          <div class="meal-stars" data-id="w3d2m-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+        <div class="meal-row" data-id="w3d2c" onclick="toggleMeal(this)">
+          <div class="meal-top"><div class="meal-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="meal-info"><div class="meal-type">Cena</div><div class="meal-text">Cena de celebración — fin de abril. ¡Lo has conseguido!</div></div></div>
+          <div class="meal-stars" data-id="w3d2c-r"><span class="star" onclick="rate(this,1,event)">★</span><span class="star" onclick="rate(this,2,event)">★</span><span class="star" onclick="rate(this,3,event)">★</span><span class="star" onclick="rate(this,4,event)">★</span><span class="star" onclick="rate(this,5,event)">★</span><span class="star-note"></span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</section>
+<section id="compra">
+<div class="container">
+  <div class="sec-label">Supermercado · Mercadona / Carrefour</div>
+  <div class="sec-title">Lista de la compra</div>
+  <div class="shop-header">
+    <div class="shop-prog-wrap">
+      <div class="sp-label">Total marcado: <strong id="shop-done">0</strong> de <strong id="shop-total">0</strong></div>
+      <div class="sp-track"><div class="sp-fill" id="shop-fill" style="width:0%"></div></div>
+    </div>
+    <div><button class="btn-sm" onclick="resetShop()">Reiniciar todo</button></div>
+  </div>
+  <div class="shop-week-tabs">
+    <button class="stab active" onclick="showShop(0,this)">Semana 1 · 7–13 abr</button>
+    <button class="stab" onclick="showShop(1,this)">Semana 2 · 14–20 abr</button>
+    <button class="stab" onclick="showShop(2,this)">Semana 3 · 21–27 abr</button>
+    <button class="stab" onclick="showShop(3,this)">Semana 4 · 28–30 abr</button>
+  </div>
+<div id="shop-0" class="shop-panel active">
+  <div class="shop-cols">
+    <div>
+      <div class="scol-title">Proteínas</div>
+      <div class="sitem" data-id="s0-Pechuga_de_pollo_600g" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Pechuga de pollo 600g</div></div>
+      <div class="sitem" data-id="s0-Pechuga_de_pavo_en_lonchas" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Pechuga de pavo en lonchas</div></div>
+      <div class="sitem" data-id="s0-Huevos_(docena)" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Huevos (docena)</div></div>
+      <div class="sitem" data-id="s0-Atún_al_natural_(pack_4_latas)" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Atún al natural (pack 4 latas)</div></div>
+      <div class="sitem" data-id="s0-Salmón_fresco_o_congelado" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Salmón fresco o congelado</div></div>
+      <div class="sitem" data-id="s0-Merluza_(filetes)" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Merluza (filetes)</div></div>
+      <div class="sitem" data-id="s0-Dorada" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Dorada</div></div>
+      <div class="sitem" data-id="s0-Gambas_congeladas_(bolsa)" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Gambas congeladas (bolsa)</div></div>
+      <div class="sitem" data-id="s0-Lomo_de_cerdo_magro" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Lomo de cerdo magro</div></div>
+      <div class="sitem" data-id="s0-Sepia_(fresca_o_congelada)" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Sepia (fresca o congelada)</div></div>
+      <div class="sitem" data-id="s0-Jamón_serrano_lonchas" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Jamón serrano lonchas</div></div>
+      <div class="sitem" data-id="s0-Requesón___queso_fresco_0%" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Requesón / queso fresco 0%</div></div>
+      <div class="sitem" data-id="s0-Yogur_griego_0%_Hacendado" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Yogur griego 0% Hacendado</div></div>
+      <div class="sitem" data-id="s0-Leche_desnatada" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Leche desnatada</div></div>
+    </div>
+    <div>
+      <div class="scol-title">Hidratos y grasas</div>
+      <div class="sitem" data-id="s0-Avena_copos_finos" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Avena copos finos</div></div>
+      <div class="sitem" data-id="s0-Arroz_integral" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Arroz integral</div></div>
+      <div class="sitem" data-id="s0-Pan_integral_(hogaza)" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Pan integral (hogaza)</div></div>
+      <div class="sitem" data-id="s0-Garbanzos_cocidos_(bote)" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Garbanzos cocidos (bote)</div></div>
+      <div class="sitem" data-id="s0-Lentejas_(bote_cocido)" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Lentejas (bote cocido)</div></div>
+      <div class="sitem" data-id="s0-Fabada_asturiana_light_(lata)" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Fabada asturiana light (lata)</div></div>
+      <div class="sitem" data-id="s0-Aceite_de_oliva_virgen_extra" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Aceite de oliva virgen extra</div></div>
+      <div class="sitem" data-id="s0-Almendras_(bolsa_200g)" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Almendras (bolsa 200g)</div></div>
+      <div class="sitem" data-id="s0-Nueces_(bolsa)" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Nueces (bolsa)</div></div>
+      <div class="sitem" data-id="s0-Aguacate_(x3)" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Aguacate (x3)</div></div>
+      <div class="sitem" data-id="s0-Mantequilla_de_cacahuete_s_azú" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Mantequilla de cacahuete s/azúcar</div></div>
+      <div class="sitem" data-id="s0-Patata_(pequeña_cantidad)" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Patata (pequeña cantidad)</div></div>
+    </div>
+    <div>
+      <div class="scol-title">Verduras y frutas</div>
+      <div class="sitem" data-id="s0-Brócoli" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Brócoli</div></div>
+      <div class="sitem" data-id="s0-Judías_verdes" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Judías verdes</div></div>
+      <div class="sitem" data-id="s0-Espárragos_trigueros" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Espárragos trigueros</div></div>
+      <div class="sitem" data-id="s0-Champiñones" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Champiñones</div></div>
+      <div class="sitem" data-id="s0-Tomates___tomate_cherry" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Tomates / tomate cherry</div></div>
+      <div class="sitem" data-id="s0-Pimiento_rojo_y_verde" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Pimiento rojo y verde</div></div>
+      <div class="sitem" data-id="s0-Lechuga___rúcula_(bolsa)" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Lechuga / rúcula (bolsa)</div></div>
+      <div class="sitem" data-id="s0-Zanahoria" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Zanahoria</div></div>
+      <div class="sitem" data-id="s0-Plátano_(racimo)" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Plátano (racimo)</div></div>
+      <div class="sitem" data-id="s0-Naranja_(bolsa)" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Naranja (bolsa)</div></div>
+      <div class="sitem" data-id="s0-Manzana_(bolsa)" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Manzana (bolsa)</div></div>
+      <div class="sitem" data-id="s0-Fresas_(bandeja)" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Fresas (bandeja)</div></div>
+      <div class="sitem" data-id="s0-Kiwi_(x4)" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Kiwi (x4)</div></div>
+      <div class="sitem" data-id="s0-Gazpacho_brick_(sin_azúcar)" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Gazpacho brick (sin azúcar)</div></div>
+    </div>
+  </div>
+</div>
+<div id="shop-1" class="shop-panel">
+  <div class="shop-cols">
+    <div>
+      <div class="scol-title">Proteínas</div>
+      <div class="sitem" data-id="s1-Pechuga_de_pollo_600g" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Pechuga de pollo 600g</div></div>
+      <div class="sitem" data-id="s1-Pechuga_de_pavo_lonchas" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Pechuga de pavo lonchas</div></div>
+      <div class="sitem" data-id="s1-Huevos_(18_uds)" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Huevos (18 uds)</div></div>
+      <div class="sitem" data-id="s1-Atún_al_natural_(pack_latas)" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Atún al natural (pack latas)</div></div>
+      <div class="sitem" data-id="s1-Atún_fresco_(lomos)" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Atún fresco (lomos)</div></div>
+      <div class="sitem" data-id="s1-Salmón_fresco" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Salmón fresco</div></div>
+      <div class="sitem" data-id="s1-Bacalao_(fresco_o_en_salazón)" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Bacalao (fresco o en salazón)</div></div>
+      <div class="sitem" data-id="s1-Gambas_congeladas" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Gambas congeladas</div></div>
+      <div class="sitem" data-id="s1-Ternera_magra_(filetes)" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Ternera magra (filetes)</div></div>
+      <div class="sitem" data-id="s1-Mejillones_al_natural_(lata_x2" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Mejillones al natural (lata x2)</div></div>
+      <div class="sitem" data-id="s1-Jamón_york_lonchas" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Jamón york lonchas</div></div>
+      <div class="sitem" data-id="s1-Requesón___queso_fresco_0%" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Requesón / queso fresco 0%</div></div>
+      <div class="sitem" data-id="s1-Yogur_griego_0%_(pack)" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Yogur griego 0% (pack)</div></div>
+    </div>
+    <div>
+      <div class="scol-title">Hidratos y grasas</div>
+      <div class="sitem" data-id="s1-Avena_copos_finos" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Avena copos finos</div></div>
+      <div class="sitem" data-id="s1-Arroz_integral" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Arroz integral</div></div>
+      <div class="sitem" data-id="s1-Quinoa" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Quinoa</div></div>
+      <div class="sitem" data-id="s1-Pan_integral" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Pan integral</div></div>
+      <div class="sitem" data-id="s1-Garbanzos_cocidos_(bote)" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Garbanzos cocidos (bote)</div></div>
+      <div class="sitem" data-id="s1-Lentejas_(bote_cocido)" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Lentejas (bote cocido)</div></div>
+      <div class="sitem" data-id="s1-Pasta_integral_(para_ensalada)" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Pasta integral (para ensalada)</div></div>
+      <div class="sitem" data-id="s1-Galletas_de_arroz" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Galletas de arroz</div></div>
+      <div class="sitem" data-id="s1-Boniato_(x2)" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Boniato (x2)</div></div>
+      <div class="sitem" data-id="s1-Aceite_de_oliva_virgen_extra" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Aceite de oliva virgen extra</div></div>
+      <div class="sitem" data-id="s1-Almendras_y_nueces" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Almendras y nueces</div></div>
+      <div class="sitem" data-id="s1-Mermelada_sin_azúcar" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Mermelada sin azúcar</div></div>
+    </div>
+    <div>
+      <div class="scol-title">Verduras y frutas</div>
+      <div class="sitem" data-id="s1-Brócoli" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Brócoli</div></div>
+      <div class="sitem" data-id="s1-Espinacas_bolsa" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Espinacas bolsa</div></div>
+      <div class="sitem" data-id="s1-Calabacín_(x2)" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Calabacín (x2)</div></div>
+      <div class="sitem" data-id="s1-Cebolla" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Cebolla</div></div>
+      <div class="sitem" data-id="s1-Tomates___cherry" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Tomates / cherry</div></div>
+      <div class="sitem" data-id="s1-Pimiento_asado_(tarro_o_fresco" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Pimiento asado (tarro o fresco)</div></div>
+      <div class="sitem" data-id="s1-Calabaza_(para_crema)" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Calabaza (para crema)</div></div>
+      <div class="sitem" data-id="s1-Lechuga___rúcula" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Lechuga / rúcula</div></div>
+      <div class="sitem" data-id="s1-Plátano,_naranja,_manzana" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Plátano, naranja, manzana</div></div>
+      <div class="sitem" data-id="s1-Fresas___frambuesas" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Fresas / frambuesas</div></div>
+      <div class="sitem" data-id="s1-Kiwi_(x4)" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Kiwi (x4)</div></div>
+      <div class="sitem" data-id="s1-Gazpacho_brick" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Gazpacho brick</div></div>
+    </div>
+  </div>
+</div>
+<div id="shop-2" class="shop-panel">
+  <div class="shop-cols">
+    <div>
+      <div class="scol-title">Proteínas</div>
+      <div class="sitem" data-id="s2-Solomillo_de_cerdo" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Solomillo de cerdo</div></div>
+      <div class="sitem" data-id="s2-Pechuga_de_pollo_500g" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Pechuga de pollo 500g</div></div>
+      <div class="sitem" data-id="s2-Huevos_(docena)" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Huevos (docena)</div></div>
+      <div class="sitem" data-id="s2-Lubina_(entera_o_filetes)" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Lubina (entera o filetes)</div></div>
+      <div class="sitem" data-id="s2-Salmón_fresco" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Salmón fresco</div></div>
+      <div class="sitem" data-id="s2-Sardinas_frescas" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Sardinas frescas</div></div>
+      <div class="sitem" data-id="s2-Merluza" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Merluza</div></div>
+      <div class="sitem" data-id="s2-Pulpo_(cocido,_bolsa_congelado" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Pulpo (cocido, bolsa congelado)</div></div>
+      <div class="sitem" data-id="s2-Atún_al_natural_(latas)" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Atún al natural (latas)</div></div>
+      <div class="sitem" data-id="s2-Pimientos_del_piquillo_(tarro)" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Pimientos del piquillo (tarro)</div></div>
+      <div class="sitem" data-id="s2-Requesón_(x2_tarrinas)" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Requesón (x2 tarrinas)</div></div>
+      <div class="sitem" data-id="s2-Yogur_griego_0%_(pack)" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Yogur griego 0% (pack)</div></div>
+      <div class="sitem" data-id="s2-Jamón_serrano_lonchas" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Jamón serrano lonchas</div></div>
+    </div>
+    <div>
+      <div class="scol-title">Hidratos y grasas</div>
+      <div class="sitem" data-id="s2-Avena_copos_finos" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Avena copos finos</div></div>
+      <div class="sitem" data-id="s2-Arroz_integral" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Arroz integral</div></div>
+      <div class="sitem" data-id="s2-Quinoa" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Quinoa</div></div>
+      <div class="sitem" data-id="s2-Pan_integral" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Pan integral</div></div>
+      <div class="sitem" data-id="s2-Garbanzos_con_espinacas_(bote)" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Garbanzos con espinacas (bote)</div></div>
+      <div class="sitem" data-id="s2-Lentejas_secas_o_bote" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Lentejas secas o bote</div></div>
+      <div class="sitem" data-id="s2-Patata_(para_pulpo_a_la_galleg" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Patata (para pulpo a la gallega)</div></div>
+      <div class="sitem" data-id="s2-Aceite_de_oliva_virgen_extra" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Aceite de oliva virgen extra</div></div>
+      <div class="sitem" data-id="s2-Semillas_de_chía" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Semillas de chía</div></div>
+      <div class="sitem" data-id="s2-Nueces_y_almendras" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Nueces y almendras</div></div>
+      <div class="sitem" data-id="s2-Pimentón_de_la_Vera" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Pimentón de la Vera</div></div>
+      <div class="sitem" data-id="s2-Granola_sin_azúcar" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Granola sin azúcar</div></div>
+    </div>
+    <div>
+      <div class="scol-title">Verduras y frutas</div>
+      <div class="sitem" data-id="s2-Espárragos_trigueros" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Espárragos trigueros</div></div>
+      <div class="sitem" data-id="s2-Espinacas_(bolsa)" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Espinacas (bolsa)</div></div>
+      <div class="sitem" data-id="s2-Judías_verdes" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Judías verdes</div></div>
+      <div class="sitem" data-id="s2-Zanahoria,_puerro,_apio" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Zanahoria, puerro, apio</div></div>
+      <div class="sitem" data-id="s2-Coliflor" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Coliflor</div></div>
+      <div class="sitem" data-id="s2-Tomate_cherry___tomates" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Tomate cherry / tomates</div></div>
+      <div class="sitem" data-id="s2-Lechuga___rúcula" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Lechuga / rúcula</div></div>
+      <div class="sitem" data-id="s2-Plátano,_naranja,_manzana" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Plátano, naranja, manzana</div></div>
+      <div class="sitem" data-id="s2-Fresas_y_arándanos" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Fresas y arándanos</div></div>
+      <div class="sitem" data-id="s2-Kiwi_(x4)" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Kiwi (x4)</div></div>
+      <div class="sitem" data-id="s2-Gazpacho_brick" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Gazpacho brick</div></div>
+    </div>
+  </div>
+</div>
+<div id="shop-3" class="shop-panel">
+  <div class="shop-cols">
+    <div>
+      <div class="scol-title">Proteínas</div>
+      <div class="sitem" data-id="s3-Pechuga_de_pollo_400g" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Pechuga de pollo 400g</div></div>
+      <div class="sitem" data-id="s3-Huevos_(media_docena)" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Huevos (media docena)</div></div>
+      <div class="sitem" data-id="s3-Dorada_o_lubina" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Dorada o lubina</div></div>
+      <div class="sitem" data-id="s3-Salmón_fresco" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Salmón fresco</div></div>
+      <div class="sitem" data-id="s3-Gambas_congeladas" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Gambas congeladas</div></div>
+      <div class="sitem" data-id="s3-Bacalao_(filetes)" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Bacalao (filetes)</div></div>
+      <div class="sitem" data-id="s3-Jamón_york_lonchas" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Jamón york lonchas</div></div>
+      <div class="sitem" data-id="s3-Requesón___queso_fresco_0%" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Requesón / queso fresco 0%</div></div>
+      <div class="sitem" data-id="s3-Yogur_griego_0%_(pack)" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Yogur griego 0% (pack)</div></div>
+    </div>
+    <div>
+      <div class="scol-title">Hidratos y grasas</div>
+      <div class="sitem" data-id="s3-Avena_copos_finos" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Avena copos finos</div></div>
+      <div class="sitem" data-id="s3-Arroz_integral" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Arroz integral</div></div>
+      <div class="sitem" data-id="s3-Quinoa" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Quinoa</div></div>
+      <div class="sitem" data-id="s3-Pan_integral" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Pan integral</div></div>
+      <div class="sitem" data-id="s3-Lentejas_(bote)" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Lentejas (bote)</div></div>
+      <div class="sitem" data-id="s3-Aceite_de_oliva_virgen_extra" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Aceite de oliva virgen extra</div></div>
+      <div class="sitem" data-id="s3-Semillas_de_chía" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Semillas de chía</div></div>
+      <div class="sitem" data-id="s3-Almendras_y_nueces" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Almendras y nueces</div></div>
+    </div>
+    <div>
+      <div class="scol-title">Verduras y frutas</div>
+      <div class="sitem" data-id="s3-Brócoli" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Brócoli</div></div>
+      <div class="sitem" data-id="s3-Coliflor" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Coliflor</div></div>
+      <div class="sitem" data-id="s3-Espinacas_bolsa" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Espinacas bolsa</div></div>
+      <div class="sitem" data-id="s3-Pimiento_asado" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Pimiento asado</div></div>
+      <div class="sitem" data-id="s3-Tomates___cherry" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Tomates / cherry</div></div>
+      <div class="sitem" data-id="s3-Lechuga___rúcula" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Lechuga / rúcula</div></div>
+      <div class="sitem" data-id="s3-Plátano,_manzana,_naranja" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Plátano, manzana, naranja</div></div>
+      <div class="sitem" data-id="s3-Fresas_y_arándanos" onclick="toggleShop(this)"><div class="sbox"><svg class="scheck" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><div class="sitem-text">Fresas y arándanos</div></div>
+    </div>
+  </div>
+</div>
+</div>
+</section>
+<footer>
+  <p>Plan de Comidas · Abril 2026 · 100→90 kg · ~1,600 kcal/día · España</p>
+  <p style="margin-top:4px;">Orientativo. Consulta con un nutricionista para supervisión personalizada.</p>
+</footer>
+<script>
+const RATING_LABELS = ['','Malo','Regular','Bueno','Muy bueno','Excelente'];
+const SHOP_KEY = 'abril2026_shop';
+const MEAL_KEY = 'abril2026_meals';
+const RATING_KEY = 'abril2026_ratings';
+
+// ── Week tabs ──────────────────────────────────────────────
+function showWeek(idx, btn) {
+  document.querySelectorAll('.week-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('week-' + idx).classList.add('active');
+  document.querySelectorAll('.wbtn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+// ── Meals ──────────────────────────────────────────────────
+function toggleMeal(row) {
+  row.classList.toggle('done');
+  const card = row.closest('.day-card');
+  const allDone = [...card.querySelectorAll('.meal-row')].every(r => r.classList.contains('done'));
+  card.classList.toggle('all-done', allDone);
+  card.querySelector('.day-head').classList.toggle('done-head', allDone);
+  saveMeals();
+  updateStats();
+}
+
+function saveMeals() {
+  const done = [...document.querySelectorAll('.meal-row.done')].map(r => r.dataset.id);
+  localStorage.setItem(MEAL_KEY, JSON.stringify(done));
+}
+
+function loadMeals() {
+  try {
+    const done = JSON.parse(localStorage.getItem(MEAL_KEY) || '[]');
+    done.forEach(id => {
+      const row = document.querySelector(`.meal-row[data-id="${id}"]`);
+      if (row) {
+        row.classList.add('done');
+        const card = row.closest('.day-card');
+        const allDone = [...card.querySelectorAll('.meal-row')].every(r => r.classList.contains('done'));
+        if (allDone) { card.classList.add('all-done'); card.querySelector('.day-head').classList.add('done-head'); }
+      }
+    });
+  } catch(e) {}
+}
+
+// ── Ratings ────────────────────────────────────────────────
+function rate(star, val, e) {
+  e.stopPropagation();
+  const container = star.closest('.meal-stars');
+  container.querySelectorAll('.star').forEach((s, i) => s.classList.toggle('lit', i < val));
+  container.dataset.rating = val;
+  container.querySelector('.star-note').textContent = RATING_LABELS[val];
+  saveRatings();
+  updateStats();
+}
+
+function saveRatings() {
+  const data = {};
+  document.querySelectorAll('.meal-stars[data-rating]').forEach(el => {
+    data[el.dataset.id] = el.dataset.rating;
+  });
+  localStorage.setItem(RATING_KEY, JSON.stringify(data));
+}
+
+function loadRatings() {
+  try {
+    const data = JSON.parse(localStorage.getItem(RATING_KEY) || '{}');
+    Object.entries(data).forEach(([id, val]) => {
+      const el = document.querySelector(`.meal-stars[data-id="${id}"]`);
+      if (!el) return;
+      el.dataset.rating = val;
+      el.querySelectorAll('.star').forEach((s, i) => s.classList.toggle('lit', i < parseInt(val)));
+      el.querySelector('.star-note').textContent = RATING_LABELS[val];
+    });
+  } catch(e) {}
+}
+
+// ── Stats ──────────────────────────────────────────────────
+function updateStats() {
+  document.getElementById('total-done').textContent = document.querySelectorAll('.meal-row.done').length;
+  const rated = [...document.querySelectorAll('.meal-stars[data-rating]')];
+  document.getElementById('total-rated').textContent = rated.length;
+  if (rated.length > 0) {
+    const avg = rated.reduce((s, c) => s + parseInt(c.dataset.rating), 0) / rated.length;
+    document.getElementById('avg-rating').textContent = avg.toFixed(1) + ' ' + '★'.repeat(Math.round(avg));
+  } else {
+    document.getElementById('avg-rating').textContent = '—';
+  }
+  [0,1,2,3].forEach(w => {
+    const cards = document.querySelectorAll(`[data-week="${w}"]`);
+    const total = cards.length * 4;
+    const done = [...cards].reduce((s, c) => s + c.querySelectorAll('.meal-row.done').length, 0);
+    const pct = total ? Math.round(done / total * 100) : 0;
+    const fill = document.getElementById('wfill-' + w);
+    const prog = document.getElementById('wprog-' + w);
+    if (fill) fill.style.width = pct + '%';
+    if (prog) prog.textContent = done + ' / ' + total + ' comidas';
+  });
+}
+
+// ── Shopping — persisted ───────────────────────────────────
+function toggleShop(el) {
+  el.classList.toggle('got');
+  saveShop();
+  updateShopProgress();
+}
+
+function saveShop() {
+  const got = [...document.querySelectorAll('.sitem.got')].map(el => el.dataset.id);
+  localStorage.setItem(SHOP_KEY, JSON.stringify(got));
+}
+
+function loadShop() {
+  try {
+    const got = JSON.parse(localStorage.getItem(SHOP_KEY) || '[]');
+    got.forEach(id => {
+      const el = document.querySelector(`.sitem[data-id="${id}"]`);
+      if (el) el.classList.add('got');
+    });
+  } catch(e) {}
+}
+
+function updateShopProgress() {
+  const all = document.querySelectorAll('.sitem');
+  const got = document.querySelectorAll('.sitem.got').length;
+  document.getElementById('shop-done').textContent = got;
+  document.getElementById('shop-total').textContent = all.length;
+  const pct = all.length ? Math.round(got / all.length * 100) : 0;
+  document.getElementById('shop-fill').style.width = pct + '%';
+}
+
+function resetShop() {
+  document.querySelectorAll('.sitem.got').forEach(el => el.classList.remove('got'));
+  localStorage.removeItem(SHOP_KEY);
+  updateShopProgress();
+}
+
+function showShop(idx, btn) {
+  document.querySelectorAll('.shop-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('shop-' + idx).classList.add('active');
+  document.querySelectorAll('.stab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+// ── Init ───────────────────────────────────────────────────
+loadMeals();
+loadRatings();
+loadShop();
+updateStats();
+updateShopProgress();
+</script>
+</body>
+</html>
