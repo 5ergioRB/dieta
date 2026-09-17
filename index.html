@@ -3,1260 +3,339 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Menú Junio — 1300 kcal</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<title>Plan de comidas · 31 días</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root {
-  --cream: #F5F0E8;
-  --sand: #E8DFD0;
-  --terracotta: #C4694F;
-  --terra-light: #E8927A;
-  --terra-pale: #F5E0D8;
-  --olive: #6B7A4A;
-  --olive-light: #8FA05E;
-  --olive-pale: #E8EDDA;
-  --ink: #2A2520;
-  --ink-mid: #5A5248;
-  --ink-light: #9A9288;
-  --white: #FEFCF8;
-}
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
-body {
-  font-family: 'DM Sans', sans-serif;
-  background: var(--cream);
-  color: var(--ink);
-  line-height: 1.6;
-  min-height: 100vh;
-}
-
-/* Header */
-.site-header {
-  background: var(--ink);
-  padding: 3rem 2rem 2.5rem;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-}
-.site-header::before {
-  content: '';
-  position: absolute;
-  top: -40px; right: -40px;
-  width: 200px; height: 200px;
-  border-radius: 50%;
-  background: var(--terracotta);
-  opacity: 0.15;
-}
-.site-header::after {
-  content: '';
-  position: absolute;
-  bottom: -60px; left: -30px;
-  width: 160px; height: 160px;
-  border-radius: 50%;
-  background: var(--olive);
-  opacity: 0.2;
-}
-.site-header h1 {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(2rem, 5vw, 3.2rem);
-  color: var(--cream);
-  font-weight: 400;
-  letter-spacing: -0.01em;
-  position: relative;
-  z-index: 1;
-}
-.site-header .subtitle {
-  font-size: 0.85rem;
-  color: var(--ink-light);
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  margin-top: 0.5rem;
-  position: relative;
-  z-index: 1;
-}
-.kcal-badge {
-  display: inline-block;
-  background: var(--terracotta);
-  color: white;
-  font-size: 0.78rem;
-  font-weight: 500;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  padding: 4px 14px;
-  border-radius: 20px;
-  margin-top: 1rem;
-  position: relative;
-  z-index: 1;
-}
-
-/* Nav tabs */
-.nav-tabs {
-  background: var(--white);
-  border-bottom: 1px solid var(--sand);
-  display: flex;
-  gap: 0;
-  overflow-x: auto;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  scrollbar-width: none;
-}
-.nav-tabs::-webkit-scrollbar { display: none; }
-.nav-tab {
-  padding: 1rem 1.5rem;
-  font-size: 0.85rem;
-  font-weight: 500;
-  color: var(--ink-mid);
-  cursor: pointer;
-  white-space: nowrap;
-  border-bottom: 2px solid transparent;
-  transition: all 0.2s;
-  background: none;
-  border-top: none;
-  border-left: none;
-  border-right: none;
-  font-family: 'DM Sans', sans-serif;
-}
-.nav-tab:hover { color: var(--terracotta); }
-.nav-tab.active {
-  color: var(--terracotta);
-  border-bottom-color: var(--terracotta);
-}
-
-/* Main content */
-.main { max-width: 900px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
-
-/* Section */
-.section { display: none; }
-.section.active { display: block; }
-
-/* Week header */
-.week-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.5rem;
-  color: var(--ink);
-  margin: 2rem 0 1rem;
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-}
-.week-title::after {
-  content: '';
-  flex: 1;
-  height: 1px;
-  background: var(--sand);
-}
-
-/* Day card */
-.day-card {
-  background: var(--white);
-  border-radius: 12px;
-  margin-bottom: 1rem;
-  overflow: hidden;
-  border: 1px solid var(--sand);
-  transition: box-shadow 0.2s;
-}
-.day-card:hover { box-shadow: 0 4px 20px rgba(42,37,32,0.06); }
-.day-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.85rem 1.25rem;
-  cursor: pointer;
-  background: var(--white);
-  user-select: none;
-}
-.day-head:hover { background: var(--cream); }
-.day-name-wrap { display: flex; align-items: center; gap: 0.75rem; }
-.day-dot {
-  width: 32px; height: 32px;
-  border-radius: 50%;
-  background: var(--terra-pale);
-  color: var(--terracotta);
-  font-size: 0.78rem;
-  font-weight: 500;
-  display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0;
-}
-.day-name { font-weight: 500; font-size: 0.95rem; }
-.day-meta { display: flex; align-items: center; gap: 1rem; }
-.day-kcal {
-  font-size: 0.8rem;
-  color: var(--ink-light);
-  font-weight: 400;
-}
-.day-toggle {
-  font-size: 1rem;
-  color: var(--ink-light);
-  transition: transform 0.25s;
-}
-.day-card.open .day-toggle { transform: rotate(180deg); }
-
-.day-body {
-  display: none;
-  padding: 0 1.25rem 1.25rem;
-  border-top: 1px solid var(--sand);
-}
-.day-card.open .day-body { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; padding-top: 1rem; }
-
-.meal-block {
-  background: var(--cream);
-  border-radius: 8px;
-  padding: 0.85rem 1rem;
-}
-.meal-tag {
-  font-size: 0.68rem;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  font-weight: 500;
-  margin-bottom: 0.35rem;
-}
-.meal-tag.desayuno { color: var(--olive); }
-.meal-tag.comida { color: var(--terracotta); }
-.meal-tag.cena { color: var(--ink-mid); }
-.meal-tag.snack { color: #8B6A3E; }
-.meal-name { font-size: 0.88rem; color: var(--ink); line-height: 1.4; margin-bottom: 0.4rem; font-weight: 500; }
-.meal-items { list-style: none; }
-.meal-items li {
-  font-size: 0.8rem;
-  color: var(--ink-mid);
-  padding: 1px 0;
-  display: flex;
-  justify-content: space-between;
-  gap: 0.5rem;
-}
-.meal-items li span { color: var(--ink-light); font-size: 0.75rem; white-space: nowrap; }
-.meal-kcal {
-  font-size: 0.72rem;
-  color: var(--terracotta);
-  font-weight: 500;
-  margin-top: 0.4rem;
-}
-
-/* Shopping list */
-.shop-week {
-  background: var(--white);
-  border-radius: 12px;
-  border: 1px solid var(--sand);
-  margin-bottom: 1.5rem;
-  overflow: hidden;
-}
-.shop-week-head {
-  background: var(--ink);
-  padding: 1rem 1.5rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.shop-week-head h3 {
-  font-family: 'Playfair Display', serif;
-  color: var(--cream);
-  font-weight: 400;
-  font-size: 1.1rem;
-}
-.shop-week-head .shop-dates {
-  font-size: 0.75rem;
-  color: var(--ink-light);
-}
-.shop-categories { padding: 1.25rem 1.5rem; display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
-.shop-cat h4 {
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--ink-light);
-  margin-bottom: 0.6rem;
-  font-weight: 500;
-}
-.shop-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.6rem;
-  padding: 4px 0;
-  cursor: pointer;
-}
-.shop-item input[type="checkbox"] {
-  appearance: none;
-  width: 16px; height: 16px;
-  border: 1.5px solid var(--sand);
-  border-radius: 4px;
-  cursor: pointer;
-  flex-shrink: 0;
-  margin-top: 2px;
-  transition: all 0.15s;
-  position: relative;
-  background: white;
-}
-.shop-item input[type="checkbox"]:checked {
-  background: var(--terracotta);
-  border-color: var(--terracotta);
-}
-.shop-item input[type="checkbox"]:checked::after {
-  content: '✓';
-  position: absolute;
-  top: -1px; left: 2px;
-  font-size: 11px;
-  color: white;
-  font-weight: 700;
-}
-.shop-item label {
-  font-size: 0.82rem;
-  color: var(--ink);
-  cursor: pointer;
-  line-height: 1.4;
-  transition: color 0.15s;
-}
-.shop-item input:checked + label { color: var(--ink-light); text-decoration: line-through; }
-
-.clear-btn {
-  background: none;
-  border: 1px solid var(--sand);
-  color: var(--ink-mid);
-  font-size: 0.75rem;
-  padding: 4px 12px;
-  border-radius: 20px;
-  cursor: pointer;
-  font-family: 'DM Sans', sans-serif;
-  transition: all 0.15s;
-}
-.clear-btn:hover { border-color: var(--terracotta); color: var(--terracotta); }
-
-@media (max-width: 600px) {
-  .day-card.open .day-body { grid-template-columns: 1fr; }
-  .shop-categories { grid-template-columns: 1fr; }
-  .nav-tab { padding: 0.85rem 1rem; font-size: 0.8rem; }
-}
+  :root{
+    --paper:#FAF7EF;
+    --ink:#20302B;
+    --ink-soft:#4B5B54;
+    --teal:#2B6E68;
+    --teal-deep:#1D4B47;
+    --ochre:#C98A2B;
+    --sage:#E7E9DC;
+    --line:#DCD5C4;
+    --card:#FFFFFF;
+    --danger:#B4472F;
+    --font-display: 'Fraunces', serif;
+    --font-body: 'Inter', sans-serif;
+  }
+  :root:not([data-theme="light"]) {
+    @media (prefers-color-scheme: dark) {
+      --paper:#161C1A;
+      --ink:#EDEAE0;
+      --ink-soft:#B7C0BA;
+      --teal:#5FA79F;
+      --teal-deep:#3E8A82;
+      --ochre:#E0A34E;
+      --sage:#233029;
+      --line:#3A423C;
+      --card:#1E2622;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper:#161C1A;
+    --ink:#EDEAE0;
+    --ink-soft:#B7C0BA;
+    --teal:#5FA79F;
+    --teal-deep:#3E8A82;
+    --ochre:#E0A34E;
+    --sage:#233029;
+    --line:#3A423C;
+    --card:#1E2622;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--font-body);
+    line-height:1.5;
+  }
+  .wrap{
+    max-width:980px;
+    margin:0 auto;
+    padding:32px 20px 80px;
+  }
+  header.top{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    margin-bottom:28px;
+    border-bottom:1px solid var(--line);
+    padding-bottom:24px;
+  }
+  h1{
+    font-family:var(--font-display);
+    font-weight:600;
+    font-size:clamp(28px,5vw,42px);
+    margin:0;
+    letter-spacing:-0.01em;
+    color:var(--ink);
+  }
+  .subtitle{
+    color:var(--ink-soft);
+    font-size:15px;
+    max-width:640px;
+  }
+  .topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    flex-wrap:wrap;
+    gap:16px;
+  }
+  a.shop-link{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    background:var(--teal);
+    color:#fff;
+    text-decoration:none;
+    padding:11px 18px;
+    border-radius:8px;
+    font-weight:600;
+    font-size:14px;
+    white-space:nowrap;
+    transition:background 0.15s ease;
+  }
+  a.shop-link:hover{ background:var(--teal-deep); }
+  .note{
+    font-size:13px;
+    color:var(--ink-soft);
+    background:var(--sage);
+    border-radius:8px;
+    padding:12px 14px;
+    margin-top:6px;
+  }
+  .layout{
+    display:grid;
+    grid-template-columns: 250px 1fr;
+    gap:28px;
+  }
+  @media (max-width: 760px){
+    .layout{ grid-template-columns: 1fr; }
+  }
+  .nav-block{
+    position:sticky;
+    top:20px;
+    align-self:start;
+  }
+  .week-label{
+    font-family:var(--font-display);
+    font-size:14px;
+    font-weight:600;
+    color:var(--teal-deep);
+    margin:16px 0 8px;
+  }
+  .week-label:first-child{ margin-top:0; }
+  .day-grid{
+    display:grid;
+    grid-template-columns:repeat(7,1fr);
+    gap:5px;
+  }
+  .day-btn{
+    aspect-ratio:1;
+    border:1px solid var(--line);
+    background:var(--card);
+    color:var(--ink);
+    border-radius:6px;
+    font-family:var(--font-body);
+    font-weight:600;
+    font-size:13px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transition:all 0.12s ease;
+  }
+  .day-btn:hover{ border-color:var(--teal); }
+  .day-btn.active{
+    background:var(--teal);
+    border-color:var(--teal);
+    color:#fff;
+  }
+  .detail{ min-width:0; }
+  .day-header{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:12px;
+    margin-bottom:18px;
+  }
+  .day-header h2{
+    font-family:var(--font-display);
+    font-size:26px;
+    font-weight:600;
+    margin:0;
+  }
+  .totals{
+    display:flex;
+    gap:18px;
+    font-size:14px;
+    color:var(--ink-soft);
+  }
+  .totals b{ color:var(--ink); font-size:16px; }
+  .meal-card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:18px 20px;
+    margin-bottom:14px;
+  }
+  .meal-card h3{
+    font-family:var(--font-display);
+    font-size:18px;
+    font-weight:600;
+    margin:0 0 12px;
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    gap:10px;
+  }
+  .meal-card h3 span.sub{
+    font-family:var(--font-body);
+    font-weight:500;
+    font-size:13px;
+    color:var(--ink-soft);
+  }
+  table.ing{
+    width:100%;
+    border-collapse:collapse;
+    font-size:14.5px;
+  }
+  table.ing td{
+    padding:6px 4px;
+    border-bottom:1px solid var(--line);
+  }
+  table.ing tr:last-child td{ border-bottom:none; }
+  table.ing td.qty{
+    text-align:right;
+    color:var(--ink-soft);
+    white-space:nowrap;
+    padding-left:12px;
+  }
+  .overflow-x{ overflow-x:auto; }
+  footer.disclaimer{
+    margin-top:36px;
+    font-size:12.5px;
+    color:var(--ink-soft);
+    border-top:1px solid var(--line);
+    padding-top:16px;
+  }
 </style>
 </head>
 <body>
+<div class="wrap">
+  <header class="top">
+    <div class="topbar">
+      <div>
+        <h1>Plan de comidas · 31 días</h1>
+        <div class="subtitle">~1.500 kcal/día · alta en proteína · productos habituales de supermercado (Alcampo y similares) · Galicia</div>
+      </div>
+      <a class="shop-link" id="shopLink" href="compra.html">Ver lista de la compra</a>
+    </div>
+    <div class="note">Los menús se repiten en un ciclo de 7 días (A–G) para que la compra semanal sea sencilla y realista. Todas las cantidades están en crudo salvo que se indique lo contrario. Sin tomate ni cebolla crudos.</div>
+  </header>
 
-<header class="site-header">
-  <h1>Menú de Junio 2025</h1>
-  <p class="subtitle">Calendario de comidas · España</p>
-  <span class="kcal-badge">~1300 kcal / día</span>
-</header>
-
-<nav class="nav-tabs">
-  <button class="nav-tab active" onclick="show('menu')">📅 Menú del mes</button>
-  <button class="nav-tab" onclick="show('compra')">🛒 Lista de la compra</button>
-</nav>
-
-<main class="main">
-
-<!-- ===================== MENÚ ===================== -->
-<div class="section active" id="sec-menu">
-
-<div class="week-title">Semana 1 &nbsp;<small style="font-size:0.8rem;font-family:'DM Sans';font-weight:300;color:var(--ink-light)">1–7 jun</small></div>
-
-<!-- LUN 1 -->
-<div class="day-card" onclick="toggle(this)">
-  <div class="day-head">
-    <div class="day-name-wrap"><div class="day-dot">L1</div><span class="day-name">Lunes, 1 de junio</span></div>
-    <div class="day-meta"><span class="day-kcal">~1.290 kcal</span><span class="day-toggle">▾</span></div>
+  <div class="layout">
+    <div class="nav-block">
+      <div id="navWeeks"></div>
+    </div>
+    <div class="detail" id="detail"></div>
   </div>
-  <div class="day-body">
-    <div class="meal-block">
-      <div class="meal-tag desayuno">Desayuno</div>
-      <div class="meal-name">Avena con leche y canela</div>
-      <ul class="meal-items">
-        <li>Copos de avena <span>50 g</span></li>
-        <li>Leche semidesnatada <span>200 ml</span></li>
-        <li>Canela molida <span>al gusto</span></li>
-      </ul>
-      <div class="meal-kcal">≈ 280 kcal</div>
-    </div>
-    <div class="meal-block">
-      <div class="meal-tag comida">Comida</div>
-      <div class="meal-name">Lentejas con zanahoria y puerro</div>
-      <ul class="meal-items">
-        <li>Lentejas secas <span>80 g</span></li>
-        <li>Zanahoria <span>80 g</span></li>
-        <li>Puerro <span>60 g</span></li>
-        <li>Aceite de oliva <span>8 ml</span></li>
-      </ul>
-      <div class="meal-kcal">≈ 420 kcal</div>
-    </div>
-    <div class="meal-block">
-      <div class="meal-tag cena">Cena</div>
-      <div class="meal-name">Tortilla de huevo con ensalada verde</div>
-      <ul class="meal-items">
-        <li>Huevo <span>2 ud (110 g)</span></li>
-        <li>Lechuga <span>80 g</span></li>
-        <li>Aceite de oliva <span>5 ml</span></li>
-      </ul>
-      <div class="meal-kcal">≈ 280 kcal</div>
-    </div>
-    <div class="meal-block">
-      <div class="meal-tag snack">Snack</div>
-      <div class="meal-name">Yogur desnatado</div>
-      <ul class="meal-items">
-        <li>Yogur desnatado natural <span>125 g</span></li>
-      </ul>
-      <div class="meal-kcal">≈ 60 kcal</div>
-    </div>
-  </div>
+
+  <footer class="disclaimer">
+    Este plan es orientativo y no sustituye la valoración de un/a médico o dietista-nutricionista, especialmente en un déficit calórico pronunciado como este. Ajusta cantidades a tu apetito y energía real.
+  </footer>
 </div>
 
-<!-- MAR 2 -->
-<div class="day-card" onclick="toggle(this)">
-  <div class="day-head">
-    <div class="day-name-wrap"><div class="day-dot">M2</div><span class="day-name">Martes, 2 de junio</span></div>
-    <div class="day-meta"><span class="day-kcal">~1.290 kcal</span><span class="day-toggle">▾</span></div>
-  </div>
-  <div class="day-body">
-    <div class="meal-block">
-      <div class="meal-tag desayuno">Desayuno</div>
-      <div class="meal-name">Tostada integral con pavo</div>
-      <ul class="meal-items">
-        <li>Pan integral tostado <span>60 g (2 rebanadas)</span></li>
-        <li>Pechuga de pavo en lonchas <span>60 g</span></li>
-        <li>Aceite de oliva <span>5 ml</span></li>
-      </ul>
-      <div class="meal-kcal">≈ 240 kcal</div>
-    </div>
-    <div class="meal-block">
-      <div class="meal-tag comida">Comida</div>
-      <div class="meal-name">Pollo al horno con judías verdes</div>
-      <ul class="meal-items">
-        <li>Contramuslo de pollo (sin piel) <span>200 g</span></li>
-        <li>Judías verdes <span>150 g</span></li>
-        <li>Ajo, limón <span>al gusto</span></li>
-        <li>Aceite de oliva <span>8 ml</span></li>
-      </ul>
-      <div class="meal-kcal">≈ 400 kcal</div>
-    </div>
-    <div class="meal-block">
-      <div class="meal-tag cena">Cena</div>
-      <div class="meal-name">Crema de calabacín</div>
-      <ul class="meal-items">
-        <li>Calabacín <span>300 g</span></li>
-        <li>Quesito ligero <span>30 g (1 porción)</span></li>
-        <li>Caldo de verduras <span>200 ml</span></li>
-        <li>Aceite de oliva <span>5 ml</span></li>
-      </ul>
-      <div class="meal-kcal">≈ 220 kcal</div>
-    </div>
-    <div class="meal-block">
-      <div class="meal-tag snack">Snack</div>
-      <div class="meal-name">Manzana</div>
-      <ul class="meal-items">
-        <li>Manzana <span>150 g (1 pieza mediana)</span></li>
-      </ul>
-      <div class="meal-kcal">≈ 80 kcal</div>
-    </div>
-  </div>
-</div>
-
-<!-- MIÉ 3 -->
-<div class="day-card" onclick="toggle(this)">
-  <div class="day-head">
-    <div class="day-name-wrap"><div class="day-dot">X3</div><span class="day-name">Miércoles, 3 de junio</span></div>
-    <div class="day-meta"><span class="day-kcal">~1.290 kcal</span><span class="day-toggle">▾</span></div>
-  </div>
-  <div class="day-body">
-    <div class="meal-block">
-      <div class="meal-tag desayuno">Desayuno</div>
-      <div class="meal-name">Yogur desnatado con fruta</div>
-      <ul class="meal-items">
-        <li>Yogur desnatado natural <span>125 g</span></li>
-        <li>Plátano o manzana <span>100 g</span></li>
-      </ul>
-      <div class="meal-kcal">≈ 180 kcal</div>
-    </div>
-    <div class="meal-block">
-      <div class="meal-tag comida">Comida</div>
-      <div class="meal-name">Merluza al vapor con patata cocida</div>
-      <ul class="meal-items">
-        <li>Lomo de merluza <span>200 g</span></li>
-        <li>Patata <span>150 g</span></li>
-        <li>Aceite de oliva <span>8 ml</span></li>
-        <li>Limón, perejil <span>al gusto</span></li>
-      </ul>
-      <div class="meal-kcal">≈ 420 kcal</div>
-    </div>
-    <div class="meal-block">
-      <div class="meal-tag cena">Cena</div>
-      <div class="meal-name">Huevo duro con ensalada de lechuga y maíz</div>
-      <ul class="meal-items">
-        <li>Huevo <span>2 ud (110 g)</span></li>
-        <li>Lechuga <span>80 g</span></li>
-        <li>Maíz en lata escurrido <span>40 g</span></li>
-        <li>Aceite de oliva <span>5 ml</span></li>
-      </ul>
-      <div class="meal-kcal">≈ 260 kcal</div>
-    </div>
-    <div class="meal-block">
-      <div class="meal-tag snack">Snack</div>
-      <div class="meal-name">Almendras</div>
-      <ul class="meal-items">
-        <li>Almendras crudas <span>15 g</span></li>
-      </ul>
-      <div class="meal-kcal">≈ 90 kcal</div>
-    </div>
-  </div>
-</div>
-
-<!-- JUE 4 -->
-<div class="day-card" onclick="toggle(this)">
-  <div class="day-head">
-    <div class="day-name-wrap"><div class="day-dot">J4</div><span class="day-name">Jueves, 4 de junio</span></div>
-    <div class="day-meta"><span class="day-kcal">~1.290 kcal</span><span class="day-toggle">▾</span></div>
-  </div>
-  <div class="day-body">
-    <div class="meal-block">
-      <div class="meal-tag desayuno">Desayuno</div>
-      <div class="meal-name">Café con leche y tostada con aceite</div>
-      <ul class="meal-items">
-        <li>Leche semidesnatada <span>150 ml</span></li>
-        <li>Café soluble <span>al gusto</span></li>
-        <li>Pan integral tostado <span>50 g</span></li>
-        <li>Aceite de oliva <span>8 ml</span></li>
-      </ul>
-      <div class="meal-kcal">≈ 230 kcal</div>
-    </div>
-    <div class="meal-block">
-      <div class="meal-tag comida">Comida</div>
-      <div class="meal-name">Garbanzos con espinacas</div>
-      <ul class="meal-items">
-        <li>Garbanzos cocidos (bote) <span>200 g escurridos</span></li>
-        <li>Espinacas frescas <span>100 g</span></li>
-        <li>Ajo, pimentón <span>al gusto</span></li>
-        <li>Aceite de oliva <span>8 ml</span></li>
-      </ul>
-      <div class="meal-kcal">≈ 410 kcal</div>
-    </div>
-    <div class="meal-block">
-      <div class="meal-tag cena">Cena</div>
-      <div class="meal-name">Pechuga a la plancha con pimiento asado</div>
-      <ul class="meal-items">
-        <li>Pechuga de pollo <span>150 g</span></li>
-        <li>Pimiento rojo asado (bote) <span>100 g</span></li>
-        <li>Aceite de oliva <span>5 ml</span></li>
-      </ul>
-      <div class="meal-kcal">≈ 290 kcal</div>
-    </div>
-    <div class="meal-block">
-      <div class="meal-tag snack">Snack</div>
-      <div class="meal-name">Yogur desnatado</div>
-      <ul class="meal-items">
-        <li>Yogur desnatado natural <span>125 g</span></li>
-      </ul>
-      <div class="meal-kcal">≈ 60 kcal</div>
-    </div>
-  </div>
-</div>
-
-<!-- VIE 5 -->
-<div class="day-card" onclick="toggle(this)">
-  <div class="day-head">
-    <div class="day-name-wrap"><div class="day-dot">V5</div><span class="day-name">Viernes, 5 de junio</span></div>
-    <div class="day-meta"><span class="day-kcal">~1.290 kcal</span><span class="day-toggle">▾</span></div>
-  </div>
-  <div class="day-body">
-    <div class="meal-block">
-      <div class="meal-tag desayuno">Desayuno</div>
-      <div class="meal-name">Leche semidesnatada con biscotes</div>
-      <ul class="meal-items">
-        <li>Leche semidesnatada <span>250 ml</span></li>
-        <li>Biscotes integrales <span>3 ud (30 g)</span></li>
-      </ul>
-      <div class="meal-kcal">≈ 220 kcal</div>
-    </div>
-    <div class="meal-block">
-      <div class="meal-tag comida">Comida</div>
-      <div class="meal-name">Pasta integral con verduras salteadas</div>
-      <ul class="meal-items">
-        <li>Pasta integral seca <span>80 g</span></li>
-        <li>Calabacín <span>80 g</span></li>
-        <li>Pimiento rojo <span>60 g</span></li>
-        <li>Aceite de oliva <span>10 ml</span></li>
-      </ul>
-      <div class="meal-kcal">≈ 430 kcal</div>
-    </div>
-    <div class="meal-block">
-      <div class="meal-tag cena">Cena</div>
-      <div class="meal-name">Salmón a la plancha con ensalada</div>
-      <ul class="meal-items">
-        <li>Lomo de salmón <span>150 g</span></li>
-        <li>Lechuga, pepino <span>100 g</span></li>
-        <li>Aceite de oliva <span>5 ml</span></li>
-      </ul>
-      <div class="meal-kcal">≈ 350 kcal</div>
-    </div>
-    <div class="meal-block">
-      <div class="meal-tag snack">Snack</div>
-      <div class="meal-name">Naranja</div>
-      <ul class="meal-items">
-        <li>Naranja <span>150 g (1 pieza mediana)</span></li>
-      </ul>
-      <div class="meal-kcal">≈ 60 kcal</div>
-    </div>
-  </div>
-</div>
-
-<!-- SÁB 6 -->
-<div class="day-card" onclick="toggle(this)">
-  <div class="day-head">
-    <div class="day-name-wrap"><div class="day-dot">S6</div><span class="day-name">Sábado, 6 de junio</span></div>
-    <div class="day-meta"><span class="day-kcal">~1.300 kcal</span><span class="day-toggle">▾</span></div>
-  </div>
-  <div class="day-body">
-    <div class="meal-block">
-      <div class="meal-tag desayuno">Desayuno</div>
-      <div class="meal-name">Revuelto de huevos con champiñones</div>
-      <ul class="meal-items">
-        <li>Huevos <span>2 ud (110 g)</span></li>
-        <li>Champiñones frescos <span>80 g</span></li>
-        <li>Aceite de oliva <span>5 ml</span></li>
-      </ul>
-      <div class="meal-kcal">≈ 290 kcal</div>
-    </div>
-    <div class="meal-block">
-      <div class="meal-tag comida">Comida</div>
-      <div class="meal-name">Caldo de pollo con fideos + contramuslo al horno</div>
-      <ul class="meal-items">
-        <li>Caldo de pollo bajo en sal <span>400 ml</span></li>
-        <li>Fideos finos <span>30 g</span></li>
-        <li>Contramuslo de pollo (sin piel) <span>160 g</span></li>
-        <li>Aceite de oliva <span>5 ml</span></li>
-      </ul>
-      <div class="meal-kcal">≈ 430 kcal</div>
-    </div>
-    <div class="meal-block">
-      <div class="meal-tag cena">Cena</div>
-      <div class="meal-name">Queso fresco con pimiento rojo asado</div>
-      <ul class="meal-items">
-        <li>Queso fresco tipo Burgos <span>120 g</span></li>
-        <li>Pimiento rojo asado (bote) <span>100 g</span></li>
-        <li>Aceite de oliva <span>5 ml</span></li>
-      </ul>
-      <div class="meal-kcal">≈ 230 kcal</div>
-    </div>
-    <div class="meal-block">
-      <div class="meal-tag snack">Snack</div>
-      <div class="meal-name">Yogur desnatado</div>
-      <ul class="meal-items">
-        <li>Yogur desnatado natural <span>125 g</span></li>
-      </ul>
-      <div class="meal-kcal">≈ 60 kcal</div>
-    </div>
-  </div>
-</div>
-
-<!-- DOM 7 -->
-<div class="day-card" onclick="toggle(this)">
-  <div class="day-head">
-    <div class="day-name-wrap"><div class="day-dot">D7</div><span class="day-name">Domingo, 7 de junio</span></div>
-    <div class="day-meta"><span class="day-kcal">~1.280 kcal</span><span class="day-toggle">▾</span></div>
-  </div>
-  <div class="day-body">
-    <div class="meal-block">
-      <div class="meal-tag desayuno">Desayuno</div>
-      <div class="meal-name">Tostada con aceite y jamón serrano</div>
-      <ul class="meal-items">
-        <li>Pan integral tostado <span>60 g</span></li>
-        <li>Jamón serrano <span>40 g (2 lonchas)</span></li>
-        <li>Aceite de oliva <span>8 ml</span></li>
-      </ul>
-      <div class="meal-kcal">≈ 280 kcal</div>
-    </div>
-    <div class="meal-block">
-      <div class="meal-tag comida">Comida</div>
-      <div class="meal-name">Bacalao al horno con patata</div>
-      <ul class="meal-items">
-        <li>Lomo de bacalao (desalado) <span>200 g</span></li>
-        <li>Patata <span>120 g</span></li>
-        <li>Aceite de oliva <span>8 ml</span></li>
-        <li>Ajo, perejil <span>al gusto</span></li>
-      </ul>
-      <div class="meal-kcal">≈ 410 kcal</div>
-    </div>
-    <div class="meal-block">
-      <div class="meal-tag cena">Cena</div>
-      <div class="meal-name">Ensalada de canónigos con atún</div>
-      <ul class="meal-items">
-        <li>Canónigos <span>70 g</span></li>
-        <li>Atún en lata al natural <span>80 g escurrido</span></li>
-        <li>Maíz <span>30 g</span></li>
-        <li>Aceite de oliva <span>5 ml</span></li>
-      </ul>
-      <div class="meal-kcal">≈ 280 kcal</div>
-    </div>
-    <div class="meal-block">
-      <div class="meal-tag snack">Snack</div>
-      <div class="meal-name">Pera</div>
-      <ul class="meal-items">
-        <li>Pera <span>140 g (1 pieza mediana)</span></li>
-      </ul>
-      <div class="meal-kcal">≈ 70 kcal</div>
-    </div>
-  </div>
-</div>
-
-<!-- SEMANA 2 -->
-<div class="week-title">Semana 2 &nbsp;<small style="font-size:0.8rem;font-family:'DM Sans';font-weight:300;color:var(--ink-light)">8–14 jun</small></div>
-
-<div class="day-card" onclick="toggle(this)">
-  <div class="day-head"><div class="day-name-wrap"><div class="day-dot">L8</div><span class="day-name">Lunes, 8 de junio</span></div><div class="day-meta"><span class="day-kcal">~1.290 kcal</span><span class="day-toggle">▾</span></div></div>
-  <div class="day-body">
-    <div class="meal-block"><div class="meal-tag desayuno">Desayuno</div><div class="meal-name">Avena con leche y plátano</div><ul class="meal-items"><li>Copos de avena<span>50 g</span></li><li>Leche semidesnatada<span>200 ml</span></li><li>Plátano<span>80 g (½ pieza)</span></li></ul><div class="meal-kcal">≈ 300 kcal</div></div>
-    <div class="meal-block"><div class="meal-tag comida">Comida</div><div class="meal-name">Alubias blancas con chorizo (porción pequeña)</div><ul class="meal-items"><li>Alubias blancas cocidas (bote)<span>180 g escurridas</span></li><li>Chorizo fresco<span>30 g</span></li><li>Cebolla, ajo<span>al gusto</span></li><li>Aceite de oliva<span>5 ml</span></li></ul><div class="meal-kcal">≈ 420 kcal</div></div>
-    <div class="meal-block"><div class="meal-tag cena">Cena</div><div class="meal-name">Tortilla francesa con ensalada</div><ul class="meal-items"><li>Huevos<span>2 ud (110 g)</span></li><li>Lechuga<span>80 g</span></li><li>Pepino<span>60 g</span></li><li>Aceite de oliva<span>5 ml</span></li></ul><div class="meal-kcal">≈ 260 kcal</div></div>
-    <div class="meal-block"><div class="meal-tag snack">Snack</div><div class="meal-name">Manzana</div><ul class="meal-items"><li>Manzana<span>150 g</span></li></ul><div class="meal-kcal">≈ 70 kcal</div></div>
-  </div>
-</div>
-
-<div class="day-card" onclick="toggle(this)">
-  <div class="day-head"><div class="day-name-wrap"><div class="day-dot">M9</div><span class="day-name">Martes, 9 de junio</span></div><div class="day-meta"><span class="day-kcal">~1.290 kcal</span><span class="day-toggle">▾</span></div></div>
-  <div class="day-body">
-    <div class="meal-block"><div class="meal-tag desayuno">Desayuno</div><div class="meal-name">Yogur desnatado con nueces</div><ul class="meal-items"><li>Yogur desnatado<span>250 g (2 uds)</span></li><li>Nueces<span>15 g (3 mitades)</span></li></ul><div class="meal-kcal">≈ 200 kcal</div></div>
-    <div class="meal-block"><div class="meal-tag comida">Comida</div><div class="meal-name">Pollo en salsa con arroz blanco</div><ul class="meal-items"><li>Pechuga de pollo<span>160 g</span></li><li>Arroz blanco seco<span>60 g</span></li><li>Cebolla, ajo, tomate frito<span>60 g</span></li><li>Aceite de oliva<span>8 ml</span></li></ul><div class="meal-kcal">≈ 430 kcal</div></div>
-    <div class="meal-block"><div class="meal-tag cena">Cena</div><div class="meal-name">Crema de calabaza</div><ul class="meal-items"><li>Calabaza<span>300 g</span></li><li>Caldo de verduras<span>200 ml</span></li><li>Quesito ligero<span>20 g</span></li><li>Aceite de oliva<span>5 ml</span></li></ul><div class="meal-kcal">≈ 200 kcal</div></div>
-    <div class="meal-block"><div class="meal-tag snack">Snack</div><div class="meal-name">Biscotes con pavo</div><ul class="meal-items"><li>Biscotes integrales<span>2 ud (20 g)</span></li><li>Pavo en lonchas<span>40 g</span></li></ul><div class="meal-kcal">≈ 130 kcal</div></div>
-  </div>
-</div>
-
-<div class="day-card" onclick="toggle(this)">
-  <div class="day-head"><div class="day-name-wrap"><div class="day-dot">X10</div><span class="day-name">Miércoles, 10 de junio</span></div><div class="day-meta"><span class="day-kcal">~1.290 kcal</span><span class="day-toggle">▾</span></div></div>
-  <div class="day-body">
-    <div class="meal-block"><div class="meal-tag desayuno">Desayuno</div><div class="meal-name">Café con leche y tostada con tomate rallado</div><ul class="meal-items"><li>Leche semidesnatada<span>150 ml</span></li><li>Pan integral tostado<span>50 g</span></li><li>Tomate triturado (lata)<span>40 g</span></li><li>Aceite de oliva<span>5 ml</span></li></ul><div class="meal-kcal">≈ 230 kcal</div></div>
-    <div class="meal-block"><div class="meal-tag comida">Comida</div><div class="meal-name">Merluza con verduras al horno</div><ul class="meal-items"><li>Lomo de merluza<span>200 g</span></li><li>Cebolla<span>60 g</span></li><li>Pimiento verde<span>60 g</span></li><li>Aceite de oliva<span>8 ml</span></li></ul><div class="meal-kcal">≈ 380 kcal</div></div>
-    <div class="meal-block"><div class="meal-tag cena">Cena</div><div class="meal-name">Revuelto de champiñones y ajetes</div><ul class="meal-items"><li>Huevos<span>2 ud (110 g)</span></li><li>Champiñones<span>100 g</span></li><li>Ajetes (ajos tiernos)<span>30 g</span></li><li>Aceite de oliva<span>5 ml</span></li></ul><div class="meal-kcal">≈ 270 kcal</div></div>
-    <div class="meal-block"><div class="meal-tag snack">Snack</div><div class="meal-name">Yogur desnatado</div><ul class="meal-items"><li>Yogur desnatado natural<span>125 g</span></li></ul><div class="meal-kcal">≈ 60 kcal</div></div>
-  </div>
-</div>
-
-<div class="day-card" onclick="toggle(this)">
-  <div class="day-head"><div class="day-name-wrap"><div class="day-dot">J11</div><span class="day-name">Jueves, 11 de junio</span></div><div class="day-meta"><span class="day-kcal">~1.290 kcal</span><span class="day-toggle">▾</span></div></div>
-  <div class="day-body">
-    <div class="meal-block"><div class="meal-tag desayuno">Desayuno</div><div class="meal-name">Leche con cereales integrales</div><ul class="meal-items"><li>Leche semidesnatada<span>250 ml</span></li><li>Cereales integrales sin azúcar<span>40 g</span></li></ul><div class="meal-kcal">≈ 260 kcal</div></div>
-    <div class="meal-block"><div class="meal-tag comida">Comida</div><div class="meal-name">Lentejas estofadas con verduras</div><ul class="meal-items"><li>Lentejas secas<span>80 g</span></li><li>Zanahoria<span>60 g</span></li><li>Puerro<span>50 g</span></li><li>Patata<span>60 g</span></li><li>Aceite de oliva<span>8 ml</span></li></ul><div class="meal-kcal">≈ 410 kcal</div></div>
-    <div class="meal-block"><div class="meal-tag cena">Cena</div><div class="meal-name">Sardinas a la plancha con lechuga</div><ul class="meal-items"><li>Sardinas frescas<span>200 g (limpias)</span></li><li>Lechuga<span>80 g</span></li><li>Aceite de oliva<span>5 ml</span></li></ul><div class="meal-kcal">≈ 280 kcal</div></div>
-    <div class="meal-block"><div class="meal-tag snack">Snack</div><div class="meal-name">Naranja</div><ul class="meal-items"><li>Naranja<span>150 g</span></li></ul><div class="meal-kcal">≈ 60 kcal</div></div>
-  </div>
-</div>
-
-<div class="day-card" onclick="toggle(this)">
-  <div class="day-head"><div class="day-name-wrap"><div class="day-dot">V12</div><span class="day-name">Viernes, 12 de junio</span></div><div class="day-meta"><span class="day-kcal">~1.290 kcal</span><span class="day-toggle">▾</span></div></div>
-  <div class="day-body">
-    <div class="meal-block"><div class="meal-tag desayuno">Desayuno</div><div class="meal-name">Tostada con aceite y jamón york</div><ul class="meal-items"><li>Pan integral tostado<span>60 g</span></li><li>Jamón york (pavo)<span>60 g</span></li><li>Aceite de oliva<span>5 ml</span></li></ul><div class="meal-kcal">≈ 240 kcal</div></div>
-    <div class="meal-block"><div class="meal-tag comida">Comida</div><div class="meal-name">Pasta integral con atún y aceitunas</div><ul class="meal-items"><li>Pasta integral seca<span>80 g</span></li><li>Atún en lata al natural<span>80 g escurrido</span></li><li>Aceitunas<span>20 g (8 uds)</span></li><li>Aceite de oliva<span>5 ml</span></li></ul><div class="meal-kcal">≈ 430 kcal</div></div>
-    <div class="meal-block"><div class="meal-tag cena">Cena</div><div class="meal-name">Crema fría de pepino y pimiento (sin tomate)</div><ul class="meal-items"><li>Pepino<span>200 g</span></li><li>Pimiento verde<span>100 g</span></li><li>Ajo, cebolla<span>20 g</span></li><li>Aceite de oliva<span>8 ml</span></li><li>Vinagre<span>10 ml</span></li></ul><div class="meal-kcal">≈ 180 kcal</div></div>
-    <div class="meal-block"><div class="meal-tag snack">Snack</div><div class="meal-name">Queso fresco 0%</div><ul class="meal-items"><li>Queso fresco 0% MG<span>100 g</span></li></ul><div class="meal-kcal">≈ 100 kcal</div></div>
-  </div>
-</div>
-
-<div class="day-card" onclick="toggle(this)">
-  <div class="day-head"><div class="day-name-wrap"><div class="day-dot">S13</div><span class="day-name">Sábado, 13 de junio</span></div><div class="day-meta"><span class="day-kcal">~1.300 kcal</span><span class="day-toggle">▾</span></div></div>
-  <div class="day-body">
-    <div class="meal-block"><div class="meal-tag desayuno">Desayuno</div><div class="meal-name">Huevos revueltos con tomate frito y champiñones</div><ul class="meal-items"><li>Huevos<span>2 ud (110 g)</span></li><li>Tomate frito (lata/bote)<span>50 g</span></li><li>Champiñones<span>80 g</span></li><li>Aceite de oliva<span>5 ml</span></li></ul><div class="meal-kcal">≈ 310 kcal</div></div>
-    <div class="meal-block"><div class="meal-tag comida">Comida</div><div class="meal-name">Bacalao con garbanzos</div><ul class="meal-items"><li>Bacalao desalado<span>160 g</span></li><li>Garbanzos cocidos (bote)<span>150 g escurridos</span></li><li>Espinacas<span>60 g</span></li><li>Aceite de oliva<span>8 ml</span></li></ul><div class="meal-kcal">≈ 420 kcal</div></div>
-    <div class="meal-block"><div class="meal-tag cena">Cena</div><div class="meal-name">Ensalada de lechuga, zanahoria y atún</div><ul class="meal-items"><li>Lechuga<span>80 g</span></li><li>Zanahoria rallada<span>60 g</span></li><li>Atún al natural<span>80 g escurrido</span></li><li>Aceite de oliva<span>5 ml</span></li></ul><div class="meal-kcal">≈ 250 kcal</div></div>
-    <div class="meal-block"><div class="meal-tag snack">Snack</div><div class="meal-name">Yogur desnatado</div><ul class="meal-items"><li>Yogur desnatado natural<span>125 g</span></li></ul><div class="meal-kcal">≈ 60 kcal</div></div>
-  </div>
-</div>
-
-<div class="day-card" onclick="toggle(this)">
-  <div class="day-head"><div class="day-name-wrap"><div class="day-dot">D14</div><span class="day-name">Domingo, 14 de junio</span></div><div class="day-meta"><span class="day-kcal">~1.290 kcal</span><span class="day-toggle">▾</span></div></div>
-  <div class="day-body">
-    <div class="meal-block"><div class="meal-tag desayuno">Desayuno</div><div class="meal-name">Tortilla de huevos con jamón serrano</div><ul class="meal-items"><li>Huevos<span>2 ud (110 g)</span></li><li>Jamón serrano<span>30 g (1 loncha)</span></li><li>Aceite de oliva<span>5 ml</span></li></ul><div class="meal-kcal">≈ 320 kcal</div></div>
-    <div class="meal-block"><div class="meal-tag comida">Comida</div><div class="meal-name">Cordero al horno con patata (ración pequeña)</div><ul class="meal-items"><li>Pierna de cordero<span>150 g (sin hueso)</span></li><li>Patata<span>100 g</span></li><li>Ajo, romero<span>al gusto</span></li><li>Aceite de oliva<span>5 ml</span></li></ul><div class="meal-kcal">≈ 450 kcal</div></div>
-    <div class="meal-block"><div class="meal-tag cena">Cena</div><div class="meal-name">Caldo de verduras con fideos</div><ul class="meal-items"><li>Caldo de verduras<span>400 ml</span></li><li>Fideos finos<span>30 g</span></li></ul><div class="meal-kcal">≈ 160 kcal</div></div>
-    <div class="meal-block"><div class="meal-tag snack">Snack</div><div class="meal-name">Kiwi</div><ul class="meal-items"><li>Kiwi<span>100 g (1 pieza)</span></li></ul><div class="meal-kcal">≈ 50 kcal</div></div>
-  </div>
-</div>
-
-<!-- SEMANA 3 -->
-<div class="week-title">Semana 3 &nbsp;<small style="font-size:0.8rem;font-family:'DM Sans';font-weight:300;color:var(--ink-light)">15–21 jun</small></div>
-
-<div class="day-card" onclick="toggle(this)">
-  <div class="day-head"><div class="day-name-wrap"><div class="day-dot">L15</div><span class="day-name">Lunes, 15 de junio</span></div><div class="day-meta"><span class="day-kcal">~1.290 kcal</span><span class="day-toggle">▾</span></div></div>
-  <div class="day-body">
-    <div class="meal-block"><div class="meal-tag desayuno">Desayuno</div><div class="meal-name">Avena con leche y canela</div><ul class="meal-items"><li>Copos de avena<span>50 g</span></li><li>Leche semidesnatada<span>200 ml</span></li><li>Canela<span>al gusto</span></li></ul><div class="meal-kcal">≈ 280 kcal</div></div>
-    <div class="meal-block"><div class="meal-tag comida">Comida</div><div class="meal-name">Pollo al ajillo con pimiento asado</div><ul class="meal-items"><li>Contramuslo de pollo (sin piel)<span>180 g</span></li><li>Pimiento rojo asado (bote)<span>100 g</span></li><li>Ajo<span>3 dientes</span></li><li>Aceite de oliva<span>8 ml</span></li></ul><div class="meal-kcal">≈ 400 kcal</div></div>
-    <div class="meal-block"><div class="meal-tag cena">Cena</div><div class="meal-name">Crema de brócoli</div><ul class="meal-items"><li>Brócoli<span>250 g</span></li><li>Caldo de verduras<span>200 ml</span></li><li>Quesito ligero<span>20 g</span></li><li>Aceite de oliva<span>5 ml</span></li></ul><div class="meal-kcal">≈ 190 kcal</div></div>
-    <div class="meal-block"><div class="meal-tag snack">Snack</div><div class="meal-name">Yogur con nueces</div><ul class="meal-items"><li>Yogur desnatado<span>125 g</span></li><li>Nueces<span>10 g (2 mitades)</span></li></ul><div class="meal-kcal">≈ 150 kcal</div></div>
-  </div>
-</div>
-
-<div class="day-card" onclick="toggle(this)">
-  <div class="day-head"><div class="day-name-wrap"><div class="day-dot">M16</div><span class="day-name">Martes, 16 de junio</span></div><div class="day-meta"><span class="day-kcal">~1.290 kcal</span><span class="day-toggle">▾</span></div></div>
-  <div class="day-body">
-    <div class="meal-block"><div class="meal-tag desayuno">Desayuno</div><div class="meal-name">Tostada integral con mantequilla y pavo</div><ul class="meal-items"><li>Pan integral tostado<span>60 g</span></li><li>Mantequilla<span>8 g (1 cucharadita)</span></li><li>Pavo en lonchas<span>40 g</span></li></ul><div class="meal-kcal">≈ 250 kcal</div></div>
-    <div class="meal-block"><div class="meal-tag comida">Comida</div><div class="meal-name">Arroz con verduras y huevo duro</div><ul class="meal-items"><li>Arroz blanco seco<span>70 g</span></li><li>Pimiento rojo y verde<span>100 g</span></li><li>Huevo duro<span>1 ud (55 g)</span></li><li>Aceite de oliva<span>8 ml</span></li></ul><div class="meal-kcal">≈ 420 kcal</div></div>
-    <div class="meal-block"><div class="meal-tag cena">Cena</div><div class="meal-name">Merluza a la plancha con lechuga</div><ul class="meal-items"><li>Lomo de merluza<span>180 g</span></li><li>Lechuga<span>80 g</span></li><li>Aceite de oliva<span>5 ml</span></li></ul><div class="meal-kcal">≈ 270 kcal</div></div>
-    <div class="meal-block"><div class="meal-tag snack">Snack</div><div class="meal-name">Manzana</div><ul class="meal-items"><li>Manzana<span>150 g</span></li></ul><div class="meal-kcal">≈ 70 kcal</div></div>
-  </div>
-</div>
-
-<div class="day-card" onclick="toggle(this)">
-  <div class="day-head"><div class="day-name-wrap"><div class="day-dot">X17</div><span class="day-name">Miércoles, 17 de junio</span></div><div class="day-meta"><span class="day-kcal">~1.290 kcal</span><span class="day-toggle">▾</span></div></div>
-  <div class="day-body">
-    <div class="meal-block"><div class="meal-tag desayuno">Desayuno</div><div class="meal-name">Leche semidesnatada con biscotes</div><ul class="meal-items"><li>Leche semidesnatada<span>250 ml</span></li><li>Biscotes integrales<span>3 ud (30 g)</span></li></ul><div class="meal-kcal">≈ 200 kcal</div></div>
-    <div class="meal-block"><div class="meal-tag comida">Comida</div><div class="meal-name">Garbanzos con espinacas y huevo cocido</div><ul class="meal-items"><li>Garbanzos cocidos (bote)<span>180 g escurridos</span></li><li>Espinacas<span>100 g</span></li><li>Huevo duro<span>1 ud (55 g)</span></li><li>Aceite de oliva<span>8 ml</span></li></ul><div class="meal-kcal">≈ 430 kcal</div></div>
-    <div class="meal-block"><div class="meal-tag cena">Cena</div><div class="meal-name">Pechuga al horno con judías verdes</div><ul class="meal-items"><li>Pechuga de pollo<span>150 g</span></li><li>Judías verdes<span>150 g</span></li><li>Aceite de oliva<span>5 ml</span></li></ul><div class="meal-kcal">≈ 270 kcal</div></div>
-    <div class="meal-block"><div class="meal-tag snack">Snack</div><div class="meal-name">Yogur desnatado</div><ul class="meal-items"><li>Yogur desnatado natural<span>125 g</span></li></ul><div class="meal-kcal">≈ 60 kcal</div></div>
-  </div>
-</div>
-
-<div class="day-card" onclick="toggle(this)">
-  <div class="day-head"><div class="day-name-wrap"><div class="day-dot">J18</div><span class="day-name">Jueves, 18 de junio</span></div><div class="day-meta"><span class="day-kcal">~1.290 kcal</span><span class="day-toggle">▾</span></div></div>
-  <div class="day-body">
-    <div class="meal-block"><div class="meal-tag desayuno">Desayuno</div><div class="meal-name">Café con leche y tostada con aceite</div><ul class="meal-items"><li>Leche semidesnatada<span>150 ml</span></li><li>Pan integral tostado<span>50 g</span></li><li>Aceite de oliva<span>8 ml</span></li></ul><div class="meal-kcal">≈ 210 kcal</div></div>
-    <div class="meal-block"><div class="meal-tag comida">Comida</div><div class="meal-name">Sopa de fideos con pollo desmenuzado</div><ul class="meal-items"><li>Caldo de pollo<span>400 ml</span></li><li>Fideos finos<span>40 g</span></li><li>Pechuga de pollo cocida<span>80 g</span></li></ul><div class="meal-kcal">≈ 360 kcal</div></div>
-    <div class="meal-block"><div class="meal-tag cena">Cena</div><div class="meal-name">Dorada al horno con patata y pimiento</div><ul class="meal-items"><li>Dorada (filetes)<span>180 g</span></li><li>Patata<span>100 g</span></li><li>Pimiento verde<span>60 g</span></li><li>Aceite de oliva<span>8 ml</span></li></ul><div class="meal-kcal">≈ 380 kcal</div></div>
-    <div class="meal-block"><div class="meal-tag snack">Snack</div><div class="meal-name">Naranja</div><ul class="meal-items"><li>Naranja<span>150 g</span></li></ul><div class="meal-kcal">≈ 60 kcal</div></div>
-  </div>
-</div>
-
-<div class="day-card" onclick="toggle(this)">
-  <div class="day-head"><div class="day-name-wrap"><div class="day-dot">V19</div><span class="day-name">Viernes, 19 de junio</span></div><div class="day-meta"><span class="day-kcal">~1.290 kcal</span><span class="day-toggle">▾</span></div></div>
-  <div class="day-body">
-    <div class="meal-block"><div class="meal-tag desayuno">Desayuno</div><div class="meal-name">Yogur desnatado con plátano</div><ul class="meal-items"><li>Yogur desnatado<span>250 g (2 uds)</span></li><li>Plátano<span>80 g (½ pieza)</span></li></ul><div class="meal-kcal">≈ 230 kcal</div></div>
-    <div class="meal-block"><div class="meal-tag comida">Comida</div><div class="meal-name">Pasta integral con boloñesa de pavo</div><ul class="meal-items"><li>Pasta integral seca<span>80 g</span></li><li>Carne picada de pavo<span>120 g</span></li><li>Tomate frito (bote)<span>80 g</span></li><li>Aceite de oliva<span>5 ml</span></li></ul><div class="meal-kcal">≈ 440 kcal</div></div>
-    <div class="meal-block"><div class="meal-tag cena">Cena</div><div class="meal-name">Ensalada de canónigos, maíz y atún</div><ul class="meal-items"><li>Canónigos<span>70 g</span></li><li>Maíz en lata<span>40 g escurrido</span></li><li>Atún al natural<span>60 g escurrido</span></li><li>Aceite de oliva<span>5 ml</span></li></ul><div class="meal-kcal">≈ 230 kcal</div></div>
-    <div class="meal-block"><div class="meal-tag snack">Snack</div><div class="meal-name">Queso fresco 0%</div><ul class="meal-items"><li>Queso fresco 0% MG<span>80 g</span></li></ul><div class="meal-kcal">≈ 80 kcal</div></div>
-  </div>
-</div>
-
-<div class="day-card" onclick="toggle(this)">
-  <div class="day-head"><div class="day-name-wrap"><div class="day-dot">S20</div><span class="day-name">Sábado, 20 de junio</span></div><div class="day-meta"><span class="day-kcal">~1.300 kcal</span><span class="day-toggle">▾</span></div></div>
-  <div class="day-body">
-    <div class="meal-block"><div class="meal-tag desayuno">Desayuno</div><div class="meal-name">Huevo frito con espárragos</div><ul class="meal-items"><li>Huevo<span>1 ud (55 g)</span></li><li>Espárragos verdes<span>150 g</span></li><li>Aceite de oliva<span>8 ml</span></li></ul><div class="meal-kcal">≈ 270 kcal</div></div>
-    <div class="meal-block"><div class="meal-tag comida">Comida</div><div class="meal-name">Cocido madrileño ligero</div><ul class="meal-items"><li>Garbanzos cocidos<span>150 g escurridos</span></li><li>Zanahoria, patata<span>80 g c/u</span></li><li>Caldo desgrasado<span>300 ml</span></li><li>Pechuga de pollo cocida<span>80 g</span></li></ul><div class="meal-kcal">≈ 450 kcal</div></div>
-    <div class="meal-block"><div class="meal-tag cena">Cena</div><div class="meal-name">Pechuga a la plancha con ensalada verde</div><ul class="meal-items"><li>Pechuga de pollo<span>130 g</span></li><li>Lechuga variada<span>80 g</span></li><li>Aceite de oliva<span>5 ml</span></li></ul><div class="meal-kcal">≈ 240 kcal</div></div>
-    <div class="meal-block"><div class="meal-tag snack">Snack</div><div class="meal-name">Yogur desnatado</div><ul class="meal-items"><li>Yogur desnatado natural<span>125 g</span></li></ul><div class="meal-kcal">≈ 60 kcal</div></div>
-  </div>
-</div>
-
-<div class="day-card" onclick="toggle(this)">
-  <div class="day-head"><div class="day-name-wrap"><div class="day-dot">D21</div><span class="day-name">Domingo, 21 de junio</span></div><div class="day-meta"><span class="day-kcal">~1.290 kcal</span><span class="day-toggle">▾</span></div></div>
-  <div class="day-body">
-    <div class="meal-block"><div class="meal-tag desayuno">Desayuno</div><div class="meal-name">Tostada con aceite y jamón serrano</div><ul class="meal-items"><li>Pan integral tostado<span>60 g</span></li><li>Jamón serrano<span>40 g</span></li><li>Aceite de oliva<span>8 ml</span></li></ul><div class="meal-kcal">≈ 280 kcal</div></div>
-    <div class="meal-block"><div class="meal-tag comida">Comida</div><div class="meal-name">Merluza en salsa verde con almejas</div><ul class="meal-items"><li>Lomo de merluza<span>180 g</span></li><li>Almejas<span>60 g</span></li><li>Perejil, ajo<span>al gusto</span></li><li>Aceite de oliva<span>8 ml</span></li></ul><div class="meal-kcal">≈ 400 kcal</div></div>
-    <div class="meal-block"><div class="meal-tag cena">Cena</div><div class="meal-name">Crema de puerros</div><ul class="meal-items"><li>Puerros<span>250 g</span></li><li>Patata<span>80 g</span></li><li>Caldo de verduras<span>200 ml</span></li><li>Aceite de oliva<span>5 ml</span></li></ul><div class="meal-kcal">≈ 190 kcal</div></div>
-    <div class="meal-block"><div class="meal-tag snack">Snack</div><div class="meal-name">Pera</div><ul class="meal-items"><li>Pera<span>140 g</span></li></ul><div class="meal-kcal">≈ 70 kcal</div></div>
-  </div>
-</div>
-
-<!-- SEMANA 4 -->
-<div class="week-title">Semana 4 &nbsp;<small style="font-size:0.8rem;font-family:'DM Sans';font-weight:300;color:var(--ink-light)">22–28 jun</small></div>
-
-<div class="day-card" onclick="toggle(this)">
-  <div class="day-head"><div class="day-name-wrap"><div class="day-dot">L22</div><span class="day-name">Lunes, 22 de junio</span></div><div class="day-meta"><span class="day-kcal">~1.290 kcal</span><span class="day-toggle">▾</span></div></div>
-  <div class="day-body">
-    <div class="meal-block"><div class="meal-tag desayuno">Desayuno</div><div class="meal-name">Avena con leche y frutos rojos</div><ul class="meal-items"><li>Copos de avena<span>50 g</span></li><li>Leche semidesnatada<span>200 ml</span></li><li>Frutos rojos congelados<span>60 g</span></li></ul><div class="meal-kcal">≈ 270 kcal</div></div>
-    <div class="meal-block"><div class="meal-tag comida">Comida</div><div class="meal-name">Lentejas con chorizo y zanahoria</div><ul class="meal-items"><li>Lentejas secas<span>80 g</span></li><li>Chorizo (trozo pequeño)<span>25 g</span></li><li>Zanahoria<span>80 g</span></li><li>Aceite de oliva<span>5 ml</span></li></ul><div class="meal-kcal">≈ 420 kcal</div></div>
-    <div class="meal-block"><div class="meal-tag cena">Cena</div><div class="meal-name">Tortilla de champiñones con ensalada</div><ul class="meal-items"><li>Huevos<span>2 ud (110 g)</span></li><li>Champiñones<span>100 g</span></li><li>Lechuga<span>60 g</span></li><li>Aceite de oliva<span>5 ml</span></li></ul><div class="meal-kcal">≈ 260 kcal</div></div>
-    <div class="meal-block"><div class="meal-tag snack">Snack</div><div class="meal-name">Manzana</div><ul class="meal-items"><li>Manzana<span>150 g</span></li></ul><div class="meal-kcal">≈ 70 kcal</div></div>
-  </div>
-</div>
-
-<div class="day-card" onclick="toggle(this)">
-  <div class="day-head"><div class="day-name-wrap"><div class="day-dot">M23</div><span class="day-name">Martes, 23 de junio</span></div><div class="day-meta"><span class="day-kcal">~1.290 kcal</span><span class="day-toggle">▾</span></div></div>
-  <div class="day-body">
-    <div class="meal-block"><div class="meal-tag desayuno">Desayuno</div><div class="meal-name">Yogur desnatado con nueces y miel</div><ul class="meal-items"><li>Yogur desnatado<span>250 g (2 uds)</span></li><li>Nueces<span>10 g</span></li><li>Miel<span>5 g (1 cucharadita)</span></li></ul><div class="meal-kcal">≈ 210 kcal</div></div>
-    <div class="meal-block"><div class="meal-tag comida">Comida</div><div class="meal-name">Pollo al limón con arroz blanco</div><ul class="meal-items"><li>Pechuga de pollo<span>160 g</span></li><li>Arroz blanco seco<span>65 g</span></li><li>Limón, ajo<span>al gusto</span></li><li>Aceite de oliva<span>8 ml</span></li></ul><div class="meal-kcal">≈ 430 kcal</div></div>
-    <div class="meal-block"><div class="meal-tag cena">Cena</div><div class="meal-name">Crema fría de pepino y pimiento</div><ul class="meal-items"><li>Pepino<span>200 g</span></li><li>Pimiento verde<span>100 g</span></li><li>Aceite de oliva<span>8 ml</span></li><li>Vinagre<span>10 ml</span></li></ul><div class="meal-kcal">≈ 160 kcal</div></div>
-    <div class="meal-block"><div class="meal-tag snack">Snack</div><div class="meal-name">Biscotes con queso fresco</div><ul class="meal-items"><li>Biscotes integrales<span>2 ud (20 g)</span></li><li>Queso fresco 0%<span>60 g</span></li></ul><div class="meal-kcal">≈ 130 kcal</div></div>
-  </div>
-</div>
-
-<div class="day-card" onclick="toggle(this)">
-  <div class="day-head"><div class="day-name-wrap"><div class="day-dot">X24</div><span class="day-name">Miércoles, 24 de junio</span></div><div class="day-meta"><span class="day-kcal">~1.290 kcal</span><span class="day-toggle">▾</span></div></div>
-  <div class="day-body">
-    <div class="meal-block"><div class="meal-tag desayuno">Desayuno</div><div class="meal-name">Tostada integral con tomate rallado y aceite</div><ul class="meal-items"><li>Pan integral tostado<span>60 g</span></li><li>Tomate triturado<span>40 g</span></li><li>Aceite de oliva<span>8 ml</span></li></ul><div class="meal-kcal">≈ 220 kcal</div></div>
-    <div class="meal-block"><div class="meal-tag comida">Comida</div><div class="meal-name">Bacalao al horno con pimiento y cebolla</div><ul class="meal-items"><li>Bacalao desalado<span>180 g</span></li><li>Pimiento rojo<span>80 g</span></li><li>Cebolla<span>60 g</span></li><li>Aceite de oliva<span>8 ml</span></li></ul><div class="meal-kcal">≈ 390 kcal</div></div>
-    <div class="meal-block"><div class="meal-tag cena">Cena</div><div class="meal-name">Ensalada de lechuga, pepino y atún</div><ul class="meal-items"><li>Lechuga<span>80 g</span></li><li>Pepino<span>80 g</span></li><li>Atún al natural<span>80 g escurrido</span></li><li>Aceite de oliva<span>5 ml</span></li></ul><div class="meal-kcal">≈ 230 kcal</div></div>
-    <div class="meal-block"><div class="meal-tag snack">Snack</div><div class="meal-name">Yogur desnatado</div><ul class="meal-items"><li>Yogur desnatado natural<span>125 g</span></li></ul><div class="meal-kcal">≈ 60 kcal</div></div>
-  </div>
-</div>
-
-<div class="day-card" onclick="toggle(this)">
-  <div class="day-head"><div class="day-name-wrap"><div class="day-dot">J25</div><span class="day-name">Jueves, 25 de junio</span></div><div class="day-meta"><span class="day-kcal">~1.290 kcal</span><span class="day-toggle">▾</span></div></div>
-  <div class="day-body">
-    <div class="meal-block"><div class="meal-tag desayuno">Desayuno</div><div class="meal-name">Leche semidesnatada con cereales integrales</div><ul class="meal-items"><li>Leche semidesnatada<span>250 ml</span></li><li>Cereales integrales sin azúcar<span>35 g</span></li></ul><div class="meal-kcal">≈ 250 kcal</div></div>
-    <div class="meal-block"><div class="meal-tag comida">Comida</div><div class="meal-name">Alubias pintas con verduras</div><ul class="meal-items"><li>Alubias pintas cocidas (bote)<span>200 g escurridas</span></li><li>Puerro<span>60 g</span></li><li>Zanahoria<span>60 g</span></li><li>Aceite de oliva<span>8 ml</span></li></ul><div class="meal-kcal">≈ 410 kcal</div></div>
-    <div class="meal-block"><div class="meal-tag cena">Cena</div><div class="meal-name">Salmón a la plancha con brócoli cocido</div><ul class="meal-items"><li>Lomo de salmón<span>140 g</span></li><li>Brócoli<span>200 g</span></li><li>Aceite de oliva<span>5 ml</span></li></ul><div class="meal-kcal">≈ 370 kcal</div></div>
-    <div class="meal-block"><div class="meal-tag snack">Snack</div><div class="meal-name">Naranja</div><ul class="meal-items"><li>Naranja<span>150 g</span></li></ul><div class="meal-kcal">≈ 70 kcal</div></div>
-  </div>
-</div>
-
-<div class="day-card" onclick="toggle(this)">
-  <div class="day-head"><div class="day-name-wrap"><div class="day-dot">V26</div><span class="day-name">Viernes, 26 de junio</span></div><div class="day-meta"><span class="day-kcal">~1.290 kcal</span><span class="day-toggle">▾</span></div></div>
-  <div class="day-body">
-    <div class="meal-block"><div class="meal-tag desayuno">Desayuno</div><div class="meal-name">Café con leche y tostada con jamón york</div><ul class="meal-items"><li>Leche semidesnatada<span>150 ml</span></li><li>Pan integral tostado<span>50 g</span></li><li>Jamón york (pavo)<span>50 g</span></li></ul><div class="meal-kcal">≈ 240 kcal</div></div>
-    <div class="meal-block"><div class="meal-tag comida">Comida</div><div class="meal-name">Pasta integral con verduras y sardinas</div><ul class="meal-items"><li>Pasta integral seca<span>80 g</span></li><li>Sardinas en aceite de oliva (lata)<span>80 g escurridas</span></li><li>Pimiento, cebolla<span>80 g</span></li><li>Aceite de oliva<span>5 ml</span></li></ul><div class="meal-kcal">≈ 420 kcal</div></div>
-    <div class="meal-block"><div class="meal-tag cena">Cena</div><div class="meal-name">Crema de calabacín con quesito</div><ul class="meal-items"><li>Calabacín<span>300 g</span></li><li>Quesito ligero<span>30 g</span></li><li>Caldo de verduras<span>200 ml</span></li><li>Aceite de oliva<span>5 ml</span></li></ul><div class="meal-kcal">≈ 220 kcal</div></div>
-    <div class="meal-block"><div class="meal-tag snack">Snack</div><div class="meal-name">Yogur desnatado</div><ul class="meal-items"><li>Yogur desnatado natural<span>125 g</span></li></ul><div class="meal-kcal">≈ 60 kcal</div></div>
-  </div>
-</div>
-
-<div class="day-card" onclick="toggle(this)">
-  <div class="day-head"><div class="day-name-wrap"><div class="day-dot">S27</div><span class="day-name">Sábado, 27 de junio</span></div><div class="day-meta"><span class="day-kcal">~1.300 kcal</span><span class="day-toggle">▾</span></div></div>
-  <div class="day-body">
-    <div class="meal-block"><div class="meal-tag desayuno">Desayuno</div><div class="meal-name">Revuelto de espárragos y jamón serrano</div><ul class="meal-items"><li>Huevos<span>2 ud (110 g)</span></li><li>Espárragos verdes<span>100 g</span></li><li>Jamón serrano<span>20 g</span></li><li>Aceite de oliva<span>5 ml</span></li></ul><div class="meal-kcal">≈ 280 kcal</div></div>
-    <div class="meal-block"><div class="meal-tag comida">Comida</div><div class="meal-name">Arroz con pollo y pimiento</div><ul class="meal-items"><li>Arroz blanco seco<span>70 g</span></li><li>Contramuslo de pollo (sin piel)<span>150 g</span></li><li>Pimiento rojo<span>80 g</span></li><li>Aceite de oliva<span>8 ml</span></li></ul><div class="meal-kcal">≈ 440 kcal</div></div>
-    <div class="meal-block"><div class="meal-tag cena">Cena</div><div class="meal-name">Ensalada verde con anchoas</div><ul class="meal-items"><li>Lechuga variada<span>80 g</span></li><li>Anchoas en aceite (lata)<span>30 g escurridas</span></li><li>Aceitunas<span>20 g</span></li><li>Aceite de oliva<span>5 ml</span></li></ul><div class="meal-kcal">≈ 230 kcal</div></div>
-    <div class="meal-block"><div class="meal-tag snack">Snack</div><div class="meal-name">Kiwi</div><ul class="meal-items"><li>Kiwi<span>100 g (1 pieza)</span></li></ul><div class="meal-kcal">≈ 60 kcal</div></div>
-  </div>
-</div>
-
-<div class="day-card" onclick="toggle(this)">
-  <div class="day-head"><div class="day-name-wrap"><div class="day-dot">D28</div><span class="day-name">Domingo, 28 de junio</span></div><div class="day-meta"><span class="day-kcal">~1.290 kcal</span><span class="day-toggle">▾</span></div></div>
-  <div class="day-body">
-    <div class="meal-block"><div class="meal-tag desayuno">Desayuno</div><div class="meal-name">Tostada con aceite y jamón serrano</div><ul class="meal-items"><li>Pan integral tostado<span>60 g</span></li><li>Jamón serrano<span>35 g</span></li><li>Aceite de oliva<span>8 ml</span></li></ul><div class="meal-kcal">≈ 270 kcal</div></div>
-    <div class="meal-block"><div class="meal-tag comida">Comida</div><div class="meal-name">Dorada al horno con patata y limón</div><ul class="meal-items"><li>Dorada (filetes)<span>180 g</span></li><li>Patata<span>120 g</span></li><li>Limón, ajo<span>al gusto</span></li><li>Aceite de oliva<span>8 ml</span></li></ul><div class="meal-kcal">≈ 430 kcal</div></div>
-    <div class="meal-block"><div class="meal-tag cena">Cena</div><div class="meal-name">Caldo de pollo con fideos</div><ul class="meal-items"><li>Caldo de pollo<span>400 ml</span></li><li>Fideos finos<span>30 g</span></li></ul><div class="meal-kcal">≈ 180 kcal</div></div>
-    <div class="meal-block"><div class="meal-tag snack">Snack</div><div class="meal-name">Yogur desnatado</div><ul class="meal-items"><li>Yogur desnatado natural<span>125 g</span></li></ul><div class="meal-kcal">≈ 60 kcal</div></div>
-  </div>
-</div>
-
-<!-- SEMANA 5 -->
-<div class="week-title">Semana 5 &nbsp;<small style="font-size:0.8rem;font-family:'DM Sans';font-weight:300;color:var(--ink-light)">29–30 jun</small></div>
-
-<div class="day-card" onclick="toggle(this)">
-  <div class="day-head"><div class="day-name-wrap"><div class="day-dot">L29</div><span class="day-name">Lunes, 29 de junio</span></div><div class="day-meta"><span class="day-kcal">~1.290 kcal</span><span class="day-toggle">▾</span></div></div>
-  <div class="day-body">
-    <div class="meal-block"><div class="meal-tag desayuno">Desayuno</div><div class="meal-name">Avena con leche, canela y nueces</div><ul class="meal-items"><li>Copos de avena<span>50 g</span></li><li>Leche semidesnatada<span>200 ml</span></li><li>Nueces<span>10 g (2 mitades)</span></li></ul><div class="meal-kcal">≈ 300 kcal</div></div>
-    <div class="meal-block"><div class="meal-tag comida">Comida</div><div class="meal-name">Lentejas con puerro y zanahoria</div><ul class="meal-items"><li>Lentejas secas<span>80 g</span></li><li>Puerro<span>70 g</span></li><li>Zanahoria<span>70 g</span></li><li>Aceite de oliva<span>8 ml</span></li></ul><div class="meal-kcal">≈ 420 kcal</div></div>
-    <div class="meal-block"><div class="meal-tag cena">Cena</div><div class="meal-name">Tortilla de un huevo con ensalada</div><ul class="meal-items"><li>Huevo<span>1 ud (55 g)</span></li><li>Lechuga<span>80 g</span></li><li>Pepino<span>60 g</span></li><li>Aceite de oliva<span>5 ml</span></li></ul><div class="meal-kcal">≈ 260 kcal</div></div>
-    <div class="meal-block"><div class="meal-tag snack">Snack</div><div class="meal-name">Manzana</div><ul class="meal-items"><li>Manzana<span>150 g</span></li></ul><div class="meal-kcal">≈ 70 kcal</div></div>
-  </div>
-</div>
-
-<div class="day-card" onclick="toggle(this)">
-  <div class="day-head"><div class="day-name-wrap"><div class="day-dot">M30</div><span class="day-name">Martes, 30 de junio</span></div><div class="day-meta"><span class="day-kcal">~1.290 kcal</span><span class="day-toggle">▾</span></div></div>
-  <div class="day-body">
-    <div class="meal-block"><div class="meal-tag desayuno">Desayuno</div><div class="meal-name">Yogur con plátano y avena</div><ul class="meal-items"><li>Yogur desnatado<span>250 g (2 uds)</span></li><li>Plátano<span>80 g (½ pieza)</span></li><li>Copos de avena<span>20 g</span></li></ul><div class="meal-kcal">≈ 270 kcal</div></div>
-    <div class="meal-block"><div class="meal-tag comida">Comida</div><div class="meal-name">Merluza al vapor con judías verdes y patata</div><ul class="meal-items"><li>Lomo de merluza<span>200 g</span></li><li>Judías verdes<span>150 g</span></li><li>Patata<span>100 g</span></li><li>Aceite de oliva<span>5 ml</span></li></ul><div class="meal-kcal">≈ 420 kcal</div></div>
-    <div class="meal-block"><div class="meal-tag cena">Cena</div><div class="meal-name">Pechuga a la plancha con pimiento asado</div><ul class="meal-items"><li>Pechuga de pollo<span>140 g</span></li><li>Pimiento rojo asado (bote)<span>100 g</span></li><li>Aceite de oliva<span>5 ml</span></li></ul><div class="meal-kcal">≈ 290 kcal</div></div>
-    <div class="meal-block"><div class="meal-tag snack">Snack</div><div class="meal-name">Naranja</div><ul class="meal-items"><li>Naranja<span>150 g</span></li></ul><div class="meal-kcal">≈ 60 kcal</div></div>
-  </div>
-</div>
-
-</div><!-- end sec-menu -->
-
-
-<!-- ===================== COMPRA ===================== -->
-<div class="section" id="sec-compra">
-
-<!-- SEMANA 1 -->
-<div class="shop-week">
-  <div class="shop-week-head">
-    <h3>Lista semana 1</h3>
-    <span class="shop-dates">1–7 de junio</span>
-  </div>
-  <div class="shop-categories">
-    <div class="shop-cat">
-      <h4>🥩 Proteínas</h4>
-      <label class="shop-item"><input type="checkbox"><label>Huevos (docena)</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Merluza (lomo) — 200 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Pechuga de pollo — 150 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Contramuslo de pollo — 360 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Salmón (lomo) — 150 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Bacalao desalado — 200 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Atún en lata al natural (2 latas)</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Pavo en lonchas — 60 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Jamón serrano — 40 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Queso fresco tipo Burgos — 120 g</label></label>
-    </div>
-    <div class="shop-cat">
-      <h4>🥦 Verduras y frutas</h4>
-      <label class="shop-item"><input type="checkbox"><label>Lechuga (bolsa) — 400 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Canónigos — 70 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Calabacín — 300 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Champiñones frescos — 160 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Judías verdes — 150 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Zanahoria — 80 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Puerro — 60 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Patata — 270 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Manzanas — 2 uds</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Naranjas — 1 ud</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Pera — 1 ud</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Plátano — 1 ud</label></label>
-    </div>
-    <div class="shop-cat">
-      <h4>🥫 Conservas y botes</h4>
-      <label class="shop-item"><input type="checkbox"><label>Maíz en lata</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Pimiento rojo asado (bote)</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Lentejas secas — 80 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Garbanzos cocidos (bote)</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Caldo de pollo (brick) — 800 ml</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Caldo de verduras (brick)</label></label>
-    </div>
-    <div class="shop-cat">
-      <h4>🍞 Lácteos y panadería</h4>
-      <label class="shop-item"><input type="checkbox"><label>Leche semidesnatada — 1 L</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Yogur desnatado natural — 6 uds</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Quesito ligero — 1 cajita</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Pan integral de molde — 1 barra</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Biscotes integrales — 1 paquete</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Copos de avena — 200 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Fideos finos — 30 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Almendras crudas — 15 g</label></label>
-    </div>
-  </div>
-</div>
-
-<!-- SEMANA 2 -->
-<div class="shop-week">
-  <div class="shop-week-head">
-    <h3>Lista semana 2</h3>
-    <span class="shop-dates">8–14 de junio</span>
-  </div>
-  <div class="shop-categories">
-    <div class="shop-cat">
-      <h4>🥩 Proteínas</h4>
-      <label class="shop-item"><input type="checkbox"><label>Huevos (docena)</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Pechuga de pollo — 400 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Merluza (lomo) — 400 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Sardinas frescas — 200 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Bacalao desalado — 160 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Cordero (pierna) — 150 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Atún en lata al natural (3 latas)</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Pavo en lonchas — 40 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Jamón serrano — 30 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Chorizo fresco — 30 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Queso fresco 0% — 100 g</label></label>
-    </div>
-    <div class="shop-cat">
-      <h4>🥦 Verduras y frutas</h4>
-      <label class="shop-item"><input type="checkbox"><label>Lechuga (bolsa) — 400 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Canónigos — 70 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Champiñones — 200 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Ajetes (ajos tiernos)</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Cebolla — 200 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Pimiento verde — 200 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Zanahoria — 120 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Patata — 200 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Espinacas — 60 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Pepino — 200 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Calabaza — 300 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Manzanas — 2 uds</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Naranjas — 1 ud</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Plátano — 1 ud</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Kiwis — 1 ud</label></label>
-    </div>
-    <div class="shop-cat">
-      <h4>🥫 Conservas y despensa</h4>
-      <label class="shop-item"><input type="checkbox"><label>Garbanzos cocidos (2 botes)</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Alubias blancas (bote)</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Lentejas secas — 80 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Tomate frito (bote) — 130 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Aceitunas (tarro)</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Caldo de pollo (brick) — 800 ml</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Caldo de verduras (brick)</label></label>
-    </div>
-    <div class="shop-cat">
-      <h4>🍞 Lácteos y panadería</h4>
-      <label class="shop-item"><input type="checkbox"><label>Leche semidesnatada — 2 L</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Yogur desnatado natural — 8 uds</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Quesito ligero — 1 cajita</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Pan integral de molde</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Biscotes integrales</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Copos de avena — 100 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Pasta integral — 80 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Arroz blanco — 60 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Cereales integrales sin azúcar — 40 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Nueces — 15 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Fideos finos — 30 g</label></label>
-    </div>
-  </div>
-</div>
-
-<!-- SEMANA 3 -->
-<div class="shop-week">
-  <div class="shop-week-head">
-    <h3>Lista semana 3</h3>
-    <span class="shop-dates">15–21 de junio</span>
-  </div>
-  <div class="shop-categories">
-    <div class="shop-cat">
-      <h4>🥩 Proteínas</h4>
-      <label class="shop-item"><input type="checkbox"><label>Huevos (docena)</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Pechuga de pollo — 500 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Contramuslo de pollo — 180 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Merluza (lomo) — 560 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Dorada (filetes) — 180 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Almejas — 60 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Atún al natural (2 latas)</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Carne picada de pavo — 120 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Pavo en lonchas — 40 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Jamón serrano — 40 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Queso fresco 0% — 80 g</label></label>
-    </div>
-    <div class="shop-cat">
-      <h4>🥦 Verduras y frutas</h4>
-      <label class="shop-item"><input type="checkbox"><label>Lechuga variada — 400 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Canónigos — 70 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Brócoli — 450 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Espárragos verdes — 150 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Espinacas — 100 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Puerros — 320 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Cebolla — 60 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Pimiento rojo y verde — 220 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Judías verdes — 300 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Patata — 360 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Zanahoria — 80 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Manzana — 1 ud</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Naranjas — 2 uds</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Plátano — 2 uds</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Pera — 1 ud</label></label>
-    </div>
-    <div class="shop-cat">
-      <h4>🥫 Conservas y despensa</h4>
-      <label class="shop-item"><input type="checkbox"><label>Garbanzos cocidos (bote)</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Maíz en lata</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Pimiento rojo asado (bote)</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Tomate frito (bote) — 80 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Caldo de pollo (brick) — 800 ml</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Caldo de verduras (brick)</label></label>
-    </div>
-    <div class="shop-cat">
-      <h4>🍞 Lácteos y panadería</h4>
-      <label class="shop-item"><input type="checkbox"><label>Leche semidesnatada — 2 L</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Yogur desnatado natural — 6 uds</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Quesito ligero — 1 cajita</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Pan integral de molde</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Copos de avena — 100 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Pasta integral — 160 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Arroz blanco — 135 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Cereales integrales — 40 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Nueces — 10 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Biscotes integrales</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Fideos finos — 40 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Mantequilla (pequeña)</label></label>
-    </div>
-  </div>
-</div>
-
-<!-- SEMANA 4 -->
-<div class="shop-week">
-  <div class="shop-week-head">
-    <h3>Lista semana 4</h3>
-    <span class="shop-dates">22–28 de junio</span>
-  </div>
-  <div class="shop-categories">
-    <div class="shop-cat">
-      <h4>🥩 Proteínas</h4>
-      <label class="shop-item"><input type="checkbox"><label>Huevos (docena)</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Pechuga de pollo — 290 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Contramuslo de pollo — 150 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Salmón (lomo) — 140 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Bacalao desalado — 180 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Dorada (filetes) — 180 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Atún al natural (3 latas)</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Sardinas en aceite (lata)</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Anchoas en aceite (lata)</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Jamón serrano — 55 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Jamón york/pavo — 50 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Chorizo (trozo) — 25 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Queso fresco 0% — 140 g</label></label>
-    </div>
-    <div class="shop-cat">
-      <h4>🥦 Verduras y frutas</h4>
-      <label class="shop-item"><input type="checkbox"><label>Lechuga variada — 400 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Espárragos verdes — 100 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Brócoli — 200 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Champiñones — 200 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Calabacín — 600 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Puerro — 130 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Cebolla — 120 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Pimiento rojo y verde — 460 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Pepino — 400 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Zanahoria — 120 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Patata — 220 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Frutos rojos congelados — 60 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Manzanas — 2 uds</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Naranjas — 2 uds</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Kiwi — 1 ud</label></label>
-    </div>
-    <div class="shop-cat">
-      <h4>🥫 Conservas y despensa</h4>
-      <label class="shop-item"><input type="checkbox"><label>Alubias pintas (bote)</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Lentejas secas — 80 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Pimiento rojo asado (bote)</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Tomate triturado (lata) — 80 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Aceitunas (tarro)</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Caldo de pollo (brick) — 400 ml</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Caldo de verduras (brick)</label></label>
-    </div>
-    <div class="shop-cat">
-      <h4>🍞 Lácteos y panadería</h4>
-      <label class="shop-item"><input type="checkbox"><label>Leche semidesnatada — 2 L</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Yogur desnatado natural — 8 uds</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Quesito ligero — 1 cajita</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Pan integral de molde</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Biscotes integrales</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Copos de avena — 50 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Pasta integral — 160 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Arroz blanco — 135 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Cereales integrales — 35 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Nueces — 10 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Miel (pequeño tarro)</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Fideos finos — 30 g</label></label>
-    </div>
-  </div>
-</div>
-
-<!-- SEMANA 5 -->
-<div class="shop-week">
-  <div class="shop-week-head">
-    <h3>Lista semana 5</h3>
-    <span class="shop-dates">29–30 de junio</span>
-  </div>
-  <div class="shop-categories">
-    <div class="shop-cat">
-      <h4>🥩 Proteínas</h4>
-      <label class="shop-item"><input type="checkbox"><label>Huevos — 3 uds</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Merluza (lomo) — 200 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Pechuga de pollo — 140 g</label></label>
-    </div>
-    <div class="shop-cat">
-      <h4>🥦 Verduras y frutas</h4>
-      <label class="shop-item"><input type="checkbox"><label>Lechuga — 160 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Judías verdes — 150 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Puerro — 70 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Zanahoria — 70 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Pepino — 60 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Patata — 100 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Pimiento rojo asado (bote)</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Manzana — 1 ud</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Naranja — 1 ud</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Plátano — 1 ud</label></label>
-    </div>
-    <div class="shop-cat">
-      <h4>🍞 Lácteos y panadería</h4>
-      <label class="shop-item"><input type="checkbox"><label>Leche semidesnatada — 400 ml</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Yogur desnatado — 4 uds</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Copos de avena — 70 g</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Lentejas secas — 80 g</label></label>
-    </div>
-    <div class="shop-cat">
-      <h4>🥫 Básicos de despensa</h4>
-      <label class="shop-item"><input type="checkbox"><label>Aceite de oliva virgen extra (reponer)</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Sal, pimienta, pimentón</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Ajo (cabeza)</label></label>
-      <label class="shop-item"><input type="checkbox"><label>Vinagre de vino</label></label>
-    </div>
-  </div>
-</div>
-
-</div><!-- end sec-compra -->
-
-</main>
-
+<script>const DATA = {"month": [{"day": 1, "template": "A", "meals": {"Desayuno": {"items": [{"food": "Copos de avena", "qty": 60, "unit": "g"}, {"food": "Leche semidesnatada", "qty": 200, "unit": "ml"}, {"food": "Platano", "qty": 100, "unit": "g"}], "kcal": 404, "prot": 15.5}, "Almuerzo": {"items": [{"food": "Pechuga de pollo (cruda)", "qty": 150, "unit": "g"}, {"food": "Arroz integral (crudo)", "qty": 60, "unit": "g"}, {"food": "Verdura variada congelada", "qty": 200, "unit": "g"}, {"food": "Aceite de oliva virgen extra", "qty": 8, "unit": "ml"}], "kcal": 507, "prot": 44.0}, "Merienda": {"items": [{"food": "Yogur griego natural 0%", "qty": 150, "unit": "g"}, {"food": "Almendras", "qty": 18, "unit": "g"}], "kcal": 194, "prot": 18.8}, "Cena": {"items": [{"food": "Merluza (cruda)", "qty": 190, "unit": "g"}, {"food": "Patata", "qty": 200, "unit": "g"}, {"food": "Pimiento", "qty": 100, "unit": "g"}, {"food": "Aceite de oliva virgen extra", "qty": 10, "unit": "ml"}], "kcal": 438, "prot": 37.3}}, "totalKcal": 1543, "totalProt": 115.6}, {"day": 2, "template": "B", "meals": {"Desayuno": {"items": [{"food": "Huevo (unidad M)", "qty": 2, "unit": "ud"}, {"food": "Pan integral de molde", "qty": 70, "unit": "g"}, {"food": "Naranja", "qty": 150, "unit": "g"}], "kcal": 402, "prot": 20.7}, "Almuerzo": {"items": [{"food": "Pavo fileteado (crudo)", "qty": 150, "unit": "g"}, {"food": "Quinoa (cruda)", "qty": 50, "unit": "g"}, {"food": "Calabacin", "qty": 150, "unit": "g"}, {"food": "Zanahoria", "qty": 100, "unit": "g"}, {"food": "Aceite de oliva virgen extra", "qty": 8, "unit": "ml"}], "kcal": 481, "prot": 42.7}, "Merienda": {"items": [{"food": "Queso fresco batido 0%", "qty": 150, "unit": "g"}, {"food": "Nueces", "qty": 18, "unit": "g"}, {"food": "Fresas", "qty": 100, "unit": "g"}], "kcal": 218, "prot": 15.4}, "Cena": {"items": [{"food": "Salmon (crudo)", "qty": 140, "unit": "g"}, {"food": "Boniato", "qty": 170, "unit": "g"}, {"food": "Verdura variada congelada", "qty": 150, "unit": "g"}], "kcal": 443, "prot": 34.5}}, "totalKcal": 1544, "totalProt": 113.3}, {"day": 3, "template": "C", "meals": {"Desayuno": {"items": [{"food": "Yogur griego natural 0%", "qty": 200, "unit": "g"}, {"food": "Copos de avena", "qty": 55, "unit": "g"}, {"food": "Arandanos", "qty": 80, "unit": "g"}], "kcal": 363, "prot": 27.7}, "Almuerzo": {"items": [{"food": "Garbanzos cocidos (bote)", "qty": 280, "unit": "g"}, {"food": "Atun al natural (lata, escurrido)", "qty": 90, "unit": "g"}, {"food": "Pimiento", "qty": 100, "unit": "g"}, {"food": "Lechuga", "qty": 50, "unit": "g"}, {"food": "Aceite de oliva virgen extra", "qty": 10, "unit": "ml"}], "kcal": 550, "prot": 44.2}, "Merienda": {"items": [{"food": "Platano", "qty": 120, "unit": "g"}, {"food": "Almendras", "qty": 18, "unit": "g"}], "kcal": 216, "prot": 5.1}, "Cena": {"items": [{"food": "Pechuga de pollo (cruda)", "qty": 170, "unit": "g"}, {"food": "Champinones", "qty": 150, "unit": "g"}, {"food": "Calabacin", "qty": 150, "unit": "g"}, {"food": "Aceite de oliva virgen extra", "qty": 10, "unit": "ml"}], "kcal": 336, "prot": 45.4}}, "totalKcal": 1465, "totalProt": 122.4}, {"day": 4, "template": "D", "meals": {"Desayuno": {"items": [{"food": "Pan integral de molde", "qty": 70, "unit": "g"}, {"food": "Huevo (unidad M)", "qty": 1, "unit": "ud"}, {"food": "Queso fresco batido 0%", "qty": 80, "unit": "g"}, {"food": "Manzana", "qty": 100, "unit": "g"}], "kcal": 341, "prot": 19.5}, "Almuerzo": {"items": [{"food": "Pasta integral (cruda)", "qty": 80, "unit": "g"}, {"food": "Pechuga de pollo (cruda)", "qty": 130, "unit": "g"}, {"food": "Tomate triturado (envase, cocido)", "qty": 100, "unit": "g"}, {"food": "Champinones", "qty": 100, "unit": "g"}, {"food": "Aceite de oliva virgen extra", "qty": 8, "unit": "ml"}], "kcal": 552, "prot": 44.6}, "Merienda": {"items": [{"food": "Yogur griego natural 0%", "qty": 150, "unit": "g"}, {"food": "Nueces", "qty": 18, "unit": "g"}], "kcal": 202, "prot": 17.7}, "Cena": {"items": [{"food": "Atun al natural (lata, escurrido)", "qty": 130, "unit": "g"}, {"food": "Patata", "qty": 170, "unit": "g"}, {"food": "Pimiento", "qty": 100, "unit": "g"}, {"food": "Lechuga", "qty": 50, "unit": "g"}, {"food": "Aceite de oliva virgen extra", "qty": 8, "unit": "ml"}], "kcal": 372, "prot": 36.2}}, "totalKcal": 1467, "totalProt": 118.0}, {"day": 5, "template": "E", "meals": {"Desayuno": {"items": [{"food": "Proteina en polvo (whey)", "qty": 30, "unit": "g"}, {"food": "Leche semidesnatada", "qty": 200, "unit": "ml"}, {"food": "Copos de avena", "qty": 45, "unit": "g"}, {"food": "Fresas", "qty": 100, "unit": "g"}], "kcal": 406, "prot": 37.2}, "Almuerzo": {"items": [{"food": "Lentejas cocidas (bote)", "qty": 280, "unit": "g"}, {"food": "Zanahoria", "qty": 100, "unit": "g"}, {"food": "Pimiento", "qty": 80, "unit": "g"}, {"food": "Pechuga de pollo (cruda)", "qty": 90, "unit": "g"}, {"food": "Aceite de oliva virgen extra", "qty": 8, "unit": "ml"}], "kcal": 541, "prot": 44.8}, "Merienda": {"items": [{"food": "Manzana", "qty": 150, "unit": "g"}, {"food": "Almendras", "qty": 18, "unit": "g"}], "kcal": 186, "prot": 4.2}, "Cena": {"items": [{"food": "Merluza (cruda)", "qty": 190, "unit": "g"}, {"food": "Boniato", "qty": 150, "unit": "g"}, {"food": "Verdura variada congelada", "qty": 150, "unit": "g"}], "kcal": 336, "prot": 38.4}}, "totalKcal": 1469, "totalProt": 124.6}, {"day": 6, "template": "F", "meals": {"Desayuno": {"items": [{"food": "Huevo (unidad M)", "qty": 2, "unit": "ud"}, {"food": "Pan integral de molde", "qty": 50, "unit": "g"}, {"food": "Naranja", "qty": 150, "unit": "g"}], "kcal": 352, "prot": 18.9}, "Almuerzo": {"items": [{"food": "Arroz integral (crudo)", "qty": 50, "unit": "g"}, {"food": "Salmon (crudo)", "qty": 120, "unit": "g"}, {"food": "Calabacin", "qty": 150, "unit": "g"}, {"food": "Zanahoria", "qty": 80, "unit": "g"}, {"food": "Aceite de oliva virgen extra", "qty": 6, "unit": "ml"}], "kcal": 503, "prot": 30.3}, "Merienda": {"items": [{"food": "Requeson", "qty": 150, "unit": "g"}, {"food": "Nueces", "qty": 15, "unit": "g"}, {"food": "Kiwi", "qty": 90, "unit": "g"}], "kcal": 299, "prot": 19.7}, "Cena": {"items": [{"food": "Pavo fileteado (crudo)", "qty": 160, "unit": "g"}, {"food": "Champinones", "qty": 150, "unit": "g"}, {"food": "Pimiento", "qty": 100, "unit": "g"}, {"food": "Aceite de oliva virgen extra", "qty": 8, "unit": "ml"}], "kcal": 299, "prot": 40.7}}, "totalKcal": 1453, "totalProt": 109.6}, {"day": 7, "template": "G", "meals": {"Desayuno": {"items": [{"food": "Yogur griego natural 0%", "qty": 200, "unit": "g"}, {"food": "Copos de avena", "qty": 55, "unit": "g"}, {"food": "Platano", "qty": 100, "unit": "g"}], "kcal": 408, "prot": 28.2}, "Almuerzo": {"items": [{"food": "Garbanzos cocidos (bote)", "qty": 250, "unit": "g"}, {"food": "Pechuga de pollo (cruda)", "qty": 130, "unit": "g"}, {"food": "Pimiento", "qty": 100, "unit": "g"}, {"food": "Lechuga", "qty": 50, "unit": "g"}, {"food": "Aceite de oliva virgen extra", "qty": 10, "unit": "ml"}], "kcal": 566, "prot": 50.3}, "Merienda": {"items": [{"food": "Pera", "qty": 150, "unit": "g"}, {"food": "Almendras", "qty": 18, "unit": "g"}], "kcal": 194, "prot": 4.4}, "Cena": {"items": [{"food": "Atun al natural (lata, escurrido)", "qty": 140, "unit": "g"}, {"food": "Patata", "qty": 170, "unit": "g"}, {"food": "Verdura variada congelada", "qty": 150, "unit": "g"}, {"food": "Aceite de oliva virgen extra", "qty": 8, "unit": "ml"}], "kcal": 393, "prot": 40.8}}, "totalKcal": 1561, "totalProt": 123.7}, {"day": 8, "template": "A", "meals": {"Desayuno": {"items": [{"food": "Copos de avena", "qty": 60, "unit": "g"}, {"food": "Leche semidesnatada", "qty": 200, "unit": "ml"}, {"food": "Platano", "qty": 100, "unit": "g"}], "kcal": 404, "prot": 15.5}, "Almuerzo": {"items": [{"food": "Pechuga de pollo (cruda)", "qty": 150, "unit": "g"}, {"food": "Arroz integral (crudo)", "qty": 60, "unit": "g"}, {"food": "Verdura variada congelada", "qty": 200, "unit": "g"}, {"food": "Aceite de oliva virgen extra", "qty": 8, "unit": "ml"}], "kcal": 507, "prot": 44.0}, "Merienda": {"items": [{"food": "Yogur griego natural 0%", "qty": 150, "unit": "g"}, {"food": "Almendras", "qty": 18, "unit": "g"}], "kcal": 194, "prot": 18.8}, "Cena": {"items": [{"food": "Merluza (cruda)", "qty": 190, "unit": "g"}, {"food": "Patata", "qty": 200, "unit": "g"}, {"food": "Pimiento", "qty": 100, "unit": "g"}, {"food": "Aceite de oliva virgen extra", "qty": 10, "unit": "ml"}], "kcal": 438, "prot": 37.3}}, "totalKcal": 1543, "totalProt": 115.6}, {"day": 9, "template": "B", "meals": {"Desayuno": {"items": [{"food": "Huevo (unidad M)", "qty": 2, "unit": "ud"}, {"food": "Pan integral de molde", "qty": 70, "unit": "g"}, {"food": "Naranja", "qty": 150, "unit": "g"}], "kcal": 402, "prot": 20.7}, "Almuerzo": {"items": [{"food": "Pavo fileteado (crudo)", "qty": 150, "unit": "g"}, {"food": "Quinoa (cruda)", "qty": 50, "unit": "g"}, {"food": "Calabacin", "qty": 150, "unit": "g"}, {"food": "Zanahoria", "qty": 100, "unit": "g"}, {"food": "Aceite de oliva virgen extra", "qty": 8, "unit": "ml"}], "kcal": 481, "prot": 42.7}, "Merienda": {"items": [{"food": "Queso fresco batido 0%", "qty": 150, "unit": "g"}, {"food": "Nueces", "qty": 18, "unit": "g"}, {"food": "Fresas", "qty": 100, "unit": "g"}], "kcal": 218, "prot": 15.4}, "Cena": {"items": [{"food": "Salmon (crudo)", "qty": 140, "unit": "g"}, {"food": "Boniato", "qty": 170, "unit": "g"}, {"food": "Verdura variada congelada", "qty": 150, "unit": "g"}], "kcal": 443, "prot": 34.5}}, "totalKcal": 1544, "totalProt": 113.3}, {"day": 10, "template": "C", "meals": {"Desayuno": {"items": [{"food": "Yogur griego natural 0%", "qty": 200, "unit": "g"}, {"food": "Copos de avena", "qty": 55, "unit": "g"}, {"food": "Arandanos", "qty": 80, "unit": "g"}], "kcal": 363, "prot": 27.7}, "Almuerzo": {"items": [{"food": "Garbanzos cocidos (bote)", "qty": 280, "unit": "g"}, {"food": "Atun al natural (lata, escurrido)", "qty": 90, "unit": "g"}, {"food": "Pimiento", "qty": 100, "unit": "g"}, {"food": "Lechuga", "qty": 50, "unit": "g"}, {"food": "Aceite de oliva virgen extra", "qty": 10, "unit": "ml"}], "kcal": 550, "prot": 44.2}, "Merienda": {"items": [{"food": "Platano", "qty": 120, "unit": "g"}, {"food": "Almendras", "qty": 18, "unit": "g"}], "kcal": 216, "prot": 5.1}, "Cena": {"items": [{"food": "Pechuga de pollo (cruda)", "qty": 170, "unit": "g"}, {"food": "Champinones", "qty": 150, "unit": "g"}, {"food": "Calabacin", "qty": 150, "unit": "g"}, {"food": "Aceite de oliva virgen extra", "qty": 10, "unit": "ml"}], "kcal": 336, "prot": 45.4}}, "totalKcal": 1465, "totalProt": 122.4}, {"day": 11, "template": "D", "meals": {"Desayuno": {"items": [{"food": "Pan integral de molde", "qty": 70, "unit": "g"}, {"food": "Huevo (unidad M)", "qty": 1, "unit": "ud"}, {"food": "Queso fresco batido 0%", "qty": 80, "unit": "g"}, {"food": "Manzana", "qty": 100, "unit": "g"}], "kcal": 341, "prot": 19.5}, "Almuerzo": {"items": [{"food": "Pasta integral (cruda)", "qty": 80, "unit": "g"}, {"food": "Pechuga de pollo (cruda)", "qty": 130, "unit": "g"}, {"food": "Tomate triturado (envase, cocido)", "qty": 100, "unit": "g"}, {"food": "Champinones", "qty": 100, "unit": "g"}, {"food": "Aceite de oliva virgen extra", "qty": 8, "unit": "ml"}], "kcal": 552, "prot": 44.6}, "Merienda": {"items": [{"food": "Yogur griego natural 0%", "qty": 150, "unit": "g"}, {"food": "Nueces", "qty": 18, "unit": "g"}], "kcal": 202, "prot": 17.7}, "Cena": {"items": [{"food": "Atun al natural (lata, escurrido)", "qty": 130, "unit": "g"}, {"food": "Patata", "qty": 170, "unit": "g"}, {"food": "Pimiento", "qty": 100, "unit": "g"}, {"food": "Lechuga", "qty": 50, "unit": "g"}, {"food": "Aceite de oliva virgen extra", "qty": 8, "unit": "ml"}], "kcal": 372, "prot": 36.2}}, "totalKcal": 1467, "totalProt": 118.0}, {"day": 12, "template": "E", "meals": {"Desayuno": {"items": [{"food": "Proteina en polvo (whey)", "qty": 30, "unit": "g"}, {"food": "Leche semidesnatada", "qty": 200, "unit": "ml"}, {"food": "Copos de avena", "qty": 45, "unit": "g"}, {"food": "Fresas", "qty": 100, "unit": "g"}], "kcal": 406, "prot": 37.2}, "Almuerzo": {"items": [{"food": "Lentejas cocidas (bote)", "qty": 280, "unit": "g"}, {"food": "Zanahoria", "qty": 100, "unit": "g"}, {"food": "Pimiento", "qty": 80, "unit": "g"}, {"food": "Pechuga de pollo (cruda)", "qty": 90, "unit": "g"}, {"food": "Aceite de oliva virgen extra", "qty": 8, "unit": "ml"}], "kcal": 541, "prot": 44.8}, "Merienda": {"items": [{"food": "Manzana", "qty": 150, "unit": "g"}, {"food": "Almendras", "qty": 18, "unit": "g"}], "kcal": 186, "prot": 4.2}, "Cena": {"items": [{"food": "Merluza (cruda)", "qty": 190, "unit": "g"}, {"food": "Boniato", "qty": 150, "unit": "g"}, {"food": "Verdura variada congelada", "qty": 150, "unit": "g"}], "kcal": 336, "prot": 38.4}}, "totalKcal": 1469, "totalProt": 124.6}, {"day": 13, "template": "F", "meals": {"Desayuno": {"items": [{"food": "Huevo (unidad M)", "qty": 2, "unit": "ud"}, {"food": "Pan integral de molde", "qty": 50, "unit": "g"}, {"food": "Naranja", "qty": 150, "unit": "g"}], "kcal": 352, "prot": 18.9}, "Almuerzo": {"items": [{"food": "Arroz integral (crudo)", "qty": 50, "unit": "g"}, {"food": "Salmon (crudo)", "qty": 120, "unit": "g"}, {"food": "Calabacin", "qty": 150, "unit": "g"}, {"food": "Zanahoria", "qty": 80, "unit": "g"}, {"food": "Aceite de oliva virgen extra", "qty": 6, "unit": "ml"}], "kcal": 503, "prot": 30.3}, "Merienda": {"items": [{"food": "Requeson", "qty": 150, "unit": "g"}, {"food": "Nueces", "qty": 15, "unit": "g"}, {"food": "Kiwi", "qty": 90, "unit": "g"}], "kcal": 299, "prot": 19.7}, "Cena": {"items": [{"food": "Pavo fileteado (crudo)", "qty": 160, "unit": "g"}, {"food": "Champinones", "qty": 150, "unit": "g"}, {"food": "Pimiento", "qty": 100, "unit": "g"}, {"food": "Aceite de oliva virgen extra", "qty": 8, "unit": "ml"}], "kcal": 299, "prot": 40.7}}, "totalKcal": 1453, "totalProt": 109.6}, {"day": 14, "template": "G", "meals": {"Desayuno": {"items": [{"food": "Yogur griego natural 0%", "qty": 200, "unit": "g"}, {"food": "Copos de avena", "qty": 55, "unit": "g"}, {"food": "Platano", "qty": 100, "unit": "g"}], "kcal": 408, "prot": 28.2}, "Almuerzo": {"items": [{"food": "Garbanzos cocidos (bote)", "qty": 250, "unit": "g"}, {"food": "Pechuga de pollo (cruda)", "qty": 130, "unit": "g"}, {"food": "Pimiento", "qty": 100, "unit": "g"}, {"food": "Lechuga", "qty": 50, "unit": "g"}, {"food": "Aceite de oliva virgen extra", "qty": 10, "unit": "ml"}], "kcal": 566, "prot": 50.3}, "Merienda": {"items": [{"food": "Pera", "qty": 150, "unit": "g"}, {"food": "Almendras", "qty": 18, "unit": "g"}], "kcal": 194, "prot": 4.4}, "Cena": {"items": [{"food": "Atun al natural (lata, escurrido)", "qty": 140, "unit": "g"}, {"food": "Patata", "qty": 170, "unit": "g"}, {"food": "Verdura variada congelada", "qty": 150, "unit": "g"}, {"food": "Aceite de oliva virgen extra", "qty": 8, "unit": "ml"}], "kcal": 393, "prot": 40.8}}, "totalKcal": 1561, "totalProt": 123.7}, {"day": 15, "template": "A", "meals": {"Desayuno": {"items": [{"food": "Copos de avena", "qty": 60, "unit": "g"}, {"food": "Leche semidesnatada", "qty": 200, "unit": "ml"}, {"food": "Platano", "qty": 100, "unit": "g"}], "kcal": 404, "prot": 15.5}, "Almuerzo": {"items": [{"food": "Pechuga de pollo (cruda)", "qty": 150, "unit": "g"}, {"food": "Arroz integral (crudo)", "qty": 60, "unit": "g"}, {"food": "Verdura variada congelada", "qty": 200, "unit": "g"}, {"food": "Aceite de oliva virgen extra", "qty": 8, "unit": "ml"}], "kcal": 507, "prot": 44.0}, "Merienda": {"items": [{"food": "Yogur griego natural 0%", "qty": 150, "unit": "g"}, {"food": "Almendras", "qty": 18, "unit": "g"}], "kcal": 194, "prot": 18.8}, "Cena": {"items": [{"food": "Merluza (cruda)", "qty": 190, "unit": "g"}, {"food": "Patata", "qty": 200, "unit": "g"}, {"food": "Pimiento", "qty": 100, "unit": "g"}, {"food": "Aceite de oliva virgen extra", "qty": 10, "unit": "ml"}], "kcal": 438, "prot": 37.3}}, "totalKcal": 1543, "totalProt": 115.6}, {"day": 16, "template": "B", "meals": {"Desayuno": {"items": [{"food": "Huevo (unidad M)", "qty": 2, "unit": "ud"}, {"food": "Pan integral de molde", "qty": 70, "unit": "g"}, {"food": "Naranja", "qty": 150, "unit": "g"}], "kcal": 402, "prot": 20.7}, "Almuerzo": {"items": [{"food": "Pavo fileteado (crudo)", "qty": 150, "unit": "g"}, {"food": "Quinoa (cruda)", "qty": 50, "unit": "g"}, {"food": "Calabacin", "qty": 150, "unit": "g"}, {"food": "Zanahoria", "qty": 100, "unit": "g"}, {"food": "Aceite de oliva virgen extra", "qty": 8, "unit": "ml"}], "kcal": 481, "prot": 42.7}, "Merienda": {"items": [{"food": "Queso fresco batido 0%", "qty": 150, "unit": "g"}, {"food": "Nueces", "qty": 18, "unit": "g"}, {"food": "Fresas", "qty": 100, "unit": "g"}], "kcal": 218, "prot": 15.4}, "Cena": {"items": [{"food": "Salmon (crudo)", "qty": 140, "unit": "g"}, {"food": "Boniato", "qty": 170, "unit": "g"}, {"food": "Verdura variada congelada", "qty": 150, "unit": "g"}], "kcal": 443, "prot": 34.5}}, "totalKcal": 1544, "totalProt": 113.3}, {"day": 17, "template": "C", "meals": {"Desayuno": {"items": [{"food": "Yogur griego natural 0%", "qty": 200, "unit": "g"}, {"food": "Copos de avena", "qty": 55, "unit": "g"}, {"food": "Arandanos", "qty": 80, "unit": "g"}], "kcal": 363, "prot": 27.7}, "Almuerzo": {"items": [{"food": "Garbanzos cocidos (bote)", "qty": 280, "unit": "g"}, {"food": "Atun al natural (lata, escurrido)", "qty": 90, "unit": "g"}, {"food": "Pimiento", "qty": 100, "unit": "g"}, {"food": "Lechuga", "qty": 50, "unit": "g"}, {"food": "Aceite de oliva virgen extra", "qty": 10, "unit": "ml"}], "kcal": 550, "prot": 44.2}, "Merienda": {"items": [{"food": "Platano", "qty": 120, "unit": "g"}, {"food": "Almendras", "qty": 18, "unit": "g"}], "kcal": 216, "prot": 5.1}, "Cena": {"items": [{"food": "Pechuga de pollo (cruda)", "qty": 170, "unit": "g"}, {"food": "Champinones", "qty": 150, "unit": "g"}, {"food": "Calabacin", "qty": 150, "unit": "g"}, {"food": "Aceite de oliva virgen extra", "qty": 10, "unit": "ml"}], "kcal": 336, "prot": 45.4}}, "totalKcal": 1465, "totalProt": 122.4}, {"day": 18, "template": "D", "meals": {"Desayuno": {"items": [{"food": "Pan integral de molde", "qty": 70, "unit": "g"}, {"food": "Huevo (unidad M)", "qty": 1, "unit": "ud"}, {"food": "Queso fresco batido 0%", "qty": 80, "unit": "g"}, {"food": "Manzana", "qty": 100, "unit": "g"}], "kcal": 341, "prot": 19.5}, "Almuerzo": {"items": [{"food": "Pasta integral (cruda)", "qty": 80, "unit": "g"}, {"food": "Pechuga de pollo (cruda)", "qty": 130, "unit": "g"}, {"food": "Tomate triturado (envase, cocido)", "qty": 100, "unit": "g"}, {"food": "Champinones", "qty": 100, "unit": "g"}, {"food": "Aceite de oliva virgen extra", "qty": 8, "unit": "ml"}], "kcal": 552, "prot": 44.6}, "Merienda": {"items": [{"food": "Yogur griego natural 0%", "qty": 150, "unit": "g"}, {"food": "Nueces", "qty": 18, "unit": "g"}], "kcal": 202, "prot": 17.7}, "Cena": {"items": [{"food": "Atun al natural (lata, escurrido)", "qty": 130, "unit": "g"}, {"food": "Patata", "qty": 170, "unit": "g"}, {"food": "Pimiento", "qty": 100, "unit": "g"}, {"food": "Lechuga", "qty": 50, "unit": "g"}, {"food": "Aceite de oliva virgen extra", "qty": 8, "unit": "ml"}], "kcal": 372, "prot": 36.2}}, "totalKcal": 1467, "totalProt": 118.0}, {"day": 19, "template": "E", "meals": {"Desayuno": {"items": [{"food": "Proteina en polvo (whey)", "qty": 30, "unit": "g"}, {"food": "Leche semidesnatada", "qty": 200, "unit": "ml"}, {"food": "Copos de avena", "qty": 45, "unit": "g"}, {"food": "Fresas", "qty": 100, "unit": "g"}], "kcal": 406, "prot": 37.2}, "Almuerzo": {"items": [{"food": "Lentejas cocidas (bote)", "qty": 280, "unit": "g"}, {"food": "Zanahoria", "qty": 100, "unit": "g"}, {"food": "Pimiento", "qty": 80, "unit": "g"}, {"food": "Pechuga de pollo (cruda)", "qty": 90, "unit": "g"}, {"food": "Aceite de oliva virgen extra", "qty": 8, "unit": "ml"}], "kcal": 541, "prot": 44.8}, "Merienda": {"items": [{"food": "Manzana", "qty": 150, "unit": "g"}, {"food": "Almendras", "qty": 18, "unit": "g"}], "kcal": 186, "prot": 4.2}, "Cena": {"items": [{"food": "Merluza (cruda)", "qty": 190, "unit": "g"}, {"food": "Boniato", "qty": 150, "unit": "g"}, {"food": "Verdura variada congelada", "qty": 150, "unit": "g"}], "kcal": 336, "prot": 38.4}}, "totalKcal": 1469, "totalProt": 124.6}, {"day": 20, "template": "F", "meals": {"Desayuno": {"items": [{"food": "Huevo (unidad M)", "qty": 2, "unit": "ud"}, {"food": "Pan integral de molde", "qty": 50, "unit": "g"}, {"food": "Naranja", "qty": 150, "unit": "g"}], "kcal": 352, "prot": 18.9}, "Almuerzo": {"items": [{"food": "Arroz integral (crudo)", "qty": 50, "unit": "g"}, {"food": "Salmon (crudo)", "qty": 120, "unit": "g"}, {"food": "Calabacin", "qty": 150, "unit": "g"}, {"food": "Zanahoria", "qty": 80, "unit": "g"}, {"food": "Aceite de oliva virgen extra", "qty": 6, "unit": "ml"}], "kcal": 503, "prot": 30.3}, "Merienda": {"items": [{"food": "Requeson", "qty": 150, "unit": "g"}, {"food": "Nueces", "qty": 15, "unit": "g"}, {"food": "Kiwi", "qty": 90, "unit": "g"}], "kcal": 299, "prot": 19.7}, "Cena": {"items": [{"food": "Pavo fileteado (crudo)", "qty": 160, "unit": "g"}, {"food": "Champinones", "qty": 150, "unit": "g"}, {"food": "Pimiento", "qty": 100, "unit": "g"}, {"food": "Aceite de oliva virgen extra", "qty": 8, "unit": "ml"}], "kcal": 299, "prot": 40.7}}, "totalKcal": 1453, "totalProt": 109.6}, {"day": 21, "template": "G", "meals": {"Desayuno": {"items": [{"food": "Yogur griego natural 0%", "qty": 200, "unit": "g"}, {"food": "Copos de avena", "qty": 55, "unit": "g"}, {"food": "Platano", "qty": 100, "unit": "g"}], "kcal": 408, "prot": 28.2}, "Almuerzo": {"items": [{"food": "Garbanzos cocidos (bote)", "qty": 250, "unit": "g"}, {"food": "Pechuga de pollo (cruda)", "qty": 130, "unit": "g"}, {"food": "Pimiento", "qty": 100, "unit": "g"}, {"food": "Lechuga", "qty": 50, "unit": "g"}, {"food": "Aceite de oliva virgen extra", "qty": 10, "unit": "ml"}], "kcal": 566, "prot": 50.3}, "Merienda": {"items": [{"food": "Pera", "qty": 150, "unit": "g"}, {"food": "Almendras", "qty": 18, "unit": "g"}], "kcal": 194, "prot": 4.4}, "Cena": {"items": [{"food": "Atun al natural (lata, escurrido)", "qty": 140, "unit": "g"}, {"food": "Patata", "qty": 170, "unit": "g"}, {"food": "Verdura variada congelada", "qty": 150, "unit": "g"}, {"food": "Aceite de oliva virgen extra", "qty": 8, "unit": "ml"}], "kcal": 393, "prot": 40.8}}, "totalKcal": 1561, "totalProt": 123.7}, {"day": 22, "template": "A", "meals": {"Desayuno": {"items": [{"food": "Copos de avena", "qty": 60, "unit": "g"}, {"food": "Leche semidesnatada", "qty": 200, "unit": "ml"}, {"food": "Platano", "qty": 100, "unit": "g"}], "kcal": 404, "prot": 15.5}, "Almuerzo": {"items": [{"food": "Pechuga de pollo (cruda)", "qty": 150, "unit": "g"}, {"food": "Arroz integral (crudo)", "qty": 60, "unit": "g"}, {"food": "Verdura variada congelada", "qty": 200, "unit": "g"}, {"food": "Aceite de oliva virgen extra", "qty": 8, "unit": "ml"}], "kcal": 507, "prot": 44.0}, "Merienda": {"items": [{"food": "Yogur griego natural 0%", "qty": 150, "unit": "g"}, {"food": "Almendras", "qty": 18, "unit": "g"}], "kcal": 194, "prot": 18.8}, "Cena": {"items": [{"food": "Merluza (cruda)", "qty": 190, "unit": "g"}, {"food": "Patata", "qty": 200, "unit": "g"}, {"food": "Pimiento", "qty": 100, "unit": "g"}, {"food": "Aceite de oliva virgen extra", "qty": 10, "unit": "ml"}], "kcal": 438, "prot": 37.3}}, "totalKcal": 1543, "totalProt": 115.6}, {"day": 23, "template": "B", "meals": {"Desayuno": {"items": [{"food": "Huevo (unidad M)", "qty": 2, "unit": "ud"}, {"food": "Pan integral de molde", "qty": 70, "unit": "g"}, {"food": "Naranja", "qty": 150, "unit": "g"}], "kcal": 402, "prot": 20.7}, "Almuerzo": {"items": [{"food": "Pavo fileteado (crudo)", "qty": 150, "unit": "g"}, {"food": "Quinoa (cruda)", "qty": 50, "unit": "g"}, {"food": "Calabacin", "qty": 150, "unit": "g"}, {"food": "Zanahoria", "qty": 100, "unit": "g"}, {"food": "Aceite de oliva virgen extra", "qty": 8, "unit": "ml"}], "kcal": 481, "prot": 42.7}, "Merienda": {"items": [{"food": "Queso fresco batido 0%", "qty": 150, "unit": "g"}, {"food": "Nueces", "qty": 18, "unit": "g"}, {"food": "Fresas", "qty": 100, "unit": "g"}], "kcal": 218, "prot": 15.4}, "Cena": {"items": [{"food": "Salmon (crudo)", "qty": 140, "unit": "g"}, {"food": "Boniato", "qty": 170, "unit": "g"}, {"food": "Verdura variada congelada", "qty": 150, "unit": "g"}], "kcal": 443, "prot": 34.5}}, "totalKcal": 1544, "totalProt": 113.3}, {"day": 24, "template": "C", "meals": {"Desayuno": {"items": [{"food": "Yogur griego natural 0%", "qty": 200, "unit": "g"}, {"food": "Copos de avena", "qty": 55, "unit": "g"}, {"food": "Arandanos", "qty": 80, "unit": "g"}], "kcal": 363, "prot": 27.7}, "Almuerzo": {"items": [{"food": "Garbanzos cocidos (bote)", "qty": 280, "unit": "g"}, {"food": "Atun al natural (lata, escurrido)", "qty": 90, "unit": "g"}, {"food": "Pimiento", "qty": 100, "unit": "g"}, {"food": "Lechuga", "qty": 50, "unit": "g"}, {"food": "Aceite de oliva virgen extra", "qty": 10, "unit": "ml"}], "kcal": 550, "prot": 44.2}, "Merienda": {"items": [{"food": "Platano", "qty": 120, "unit": "g"}, {"food": "Almendras", "qty": 18, "unit": "g"}], "kcal": 216, "prot": 5.1}, "Cena": {"items": [{"food": "Pechuga de pollo (cruda)", "qty": 170, "unit": "g"}, {"food": "Champinones", "qty": 150, "unit": "g"}, {"food": "Calabacin", "qty": 150, "unit": "g"}, {"food": "Aceite de oliva virgen extra", "qty": 10, "unit": "ml"}], "kcal": 336, "prot": 45.4}}, "totalKcal": 1465, "totalProt": 122.4}, {"day": 25, "template": "D", "meals": {"Desayuno": {"items": [{"food": "Pan integral de molde", "qty": 70, "unit": "g"}, {"food": "Huevo (unidad M)", "qty": 1, "unit": "ud"}, {"food": "Queso fresco batido 0%", "qty": 80, "unit": "g"}, {"food": "Manzana", "qty": 100, "unit": "g"}], "kcal": 341, "prot": 19.5}, "Almuerzo": {"items": [{"food": "Pasta integral (cruda)", "qty": 80, "unit": "g"}, {"food": "Pechuga de pollo (cruda)", "qty": 130, "unit": "g"}, {"food": "Tomate triturado (envase, cocido)", "qty": 100, "unit": "g"}, {"food": "Champinones", "qty": 100, "unit": "g"}, {"food": "Aceite de oliva virgen extra", "qty": 8, "unit": "ml"}], "kcal": 552, "prot": 44.6}, "Merienda": {"items": [{"food": "Yogur griego natural 0%", "qty": 150, "unit": "g"}, {"food": "Nueces", "qty": 18, "unit": "g"}], "kcal": 202, "prot": 17.7}, "Cena": {"items": [{"food": "Atun al natural (lata, escurrido)", "qty": 130, "unit": "g"}, {"food": "Patata", "qty": 170, "unit": "g"}, {"food": "Pimiento", "qty": 100, "unit": "g"}, {"food": "Lechuga", "qty": 50, "unit": "g"}, {"food": "Aceite de oliva virgen extra", "qty": 8, "unit": "ml"}], "kcal": 372, "prot": 36.2}}, "totalKcal": 1467, "totalProt": 118.0}, {"day": 26, "template": "E", "meals": {"Desayuno": {"items": [{"food": "Proteina en polvo (whey)", "qty": 30, "unit": "g"}, {"food": "Leche semidesnatada", "qty": 200, "unit": "ml"}, {"food": "Copos de avena", "qty": 45, "unit": "g"}, {"food": "Fresas", "qty": 100, "unit": "g"}], "kcal": 406, "prot": 37.2}, "Almuerzo": {"items": [{"food": "Lentejas cocidas (bote)", "qty": 280, "unit": "g"}, {"food": "Zanahoria", "qty": 100, "unit": "g"}, {"food": "Pimiento", "qty": 80, "unit": "g"}, {"food": "Pechuga de pollo (cruda)", "qty": 90, "unit": "g"}, {"food": "Aceite de oliva virgen extra", "qty": 8, "unit": "ml"}], "kcal": 541, "prot": 44.8}, "Merienda": {"items": [{"food": "Manzana", "qty": 150, "unit": "g"}, {"food": "Almendras", "qty": 18, "unit": "g"}], "kcal": 186, "prot": 4.2}, "Cena": {"items": [{"food": "Merluza (cruda)", "qty": 190, "unit": "g"}, {"food": "Boniato", "qty": 150, "unit": "g"}, {"food": "Verdura variada congelada", "qty": 150, "unit": "g"}], "kcal": 336, "prot": 38.4}}, "totalKcal": 1469, "totalProt": 124.6}, {"day": 27, "template": "F", "meals": {"Desayuno": {"items": [{"food": "Huevo (unidad M)", "qty": 2, "unit": "ud"}, {"food": "Pan integral de molde", "qty": 50, "unit": "g"}, {"food": "Naranja", "qty": 150, "unit": "g"}], "kcal": 352, "prot": 18.9}, "Almuerzo": {"items": [{"food": "Arroz integral (crudo)", "qty": 50, "unit": "g"}, {"food": "Salmon (crudo)", "qty": 120, "unit": "g"}, {"food": "Calabacin", "qty": 150, "unit": "g"}, {"food": "Zanahoria", "qty": 80, "unit": "g"}, {"food": "Aceite de oliva virgen extra", "qty": 6, "unit": "ml"}], "kcal": 503, "prot": 30.3}, "Merienda": {"items": [{"food": "Requeson", "qty": 150, "unit": "g"}, {"food": "Nueces", "qty": 15, "unit": "g"}, {"food": "Kiwi", "qty": 90, "unit": "g"}], "kcal": 299, "prot": 19.7}, "Cena": {"items": [{"food": "Pavo fileteado (crudo)", "qty": 160, "unit": "g"}, {"food": "Champinones", "qty": 150, "unit": "g"}, {"food": "Pimiento", "qty": 100, "unit": "g"}, {"food": "Aceite de oliva virgen extra", "qty": 8, "unit": "ml"}], "kcal": 299, "prot": 40.7}}, "totalKcal": 1453, "totalProt": 109.6}, {"day": 28, "template": "G", "meals": {"Desayuno": {"items": [{"food": "Yogur griego natural 0%", "qty": 200, "unit": "g"}, {"food": "Copos de avena", "qty": 55, "unit": "g"}, {"food": "Platano", "qty": 100, "unit": "g"}], "kcal": 408, "prot": 28.2}, "Almuerzo": {"items": [{"food": "Garbanzos cocidos (bote)", "qty": 250, "unit": "g"}, {"food": "Pechuga de pollo (cruda)", "qty": 130, "unit": "g"}, {"food": "Pimiento", "qty": 100, "unit": "g"}, {"food": "Lechuga", "qty": 50, "unit": "g"}, {"food": "Aceite de oliva virgen extra", "qty": 10, "unit": "ml"}], "kcal": 566, "prot": 50.3}, "Merienda": {"items": [{"food": "Pera", "qty": 150, "unit": "g"}, {"food": "Almendras", "qty": 18, "unit": "g"}], "kcal": 194, "prot": 4.4}, "Cena": {"items": [{"food": "Atun al natural (lata, escurrido)", "qty": 140, "unit": "g"}, {"food": "Patata", "qty": 170, "unit": "g"}, {"food": "Verdura variada congelada", "qty": 150, "unit": "g"}, {"food": "Aceite de oliva virgen extra", "qty": 8, "unit": "ml"}], "kcal": 393, "prot": 40.8}}, "totalKcal": 1561, "totalProt": 123.7}, {"day": 29, "template": "A", "meals": {"Desayuno": {"items": [{"food": "Copos de avena", "qty": 60, "unit": "g"}, {"food": "Leche semidesnatada", "qty": 200, "unit": "ml"}, {"food": "Platano", "qty": 100, "unit": "g"}], "kcal": 404, "prot": 15.5}, "Almuerzo": {"items": [{"food": "Pechuga de pollo (cruda)", "qty": 150, "unit": "g"}, {"food": "Arroz integral (crudo)", "qty": 60, "unit": "g"}, {"food": "Verdura variada congelada", "qty": 200, "unit": "g"}, {"food": "Aceite de oliva virgen extra", "qty": 8, "unit": "ml"}], "kcal": 507, "prot": 44.0}, "Merienda": {"items": [{"food": "Yogur griego natural 0%", "qty": 150, "unit": "g"}, {"food": "Almendras", "qty": 18, "unit": "g"}], "kcal": 194, "prot": 18.8}, "Cena": {"items": [{"food": "Merluza (cruda)", "qty": 190, "unit": "g"}, {"food": "Patata", "qty": 200, "unit": "g"}, {"food": "Pimiento", "qty": 100, "unit": "g"}, {"food": "Aceite de oliva virgen extra", "qty": 10, "unit": "ml"}], "kcal": 438, "prot": 37.3}}, "totalKcal": 1543, "totalProt": 115.6}, {"day": 30, "template": "B", "meals": {"Desayuno": {"items": [{"food": "Huevo (unidad M)", "qty": 2, "unit": "ud"}, {"food": "Pan integral de molde", "qty": 70, "unit": "g"}, {"food": "Naranja", "qty": 150, "unit": "g"}], "kcal": 402, "prot": 20.7}, "Almuerzo": {"items": [{"food": "Pavo fileteado (crudo)", "qty": 150, "unit": "g"}, {"food": "Quinoa (cruda)", "qty": 50, "unit": "g"}, {"food": "Calabacin", "qty": 150, "unit": "g"}, {"food": "Zanahoria", "qty": 100, "unit": "g"}, {"food": "Aceite de oliva virgen extra", "qty": 8, "unit": "ml"}], "kcal": 481, "prot": 42.7}, "Merienda": {"items": [{"food": "Queso fresco batido 0%", "qty": 150, "unit": "g"}, {"food": "Nueces", "qty": 18, "unit": "g"}, {"food": "Fresas", "qty": 100, "unit": "g"}], "kcal": 218, "prot": 15.4}, "Cena": {"items": [{"food": "Salmon (crudo)", "qty": 140, "unit": "g"}, {"food": "Boniato", "qty": 170, "unit": "g"}, {"food": "Verdura variada congelada", "qty": 150, "unit": "g"}], "kcal": 443, "prot": 34.5}}, "totalKcal": 1544, "totalProt": 113.3}, {"day": 31, "template": "C", "meals": {"Desayuno": {"items": [{"food": "Yogur griego natural 0%", "qty": 200, "unit": "g"}, {"food": "Copos de avena", "qty": 55, "unit": "g"}, {"food": "Arandanos", "qty": 80, "unit": "g"}], "kcal": 363, "prot": 27.7}, "Almuerzo": {"items": [{"food": "Garbanzos cocidos (bote)", "qty": 280, "unit": "g"}, {"food": "Atun al natural (lata, escurrido)", "qty": 90, "unit": "g"}, {"food": "Pimiento", "qty": 100, "unit": "g"}, {"food": "Lechuga", "qty": 50, "unit": "g"}, {"food": "Aceite de oliva virgen extra", "qty": 10, "unit": "ml"}], "kcal": 550, "prot": 44.2}, "Merienda": {"items": [{"food": "Platano", "qty": 120, "unit": "g"}, {"food": "Almendras", "qty": 18, "unit": "g"}], "kcal": 216, "prot": 5.1}, "Cena": {"items": [{"food": "Pechuga de pollo (cruda)", "qty": 170, "unit": "g"}, {"food": "Champinones", "qty": 150, "unit": "g"}, {"food": "Calabacin", "qty": 150, "unit": "g"}, {"food": "Aceite de oliva virgen extra", "qty": 10, "unit": "ml"}], "kcal": 336, "prot": 45.4}}, "totalKcal": 1465, "totalProt": 122.4}], "shopping": [{"label": "Semana 1", "days": [1, 2, 3, 4, 5, 6, 7], "items": [{"food": "Aceite de oliva virgen extra", "display": "102 ml"}, {"food": "Almendras", "display": "72 g"}, {"food": "Arandanos", "display": "80 g"}, {"food": "Arroz integral (crudo)", "display": "110 g"}, {"food": "Atun al natural (lata, escurrido)", "display": "360 g"}, {"food": "Boniato", "display": "320 g"}, {"food": "Calabacin", "display": "450 g"}, {"food": "Champinones", "display": "400 g"}, {"food": "Copos de avena", "display": "215 g"}, {"food": "Fresas", "display": "200 g"}, {"food": "Garbanzos cocidos (bote)", "display": "530 g"}, {"food": "Huevo (unidad M)", "display": "5 unidades"}, {"food": "Kiwi", "display": "90 g"}, {"food": "Leche semidesnatada", "display": "400 ml"}, {"food": "Lechuga", "display": "150 g"}, {"food": "Lentejas cocidas (bote)", "display": "280 g"}, {"food": "Manzana", "display": "250 g"}, {"food": "Merluza (cruda)", "display": "380 g"}, {"food": "Naranja", "display": "300 g"}, {"food": "Nueces", "display": "51 g"}, {"food": "Pan integral de molde", "display": "190 g"}, {"food": "Pasta integral (cruda)", "display": "80 g"}, {"food": "Patata", "display": "540 g"}, {"food": "Pavo fileteado (crudo)", "display": "310 g"}, {"food": "Pechuga de pollo (cruda)", "display": "670 g"}, {"food": "Pera", "display": "150 g"}, {"food": "Pimiento", "display": "580 g"}, {"food": "Platano", "display": "320 g"}, {"food": "Proteina en polvo (whey)", "display": "30 g"}, {"food": "Queso fresco batido 0%", "display": "230 g"}, {"food": "Quinoa (cruda)", "display": "50 g"}, {"food": "Requeson", "display": "150 g"}, {"food": "Salmon (crudo)", "display": "260 g"}, {"food": "Tomate triturado (envase, cocido)", "display": "100 g"}, {"food": "Verdura variada congelada", "display": "650 g"}, {"food": "Yogur griego natural 0%", "display": "700 g"}, {"food": "Zanahoria", "display": "280 g"}]}, {"label": "Semana 2", "days": [8, 9, 10, 11, 12, 13, 14], "items": [{"food": "Aceite de oliva virgen extra", "display": "102 ml"}, {"food": "Almendras", "display": "72 g"}, {"food": "Arandanos", "display": "80 g"}, {"food": "Arroz integral (crudo)", "display": "110 g"}, {"food": "Atun al natural (lata, escurrido)", "display": "360 g"}, {"food": "Boniato", "display": "320 g"}, {"food": "Calabacin", "display": "450 g"}, {"food": "Champinones", "display": "400 g"}, {"food": "Copos de avena", "display": "215 g"}, {"food": "Fresas", "display": "200 g"}, {"food": "Garbanzos cocidos (bote)", "display": "530 g"}, {"food": "Huevo (unidad M)", "display": "5 unidades"}, {"food": "Kiwi", "display": "90 g"}, {"food": "Leche semidesnatada", "display": "400 ml"}, {"food": "Lechuga", "display": "150 g"}, {"food": "Lentejas cocidas (bote)", "display": "280 g"}, {"food": "Manzana", "display": "250 g"}, {"food": "Merluza (cruda)", "display": "380 g"}, {"food": "Naranja", "display": "300 g"}, {"food": "Nueces", "display": "51 g"}, {"food": "Pan integral de molde", "display": "190 g"}, {"food": "Pasta integral (cruda)", "display": "80 g"}, {"food": "Patata", "display": "540 g"}, {"food": "Pavo fileteado (crudo)", "display": "310 g"}, {"food": "Pechuga de pollo (cruda)", "display": "670 g"}, {"food": "Pera", "display": "150 g"}, {"food": "Pimiento", "display": "580 g"}, {"food": "Platano", "display": "320 g"}, {"food": "Proteina en polvo (whey)", "display": "30 g"}, {"food": "Queso fresco batido 0%", "display": "230 g"}, {"food": "Quinoa (cruda)", "display": "50 g"}, {"food": "Requeson", "display": "150 g"}, {"food": "Salmon (crudo)", "display": "260 g"}, {"food": "Tomate triturado (envase, cocido)", "display": "100 g"}, {"food": "Verdura variada congelada", "display": "650 g"}, {"food": "Yogur griego natural 0%", "display": "700 g"}, {"food": "Zanahoria", "display": "280 g"}]}, {"label": "Semana 3", "days": [15, 16, 17, 18, 19, 20, 21], "items": [{"food": "Aceite de oliva virgen extra", "display": "102 ml"}, {"food": "Almendras", "display": "72 g"}, {"food": "Arandanos", "display": "80 g"}, {"food": "Arroz integral (crudo)", "display": "110 g"}, {"food": "Atun al natural (lata, escurrido)", "display": "360 g"}, {"food": "Boniato", "display": "320 g"}, {"food": "Calabacin", "display": "450 g"}, {"food": "Champinones", "display": "400 g"}, {"food": "Copos de avena", "display": "215 g"}, {"food": "Fresas", "display": "200 g"}, {"food": "Garbanzos cocidos (bote)", "display": "530 g"}, {"food": "Huevo (unidad M)", "display": "5 unidades"}, {"food": "Kiwi", "display": "90 g"}, {"food": "Leche semidesnatada", "display": "400 ml"}, {"food": "Lechuga", "display": "150 g"}, {"food": "Lentejas cocidas (bote)", "display": "280 g"}, {"food": "Manzana", "display": "250 g"}, {"food": "Merluza (cruda)", "display": "380 g"}, {"food": "Naranja", "display": "300 g"}, {"food": "Nueces", "display": "51 g"}, {"food": "Pan integral de molde", "display": "190 g"}, {"food": "Pasta integral (cruda)", "display": "80 g"}, {"food": "Patata", "display": "540 g"}, {"food": "Pavo fileteado (crudo)", "display": "310 g"}, {"food": "Pechuga de pollo (cruda)", "display": "670 g"}, {"food": "Pera", "display": "150 g"}, {"food": "Pimiento", "display": "580 g"}, {"food": "Platano", "display": "320 g"}, {"food": "Proteina en polvo (whey)", "display": "30 g"}, {"food": "Queso fresco batido 0%", "display": "230 g"}, {"food": "Quinoa (cruda)", "display": "50 g"}, {"food": "Requeson", "display": "150 g"}, {"food": "Salmon (crudo)", "display": "260 g"}, {"food": "Tomate triturado (envase, cocido)", "display": "100 g"}, {"food": "Verdura variada congelada", "display": "650 g"}, {"food": "Yogur griego natural 0%", "display": "700 g"}, {"food": "Zanahoria", "display": "280 g"}]}, {"label": "Semana 4", "days": [22, 23, 24, 25, 26, 27, 28], "items": [{"food": "Aceite de oliva virgen extra", "display": "102 ml"}, {"food": "Almendras", "display": "72 g"}, {"food": "Arandanos", "display": "80 g"}, {"food": "Arroz integral (crudo)", "display": "110 g"}, {"food": "Atun al natural (lata, escurrido)", "display": "360 g"}, {"food": "Boniato", "display": "320 g"}, {"food": "Calabacin", "display": "450 g"}, {"food": "Champinones", "display": "400 g"}, {"food": "Copos de avena", "display": "215 g"}, {"food": "Fresas", "display": "200 g"}, {"food": "Garbanzos cocidos (bote)", "display": "530 g"}, {"food": "Huevo (unidad M)", "display": "5 unidades"}, {"food": "Kiwi", "display": "90 g"}, {"food": "Leche semidesnatada", "display": "400 ml"}, {"food": "Lechuga", "display": "150 g"}, {"food": "Lentejas cocidas (bote)", "display": "280 g"}, {"food": "Manzana", "display": "250 g"}, {"food": "Merluza (cruda)", "display": "380 g"}, {"food": "Naranja", "display": "300 g"}, {"food": "Nueces", "display": "51 g"}, {"food": "Pan integral de molde", "display": "190 g"}, {"food": "Pasta integral (cruda)", "display": "80 g"}, {"food": "Patata", "display": "540 g"}, {"food": "Pavo fileteado (crudo)", "display": "310 g"}, {"food": "Pechuga de pollo (cruda)", "display": "670 g"}, {"food": "Pera", "display": "150 g"}, {"food": "Pimiento", "display": "580 g"}, {"food": "Platano", "display": "320 g"}, {"food": "Proteina en polvo (whey)", "display": "30 g"}, {"food": "Queso fresco batido 0%", "display": "230 g"}, {"food": "Quinoa (cruda)", "display": "50 g"}, {"food": "Requeson", "display": "150 g"}, {"food": "Salmon (crudo)", "display": "260 g"}, {"food": "Tomate triturado (envase, cocido)", "display": "100 g"}, {"food": "Verdura variada congelada", "display": "650 g"}, {"food": "Yogur griego natural 0%", "display": "700 g"}, {"food": "Zanahoria", "display": "280 g"}]}, {"label": "Semana 5 (dias 29-31)", "days": [29, 30, 31], "items": [{"food": "Aceite de oliva virgen extra", "display": "46 ml"}, {"food": "Almendras", "display": "36 g"}, {"food": "Arandanos", "display": "80 g"}, {"food": "Arroz integral (crudo)", "display": "60 g"}, {"food": "Atun al natural (lata, escurrido)", "display": "90 g"}, {"food": "Boniato", "display": "170 g"}, {"food": "Calabacin", "display": "300 g"}, {"food": "Champinones", "display": "150 g"}, {"food": "Copos de avena", "display": "115 g"}, {"food": "Fresas", "display": "100 g"}, {"food": "Garbanzos cocidos (bote)", "display": "280 g"}, {"food": "Huevo (unidad M)", "display": "2 unidades"}, {"food": "Leche semidesnatada", "display": "200 ml"}, {"food": "Lechuga", "display": "50 g"}, {"food": "Merluza (cruda)", "display": "190 g"}, {"food": "Naranja", "display": "150 g"}, {"food": "Nueces", "display": "18 g"}, {"food": "Pan integral de molde", "display": "70 g"}, {"food": "Patata", "display": "200 g"}, {"food": "Pavo fileteado (crudo)", "display": "150 g"}, {"food": "Pechuga de pollo (cruda)", "display": "320 g"}, {"food": "Pimiento", "display": "200 g"}, {"food": "Platano", "display": "220 g"}, {"food": "Queso fresco batido 0%", "display": "150 g"}, {"food": "Quinoa (cruda)", "display": "50 g"}, {"food": "Salmon (crudo)", "display": "140 g"}, {"food": "Verdura variada congelada", "display": "350 g"}, {"food": "Yogur griego natural 0%", "display": "350 g"}, {"food": "Zanahoria", "display": "100 g"}]}], "foods": {"Copos de avena": {"kcal": 370, "prot": 13, "unit": "g"}, "Leche semidesnatada": {"kcal": 46, "prot": 3.3, "unit": "ml"}, "Huevo (unidad M)": {"kcal": 78, "prot": 6.5, "unit": "ud"}, "Pan integral de molde": {"kcal": 250, "prot": 9, "unit": "g"}, "Pechuga de pollo (cruda)": {"kcal": 110, "prot": 23, "unit": "g"}, "Pavo fileteado (crudo)": {"kcal": 105, "prot": 22, "unit": "g"}, "Merluza (cruda)": {"kcal": 85, "prot": 17, "unit": "g"}, "Salmon (crudo)": {"kcal": 180, "prot": 20, "unit": "g"}, "Atun al natural (lata, escurrido)": {"kcal": 100, "prot": 24, "unit": "g"}, "Arroz integral (crudo)": {"kcal": 350, "prot": 7.5, "unit": "g"}, "Pasta integral (cruda)": {"kcal": 350, "prot": 13, "unit": "g"}, "Patata": {"kcal": 80, "prot": 2, "unit": "g"}, "Boniato": {"kcal": 86, "prot": 1.6, "unit": "g"}, "Quinoa (cruda)": {"kcal": 370, "prot": 14, "unit": "g"}, "Garbanzos cocidos (bote)": {"kcal": 120, "prot": 7.5, "unit": "g"}, "Lentejas cocidas (bote)": {"kcal": 110, "prot": 8, "unit": "g"}, "Verdura variada congelada": {"kcal": 30, "prot": 2.5, "unit": "g"}, "Champinones": {"kcal": 22, "prot": 3, "unit": "g"}, "Calabacin": {"kcal": 17, "prot": 1.2, "unit": "g"}, "Pimiento": {"kcal": 26, "prot": 1, "unit": "g"}, "Lechuga": {"kcal": 15, "prot": 1.3, "unit": "g"}, "Pepino": {"kcal": 12, "prot": 0.7, "unit": "g"}, "Zanahoria": {"kcal": 41, "prot": 0.9, "unit": "g"}, "Aceite de oliva virgen extra": {"kcal": 900, "prot": 0, "unit": "ml"}, "Almendras": {"kcal": 600, "prot": 21, "unit": "g"}, "Nueces": {"kcal": 650, "prot": 15, "unit": "g"}, "Yogur griego natural 0%": {"kcal": 57, "prot": 10, "unit": "g"}, "Queso fresco batido 0%": {"kcal": 45, "prot": 8, "unit": "g"}, "Requeson": {"kcal": 98, "prot": 11, "unit": "g"}, "Proteina en polvo (whey)": {"kcal": 380, "prot": 80, "unit": "g"}, "Platano": {"kcal": 90, "prot": 1.1, "unit": "g"}, "Manzana": {"kcal": 52, "prot": 0.3, "unit": "g"}, "Naranja": {"kcal": 47, "prot": 0.9, "unit": "g"}, "Pera": {"kcal": 57, "prot": 0.4, "unit": "g"}, "Fresas": {"kcal": 33, "prot": 0.7, "unit": "g"}, "Kiwi": {"kcal": 61, "prot": 1.1, "unit": "g"}, "Arandanos": {"kcal": 57, "prot": 0.7, "unit": "g"}, "Hummus": {"kcal": 166, "prot": 8, "unit": "g"}, "Tomate triturado (envase, cocido)": {"kcal": 35, "prot": 1.3, "unit": "g"}, "Puerro": {"kcal": 29, "prot": 1.3, "unit": "g"}}};</script>
 <script>
-function show(sec) {
-  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
-  document.getElementById('sec-' + sec).classList.add('active');
-  event.currentTarget.classList.add('active');
-}
+(function(){
+  const weeks = [
+    {label:"Semana 1", days:[1,2,3,4,5,6,7]},
+    {label:"Semana 2", days:[8,9,10,11,12,13,14]},
+    {label:"Semana 3", days:[15,16,17,18,19,20,21]},
+    {label:"Semana 4", days:[22,23,24,25,26,27,28]},
+    {label:"Semana 5", days:[29,30,31]},
+  ];
 
-function toggle(card) {
-  card.classList.toggle('open');
-}
+  const navWeeks = document.getElementById('navWeeks');
+  weeks.forEach(w=>{
+    const lbl = document.createElement('div');
+    lbl.className='week-label';
+    lbl.textContent = w.label;
+    navWeeks.appendChild(lbl);
+    const grid = document.createElement('div');
+    grid.className='day-grid';
+    w.days.forEach(d=>{
+      const btn = document.createElement('button');
+      btn.className='day-btn';
+      btn.textContent = d;
+      btn.dataset.day = d;
+      btn.addEventListener('click', ()=>selectDay(d));
+      grid.appendChild(btn);
+    });
+    navWeeks.appendChild(grid);
+  });
+
+  function foodMeta(name){
+    return DATA.foods[name] || {unit:''};
+  }
+
+  function fmtQty(item){
+    return item.qty + ' ' + item.unit;
+  }
+
+  function selectDay(dayNum){
+    document.querySelectorAll('.day-btn').forEach(b=>{
+      b.classList.toggle('active', Number(b.dataset.day)===dayNum);
+    });
+    const dayData = DATA.month.find(m=>m.day===dayNum);
+    const detail = document.getElementById('detail');
+    detail.innerHTML = '';
+
+    const header = document.createElement('div');
+    header.className='day-header';
+    header.innerHTML = `
+      <h2>Día ${dayData.day}</h2>
+      <div class="totals">
+        <div>Calorías <b>${dayData.totalKcal} kcal</b></div>
+        <div>Proteína <b>${dayData.totalProt} g</b></div>
+      </div>
+    `;
+    detail.appendChild(header);
+
+    const order = ["Desayuno","Almuerzo","Merienda","Cena"];
+    order.forEach(mealName=>{
+      const meal = dayData.meals[mealName];
+      if(!meal) return;
+      const card = document.createElement('div');
+      card.className='meal-card';
+      let rows = meal.items.map(it=>`
+        <tr><td>${it.food}</td><td class="qty">${fmtQty(it)}</td></tr>
+      `).join('');
+      card.innerHTML = `
+        <h3>${mealName} <span class="sub">${meal.kcal} kcal · ${meal.prot} g proteína</span></h3>
+        <div class="overflow-x"><table class="ing">${rows}</table></div>
+      `;
+      detail.appendChild(card);
+    });
+
+    try{ localStorage.setItem('mealplan_last_day', String(dayNum)); }catch(e){}
+  }
+
+  let startDay = 1;
+  try{
+    const saved = localStorage.getItem('mealplan_last_day');
+    if(saved) startDay = Number(saved);
+  }catch(e){}
+  selectDay(startDay);
+})();
 </script>
 </body>
 </html>
