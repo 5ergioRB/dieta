@@ -117,12 +117,14 @@
   }
   @media (max-width: 760px){
     .layout{ grid-template-columns: 1fr; }
-    .nav-block{ position:static; top:auto; }
   }
   .nav-block{
     position:sticky;
     top:20px;
     align-self:start;
+  }
+  @media (max-width: 760px){
+    .nav-block{ position:static; top:auto; }
   }
   .week-label{
     font-family:var(--font-display);
